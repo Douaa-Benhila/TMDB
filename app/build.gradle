@@ -49,3 +49,11 @@ run  {
     standardInput = System.in
     // CL app in intellij console
 }
+
+task(runCLI, dependsOn: 'classes', type: JavaExec) {
+    main = 'moviesapp.AppCLI'
+    classpath = sourceSets.main.runtimeClasspath
+    standardInput = System.in
+    args "list"
+    args "today"
+}
