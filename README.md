@@ -2,7 +2,7 @@
 
 Base de code pour l'UE : initiation au génie logiciel 2023-2024
 
-Nom de l'équipe : LA TEAM DES 4 FANTASTIQUES (Equipe D)
+Nom de l'équipe : Equipe D 
 
 Membres de l'équipe :
 Ammari Khadija
