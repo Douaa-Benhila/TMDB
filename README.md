@@ -8,6 +8,9 @@ Benhila douaa
 Fhafah Mohamed
 Ben Ismail Fatma
 
-TEAM1:
-FATMA
-KHADIJA.
+Team1: 
+Fatma Khadija
+
+TEAM2:
+Mohamed Douaa
+
