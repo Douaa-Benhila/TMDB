@@ -1,7 +1,9 @@
 package moviesapp.model;
 
+import javafx.scene.control.TableColumn;
 import moviesapp.model.Movie;
 
+import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,5 +26,16 @@ public class Favorites {
         favoriteMovies.remove(movie);
     }
 
+    public void showFavoritesMovies(){
+        if(favoriteMovies.isEmpty()){
+            System.out.println("There is no favorite movie.");
+        }
+        else {
+            System.out.println("Favorites movies list :");
+            for (Movie movie : favoriteMovies){
+                System.out.println(movie);
+            }
+        }
+    }
 }
 
