@@ -2,6 +2,11 @@ package moviesapp.model;
 
 import java.util.List;
 
+
+/**
+ * Represents a movie with various attributes such as title, genre, release date, and more.
+ * This class provides getters and setters for accessing and modifying movie properties.
+ */
 public class Movie {
     private boolean adult;
     private String backdropPath;
@@ -18,6 +23,24 @@ public class Movie {
     private double voteAverage;
     private int voteCount;
 
+    /**
+     * Constructs a new Movie instance.
+     *
+     * @param adult Indicates if the movie is for adults.
+     * @param backdropPath The path to the movie's backdrop image.
+     * @param genreIds A list of genre IDs associated with the movie.
+     * @param id The unique identifier of the movie.
+     * @param originalLanguage The original language of the movie.
+     * @param originalTitle The original title of the movie.
+     * @param overview A brief overview or description of the movie.
+     * @param popularity The popularity score of the movie.
+     * @param posterPath The path to the movie's poster image.
+     * @param releaseDate The release date of the movie.
+     * @param title The title of the movie.
+     * @param video Indicates if the movie is a video.
+     * @param voteAverage The average vote score of the movie.
+     * @param voteCount The count of votes received by the movie.
+     */
     public Movie(boolean adult, String backdropPath, List<Integer> genreIds, int id, String originalLanguage, String originalTitle, String overview, double popularity, String posterPath, String releaseDate, String title, boolean video, double voteAverage, int voteCount) {
         this.adult = adult;
         this.backdropPath = backdropPath;
