@@ -30,19 +30,19 @@ public class MovieTest {
 
 
         assertEquals(false, movie.isAdult());
-        assertEquals("/backdrop.jpg", movie.getBackdropPath());
-        assertEquals(Arrays.asList(1, 2, 3), movie.getGenreIds());
+        assertEquals("/backdrop.jpg", movie.getBackdrop_path());
+        assertEquals(Arrays.asList(1, 2, 3), movie.getGenre_ids());
         assertEquals(123, movie.getId());
-        assertEquals("en", movie.getOriginalLanguage());
-        assertEquals("Original Title", movie.getOriginalTitle());
+        assertEquals("en", movie.getOriginal_language());
+        assertEquals("Original Title", movie.getOriginal_title());
         assertEquals("Overview", movie.getOverview());
         assertEquals(7.5, movie.getPopularity(), 0.001);
-        assertEquals("/poster.jpg", movie.getPosterPath());
-        assertEquals("2022-01-01", movie.getReleaseDate());
+        assertEquals("/poster.jpg", movie.getPoster_path());
+        assertEquals("2022-01-01", movie.getRelease_date());
         assertEquals("Test Movie", movie.getTitle());
         assertEquals(false, movie.isVideo());
-        assertEquals(7.2, movie.getVoteAverage(), 0.001);
-        assertEquals(100, movie.getVoteCount());
+        assertEquals(7.2, movie.getVote_average(), 0.001);
+        assertEquals(100, movie.getVote_count());
     }
 
     @Test
