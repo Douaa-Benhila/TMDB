@@ -1,9 +1,9 @@
 package moviesapp.model;
 
-import java.io.BufferedReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
+import java.io.IOException;
 
 public class TMDBApi {
-    private static final String API_KEY = "c2e5eea5f9078e7bd27be9838d32abf8";
+    private static final String API_KEY = "VotreCleAPI"; // Remplacez par votre clé API
+    private static final String BASE_URL = "https://api.themoviedb.org/3/movie/";
+
 }
