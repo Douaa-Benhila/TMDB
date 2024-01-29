@@ -1,16 +1,19 @@
 package moviesapp;
 
+import java.io.IOException;
 import java.util.Scanner;
+
+import static moviesapp.model.TMDBApi.sendGET;
 
 public class AppCLI {
     public static void main(String[] args) {
-        System.out.println("Welcome to the movies app");
+        try {
+            String popularMoviesJson = sendGET("/movie/2020", "");
 
-        System.out.println("You requested command '" + args[0] + "' with parameter '" + args[1] + "'");
-
-        System.out.println("Input your command: ");
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("Sorry, I can't do anything yet ! (Read: " + scanner.nextLine() +")");
-        scanner.close();
+            System.out.println("Réponse JSON pour les vidéos du film (ID : 872585) :");
+            System.out.println(popularMoviesJson);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
