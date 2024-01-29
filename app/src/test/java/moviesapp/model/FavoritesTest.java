@@ -1,70 +1,53 @@
 package moviesapp.model;
 
-import java.util.Arrays;
+import org.junit.jupiter.api.Test;
+
+import java.io.ByteArrayOutputStream;
+import java.io.PrintStream;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 public class FavoritesTest {
-    public static void main(String[] args) {
-        Movie movie1 = new Movie(
-                false,
-                "backdropPath1",
-                Arrays.asList(1, 2, 3),
-                1,
-                "originalLanguage1",
-                "originalTitle1",
-                "overview1",
-                10.5,
-                "posterPath1",
-                "2022-01-01",
-                "Title 1",
-                false,
-                8.0,
-                100
-        );
 
-        Movie movie2 = new Movie(
-                true,
-                "backdropPath2",
-                Arrays.asList(4, 5, 6),
-                2,
-                "originalLanguage2",
-                "originalTitle2",
-                "overview2",
-                15.2,
-                "posterPath2",
-                "2022-02-02",
-                "Title 2",
-                true,
-                9.5,
-                150
-        );
-
-        Movie movie3 = new Movie(
-                false,
-                "backdropPath3",
-                Arrays.asList(7, 8, 9),
-                3,
-                "originalLanguage3",
-                "originalTitle3",
-                "overview3",
-                20.0,
-                "posterPath3",
-                "2022-03-03",
-                "Title 3",
-                false,
-                7.5,
-                120
-        );
-
+    @Test
+    public void testAddAndRemoveFavoriteMovie() {
         Favorites favorites = new Favorites();
+        Movie movie1 = new Movie(true, "/backdrop1.jpg", null, 1, "en", "Title 1", "Overview 1", 5.0, "/poster1.jpg", "2022-01-01", "Movie 1", false, 4.5, 50);
+        Movie movie2 = new Movie(false, "/backdrop2.jpg", null, 2, "fr", "Title 2", "Overview 2", 7.5, "/poster2.jpg", "2022-02-01", "Movie 2", true, 8.0, 100);
 
         favorites.addFavoriteMovie(movie1);
         favorites.addFavoriteMovie(movie2);
-        favorites.addFavoriteMovie(movie3);
+
+        assertEquals(2, favorites.getFavoriteMovies().size());
+        assertTrue(favorites.getFavoriteMovies().contains(movie1));
+        assertTrue(favorites.getFavoriteMovies().contains(movie2));
+
+        favorites.removeFavoriteMovie(movie1);
+
+        assertEquals(1, favorites.getFavoriteMovies().size());
+        assertFalse(favorites.getFavoriteMovies().contains(movie1));
+        assertTrue(favorites.getFavoriteMovies().contains(movie2));
+    }
+
+    @Test
+    public void testShowFavoritesMovies() {
+        Favorites favorites = new Favorites();
+        Movie movie1 = new Movie(true, "/backdrop1.jpg", null, 1, "en", "Title 1", "Overview 1", 5.0, "/poster1.jpg", "2022-01-01", "Movie 1", false, 4.5, 50);
+        Movie movie2 = new Movie(false, "/backdrop2.jpg", null, 2, "fr", "Title 2", "Overview 2", 7.5, "/poster2.jpg", "2022-02-01", "Movie 2", true, 8.0, 100);
+
+        favorites.addFavoriteMovie(movie1);
+        favorites.addFavoriteMovie(movie2);
+
+        // Capture la sortie console pour vérifier les messages
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(outputStream));
 
         favorites.showFavoritesMovies();
 
-        favorites.removeFavoriteMovie(movie2);
+        String expectedOutput = "Favorites movies list :\n" +
+                "Movie{adult=true, backdropPath='/backdrop1.jpg', genreIds=null, id=1, originalLanguage='en', originalTitle='Title 1', overview='Overview 1', popularity=5.0, posterPath='/poster1.jpg', releaseDate='2022-01-01', title='Movie 1', video=false, voteAverage=4.5, voteCount=50}\n" +
+                "Movie{adult=false, backdropPath='/backdrop2.jpg', genreIds=null, id=2, originalLanguage='fr', originalTitle='Title 2', overview='Overview 2', popularity=7.5, posterPath='/poster2.jpg', releaseDate='2022-02-01', title='Movie 2', video=true, voteAverage=8.0, voteCount=100}\n";
 
-        favorites.showFavoritesMovies();
+        assertEquals(expectedOutput, outputStream.toString());
     }
 }
