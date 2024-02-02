@@ -1,7 +1,6 @@
 package moviesapp.model;
 
 import com.google.gson.Gson;
-import moviesapp.model.MovieListResponse;
 
 public class JsonParser {
 
