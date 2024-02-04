@@ -13,11 +13,13 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
+//La classe TMDBApi interagit avec l'API The Movie Database pour récupérer des informations liées aux films.
 public class TMDBApi {
 
     private static final String API_KEY = "c2e5eea5f9078e7bd27be9838d32abf8";
     private static final String BASE_URL = "https://api.themoviedb.org/3";
 
+    //Envoie une requête GET à l'API TMDb avec l'endpoint et les paramètres de requête spécifiés.
     public static String sendGET(String endpoint, String queryParams) throws IOException {
         String urlString = BASE_URL + endpoint + "?api_key=" + API_KEY + queryParams;
 
@@ -39,6 +41,8 @@ public class TMDBApi {
         }
     }
 
+    //Recherche un film par son titre en utilisant l'API TMDb.
+    //l'endpoint est la partie de l'URL qui spécifie la ressource qu'on souhaite utiliser
     public static String searchMovieByTitle(String title) throws IOException {
         String encodedTitle = URLEncoder.encode(title, StandardCharsets.UTF_8);
         String endpoint = "/search/movie";
@@ -46,6 +50,7 @@ public class TMDBApi {
         return sendGET(endpoint, queryParams);
     }
 
+    //Analyse un objet Movie à partir du résultat de recherche JSON obtenu de l'API TMDb
     public static Movie parseMovieFromSearchResult(String searchResult) {
         Gson gson = new Gson();
         MovieListResponse movieListResponse = gson.fromJson(searchResult, MovieListResponse.class);
@@ -58,7 +63,7 @@ public class TMDBApi {
         }
     }
 
-
+    //Recherche des titres de films en fonction d'un terme de recherche en utilisant l'API TMDb.
     public static List<String> searchMovieTitles(String title) throws IOException {
         String searchResult = sendGET("/search/movie", "&query=" + URLEncoder.encode(title, StandardCharsets.UTF_8));
         MovieListResponse movieListResponse = JsonParser.parseMovieList(searchResult);
