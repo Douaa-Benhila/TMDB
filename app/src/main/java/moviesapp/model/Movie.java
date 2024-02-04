@@ -9,77 +9,77 @@ import java.util.List;
  */
 public class Movie {
     private boolean adult;
-    private String backdropPath;
-    private List<Integer> genreIds;
+    private String backdrop_path;
+    private List<Integer> genre_ids;
     private int id;
-    private String originalLanguage;
-    private String originalTitle;
+    private String original_language;
+    private String original_title;
     private String overview;
     private double popularity;
-    private String posterPath;
-    private String releaseDate;
+    private String poster_path;
+    private String release_date;
     private String title;
     private boolean video;
-    private double voteAverage;
-    private int voteCount;
+    private double vote_average;
+    private int vote_count;
 
     /**
      * Constructs a new Movie instance.
      *
      * @param adult Indicates if the movie is for adults.
-     * @param backdropPath The path to the movie's backdrop image.
-     * @param genreIds A list of genre IDs associated with the movie.
+     * @param backdrop_path The path to the movie's backdrop image.
+     * @param genre_ids A list of genre IDs associated with the movie.
      * @param id The unique identifier of the movie.
-     * @param originalLanguage The original language of the movie.
-     * @param originalTitle The original title of the movie.
+     * @param original_language The original language of the movie.
+     * @param original_title The original title of the movie.
      * @param overview A brief overview or description of the movie.
      * @param popularity The popularity score of the movie.
-     * @param posterPath The path to the movie's poster image.
-     * @param releaseDate The release date of the movie.
+     * @param poster_path The path to the movie's poster image.
+     * @param release_date The release date of the movie.
      * @param title The title of the movie.
      * @param video Indicates if the movie is a video.
-     * @param voteAverage The average vote score of the movie.
-     * @param voteCount The count of votes received by the movie.
+     * @param vote_average The average vote score of the movie.
+     * @param vote_count The count of votes received by the movie.
      */
-    public Movie(boolean adult, String backdropPath, List<Integer> genreIds, int id, String originalLanguage, String originalTitle, String overview, double popularity, String posterPath, String releaseDate, String title, boolean video, double voteAverage, int voteCount) {
+    public Movie(boolean adult, String backdrop_path, List<Integer> genre_ids, int id, String original_language, String original_title, String overview, double popularity, String poster_path, String release_date, String title, boolean video, double vote_average, int vote_count) {
         this.adult = adult;
-        this.backdropPath = backdropPath;
-        this.genreIds = genreIds;
+        this.backdrop_path = backdrop_path;
+        this.genre_ids = genre_ids;
         this.id = id;
-        this.originalLanguage = originalLanguage;
-        this.originalTitle = originalTitle;
+        this.original_language = original_language;
+        this.original_title = original_title;
         this.overview = overview;
         this.popularity = popularity;
-        this.posterPath = posterPath;
-        this.releaseDate = releaseDate;
+        this.poster_path = poster_path;
+        this.release_date = release_date;
         this.title = title;
         this.video = video;
-        this.voteAverage = voteAverage;
-        this.voteCount = voteCount;
+        this.vote_average = vote_average;
+        this.vote_count = vote_count;
     }
 
     public boolean isAdult() {
         return adult;
     }
 
-    public String getBackdropPath() {
-        return backdropPath;
+    public String getBackdrop_path() {
+        return backdrop_path;
     }
 
-    public List<Integer> getGenreIds() {
-        return genreIds;
+    public List<Integer> getGenre_ids() {
+        return genre_ids;
     }
 
     public int getId() {
         return id;
     }
 
-    public String getOriginalLanguage() {
-        return originalLanguage;
+    public String getOriginal_language() {
+        return original_language;
     }
 
-    public String getOriginalTitle() {
-        return originalTitle;
+    public String getOriginal_title() {
+        return original_title;
     }
 
     public String getOverview() {
@@ -90,12 +90,12 @@ public class Movie {
         return popularity;
     }
 
-    public String getPosterPath() {
-        return posterPath;
+    public String getPoster_path() {
+        return poster_path;
     }
 
-    public String getReleaseDate() {
-        return releaseDate;
+    public String getRelease_date() {
+        return release_date;
     }
 
     public String getTitle() {
@@ -106,12 +106,12 @@ public class Movie {
         return video;
     }
 
-    public double getVoteAverage() {
-        return voteAverage;
+    public double getVote_average() {
+        return vote_average;
     }
 
-    public int getVoteCount() {
-        return voteCount;
+    public int getVote_count() {
+        return vote_count;
     }
 
 
@@ -119,24 +119,24 @@ public class Movie {
         this.adult = adult;
     }
 
-    public void setBackdropPath(String backdropPath) {
-        this.backdropPath = backdropPath;
+    public void setBackdrop_path(String backdrop_path) {
+        this.backdrop_path = backdrop_path;
     }
 
-    public void setGenreIds(List<Integer> genreIds) {
-        this.genreIds = genreIds;
+    public void setGenre_ids(List<Integer> genre_ids) {
+        this.genre_ids = genre_ids;
     }
 
     public void setId(int id) {
         this.id = id;
     }
 
-    public void setOriginalLanguage(String originalLanguage) {
-        this.originalLanguage = originalLanguage;
+    public void setOriginal_language(String original_language) {
+        this.original_language = original_language;
     }
 
-    public void setOriginalTitle(String originalTitle) {
-        this.originalTitle = originalTitle;
+    public void setOriginal_title(String original_title) {
+        this.original_title = original_title;
     }
 
     public void setOverview(String overview) {
@@ -147,12 +147,12 @@ public class Movie {
         this.popularity = popularity;
     }
 
-    public void setPosterPath(String posterPath) {
-        this.posterPath = posterPath;
+    public void setPoster_path(String poster_path) {
+        this.poster_path = poster_path;
     }
 
-    public void setReleaseDate(String releaseDate) {
-        this.releaseDate = releaseDate;
+    public void setRelease_date(String release_date) {
+        this.release_date = release_date;
     }
 
     public void setTitle(String title) {
@@ -163,31 +163,31 @@ public class Movie {
         this.video = video;
     }
 
-    public void setVoteAverage(double voteAverage) {
-        this.voteAverage = voteAverage;
+    public void setVote_average(double vote_average) {
+        this.vote_average = vote_average;
     }
 
-    public void setVoteCount(int voteCount) {
-        this.voteCount = voteCount;
+    public void setVote_count(int vote_count) {
+        this.vote_count = vote_count;
     }
 
     @Override
     public String toString() {
         return "Movie{" +
                 "adult=" + adult +
-                ", backdropPath='" + backdropPath + '\'' +
-                ", genreIds=" + genreIds +
+                ", backdropPath='" + backdrop_path + '\'' +
+                ", genreIds=" + genre_ids +
                 ", id=" + id +
-                ", originalLanguage='" + originalLanguage + '\'' +
-                ", originalTitle='" + originalTitle + '\'' +
+                ", originalLanguage='" + original_language + '\'' +
+                ", originalTitle='" + original_title + '\'' +
                 ", overview='" + overview + '\'' +
                 ", popularity=" + popularity +
-                ", posterPath='" + posterPath + '\'' +
-                ", releaseDate='" + releaseDate + '\'' +
+                ", posterPath='" + poster_path + '\'' +
+                ", releaseDate='" + release_date + '\'' +
                 ", title='" + title + '\'' +
                 ", video=" + video +
-                ", voteAverage=" + voteAverage +
-                ", voteCount=" + voteCount +
+                ", voteAverage=" + vote_average +
+                ", voteCount=" + vote_count +
                 '}';
     }
 

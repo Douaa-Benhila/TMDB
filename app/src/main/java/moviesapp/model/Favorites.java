@@ -61,5 +61,14 @@ public class Favorites {
             }
         }
     }
+
+    public Movie getFavoriteMovieByTitle(String title) {
+        for (Movie movie : favoriteMovies) {
+            if (movie.getTitle().equalsIgnoreCase(title)) {
+                return movie;
+            }
+        }
+        return null; // Movie not found
+    }
 }
 
