@@ -1,4 +1,6 @@
-package moviesapp.model;
+package moviesapp.JsonManager;
+
+import moviesapp.model.Movie;
 
 import java.util.List;
 

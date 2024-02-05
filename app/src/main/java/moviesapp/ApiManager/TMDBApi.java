@@ -1,6 +1,9 @@
-package moviesapp.model;
+package moviesapp.ApiManager;
 
 import com.google.gson.Gson;
+import moviesapp.JsonManager.JsonParser;
+import moviesapp.JsonManager.MovieListResponse;
+import moviesapp.model.Movie;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -75,6 +78,19 @@ public class TMDBApi {
         } else {
             return Collections.emptyList();
         }
+    }
+
+    // Existing methods...
+
+    /**
+     * Discover movies with specified search filters.
+     *
+     * @param queryParams The query parameters for filtering movies.
+     * @return The JSON response string from TMDB API.
+     * @throws IOException If an I/O error occurs.
+     */
+    public static String discoverMovies(String queryParams) throws IOException {
+        return sendGET("/discover/movie", queryParams);
     }
 
 }

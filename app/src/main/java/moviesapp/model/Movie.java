@@ -1,6 +1,8 @@
 package moviesapp.model;
 
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 
 /**
@@ -173,22 +175,31 @@ public class Movie {
 
     @Override
     public String toString() {
-        return "Movie{" +
-                "adult=" + adult +
-                ", backdropPath='" + backdrop_path + '\'' +
-                ", genreIds=" + genre_ids +
-                ", id=" + id +
-                ", originalLanguage='" + original_language + '\'' +
-                ", originalTitle='" + original_title + '\'' +
-                ", overview='" + overview + '\'' +
-                ", popularity=" + popularity +
-                ", posterPath='" + poster_path + '\'' +
-                ", releaseDate='" + release_date + '\'' +
-                ", title='" + title + '\'' +
-                ", video=" + video +
-                ", voteAverage=" + vote_average +
-                ", voteCount=" + vote_count +
-                '}';
+        // Création d'une représentation de chaîne de caractères plus lisible pour un film
+        String info = String.format(
+                "Titre: %s (%s)\n",
+                title, release_date
+        );
+
+        info += String.format(
+                "Langue originale: %s | Adulte: %s | Vidéo: %s\n",
+                original_language.toUpperCase(),
+                adult ? "Oui" : "Non",
+                video ? "Oui" : "Non"
+        );
+
+        info += String.format(
+                "Note moyenne: %.1f (sur %d votes)\n",
+                vote_average, vote_count
+        );
+
+        info += "Genres: " + genre_ids + "\n";
+
+        info += "Popularité: " + String.format("%.2f\n", popularity);
+
+        info += "Résumé: " + (overview.isEmpty() ? "Non disponible" : overview) + "\n";
+
+        return info;
     }
 
 }

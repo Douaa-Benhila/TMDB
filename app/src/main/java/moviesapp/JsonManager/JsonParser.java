@@ -1,4 +1,4 @@
-package moviesapp.model;
+package moviesapp.JsonManager;
 
 import com.google.gson.Gson;
 
