@@ -1,6 +1,6 @@
 package moviesapp.model;
 
-import moviesapp.model.TMDBApi;
+import moviesapp.ApiManager.TMDBApi;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;

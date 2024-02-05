@@ -2,7 +2,7 @@ package moviesapp;
 
 import moviesapp.model.Favorites;
 import moviesapp.model.Movie;
-import moviesapp.model.TMDBApi;
+import moviesapp.ApiManager.TMDBApi;
 
 import java.io.IOException;
 import java.util.List;
