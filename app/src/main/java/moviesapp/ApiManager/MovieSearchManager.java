@@ -32,7 +32,7 @@ public class MovieSearchManager {
         }
     }
 
-    private void searchByTitle() {
+    public void searchByTitle() {
         System.out.print("Entrez le titre du film à rechercher : ");
         String title = scanner.nextLine();
         try {
@@ -51,7 +51,7 @@ public class MovieSearchManager {
         }
     }
 
-    private void searchByFilters() {
+    public void searchByFilters() {
         System.out.println("Entrez les critères de recherche (laissez vide pour ignorer) :");
 
         System.out.print("Titre (laissez vide pour ignorer) : ");
