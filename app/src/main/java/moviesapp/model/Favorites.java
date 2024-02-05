@@ -1,9 +1,10 @@
 package moviesapp.model;
 
 import javafx.scene.control.TableColumn;
+import moviesapp.ApiManager.TMDBApi;
 import moviesapp.model.Movie;
 
-import java.sql.SQLOutput;
+
 import java.util.ArrayList;
 import java.util.List;
 /**
@@ -61,5 +62,29 @@ public class Favorites {
             }
         }
     }
+
+    public Movie getFavoriteMovieByTitle(String title) {
+        for (Movie movie : favoriteMovies) {
+            if (movie.getTitle().equalsIgnoreCase(title)) {
+                return movie;
+            }
+        }
+        return null; // Movie not found
+    }
+
+
+
+    public void removeFavoriteByTitle(String title) {
+        Movie movie = getFavoriteMovieByTitle(title);
+        if (movie != null) {
+            removeFavoriteMovie(movie);
+            System.out.println(movie.getTitle() + " a été retiré des favoris.");
+        } else {
+            System.out.println("Film non trouvé dans les favoris.");
+        }
+    }
+
+
+
 }
 
