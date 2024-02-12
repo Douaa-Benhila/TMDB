@@ -10,29 +10,27 @@ import java.util.ResourceBundle;
 
 public class AppController implements Initializable {
 
-        @FXML
-        private Button helloWorldButton;
-        @FXML private Button goodByeWorldButton;
-        @FXML private Label label;
+    @FXML
+    private Button helloWorldButton;
+    @FXML private Button goodByeWorldButton;
+    @FXML private Label label;
 
-        //    @Override
-        public void initialize(URL location, ResourceBundle resourceBundle) {}
+    //    @Override
+    public void initialize(URL location, ResourceBundle resourceBundle) {}
 
-        @FXML
-        private void displayHelloWorld() {
-            label.setText("Hello World");
-            helloWorldButton.setVisible(false);
-            if (!goodByeWorldButton.isVisible())
-                goodByeWorldButton.setVisible(true);
-        }
+    @FXML
+    private void displayHelloWorld() {
+        label.setText("Hello World");
+        helloWorldButton.setVisible(false);
+        if (!goodByeWorldButton.isVisible())
+            goodByeWorldButton.setVisible(true);
+    }
 
-        @FXML
-        private void goodByeWorld() {
-            label.setText("");
-            goodByeWorldButton.setVisible(false);
-            if (!helloWorldButton.isVisible())
-                helloWorldButton.setVisible(true);
-        }
+    @FXML
+    private void goodByeWorld() {
+        label.setText("");
+        goodByeWorldButton.setVisible(false);
+        if (!helloWorldButton.isVisible())
+            helloWorldButton.setVisible(true);
+    }
 }
-
-
