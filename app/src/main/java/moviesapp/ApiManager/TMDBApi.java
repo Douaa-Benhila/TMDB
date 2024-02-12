@@ -67,7 +67,34 @@ public class TMDBApi {
     }
 
     //Recherche des titres de films en fonction d'un terme de recherche en utilisant l'API TMDb.
-    public static List<String> searchMoviesByFilters(String title, String genre, String year, String rating) throws IOException {
+    public static List<String> searchMovieTitles(String title) throws IOException {
+        String searchResult = sendGET("/search/movie", "&query=" + URLEncoder.encode(title, StandardCharsets.UTF_8));
+        MovieListResponse movieListResponse = JsonParser.parseMovieList(searchResult);
+
+        if (movieListResponse != null && movieListResponse.getResults() != null) {
+            return movieListResponse.getResults().stream()
+                    .map(Movie::getTitle)
+                    .collect(Collectors.toList());
+        } else {
+            return Collections.emptyList();
+        }
+    }
+
+    // Existing methods...
+
+    /**
+     * Discover movies with specified search filters.
+     *
+     * @param queryParams The query parameters for filtering movies.
+     * @return The JSON response string from TMDB API.
+     * @throws IOException If an I/O error occurs.
+     */
+    public static String discoverMovies(String queryParams) throws IOException {
+        return sendGET("/discover/movie", queryParams);
+    }
+
+
+    public static List<Movie> searchMoviesByFilters(String title, String genre, String year, String rating) throws IOException {
         StringBuilder queryParams = new StringBuilder();
 
         if (!title.isEmpty()) {
@@ -90,24 +117,9 @@ public class TMDBApi {
         MovieListResponse movieListResponse = JsonParser.parseMovieList(searchResult);
 
         if (movieListResponse != null && movieListResponse.getResults() != null) {
-            return movieListResponse.getResults().stream()
-                    .map(Movie::getTitle)
-                    .collect(Collectors.toList());
+            return movieListResponse.getResults();
         } else {
             return Collections.emptyList();
         }
     }
-
-
-    /**
-     * Discover movies with specified search filters.
-     *
-     * @param queryParams The query parameters for filtering movies.
-     * @return The JSON response string from TMDB API.
-     * @throws IOException If an I/O error occurs.
-     */
-    public static String discoverMovies(String queryParams) throws IOException {
-        return sendGET("/discover/movie", queryParams);
-    }
-
 }

@@ -10,6 +10,8 @@ import java.util.stream.Collectors;
  */
 
 public class Movie {
+
+    private boolean favorite; //Ajoutez un nouvel attribut favorite de type boolean pour indiquer si un film est ajouté aux favoris ou non.
     private boolean adult;
     private String backdrop_path;
     private List<Integer> genre_ids;
@@ -170,6 +172,16 @@ public class Movie {
 
     public void setVote_count(int vote_count) {
         this.vote_count = vote_count;
+    }
+
+
+    // Getters et setters pour l'attribut favori
+    public boolean isFavorite() {
+        return favorite;
+    }
+
+    public void setFavorite(boolean favorite) {
+        this.favorite = favorite;
     }
 
     @Override
