@@ -10,12 +10,9 @@ import moviesapp.ApiManager.TMDBApi;
 import moviesapp.model.Movie;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 public class MovieCatalogueApp extends Application {
-
-    private List<Movie> favoriteMovies = new ArrayList<>(); // Liste pour stocker les films favoris
 
     @Override
     public void start(Stage primaryStage) {
@@ -32,8 +29,7 @@ public class MovieCatalogueApp extends Application {
         TextField ratingField = new TextField();
         ratingField.setPromptText("Enter rating");
         Button searchButton = new Button("Search");
-        Button favoritesButton = new Button("Favorites"); // Bouton pour afficher les favoris
-        filtersSection.getChildren().addAll(new Label("FILTERS:"), titleField, genreField, ratingField, startYearField, endYearField, searchButton, favoritesButton); // Ajout du bouton "Favorites"
+        filtersSection.getChildren().addAll(new Label("FILTERS:"), titleField, genreField, ratingField, startYearField, endYearField, searchButton);
 
         VBox resultsSection = new VBox(10);
         resultsSection.setPadding(new Insets(10));
@@ -57,11 +53,7 @@ public class MovieCatalogueApp extends Application {
                         Label movieLabel = new Label(movie.getTitle());
                         Button detailsButton = new Button("Details");
                         detailsButton.setOnAction(e -> showMovieDetails(movie));
-
-                        Button addToFavoritesButton = new Button("Add to Favorites");
-                        addToFavoritesButton.setOnAction(e -> addToFavorites(movie)); // Ajout de l'action pour ajouter aux favoris
-
-                        movieLayout.getChildren().addAll(movieLabel, detailsButton, addToFavoritesButton);
+                        movieLayout.getChildren().addAll(movieLabel, detailsButton);
                         resultsSection.getChildren().add(movieLayout);
                     }
                 }
@@ -69,8 +61,6 @@ public class MovieCatalogueApp extends Application {
                 e.printStackTrace();
             }
         });
-
-        favoritesButton.setOnAction(event -> showFavorites()); // Ajout de l'action pour afficher les favoris
 
         HBox mainLayout = new HBox(20);
         mainLayout.getChildren().addAll(filtersSection, resultsSection);
@@ -103,24 +93,6 @@ public class MovieCatalogueApp extends Application {
         alert.setHeaderText(null);
         alert.setContentText(details.toString());
         alert.showAndWait();
-    }
-
-    private void addToFavorites(Movie movie) {
-        movie.setFavorite(true);
-        favoriteMovies.add(movie); // Ajout du film à la liste des favoris
-    }
-
-    private void showFavorites() {
-        Stage favoritesStage = new Stage();
-        VBox favoritesLayout = new VBox();
-        for (Movie movie : favoriteMovies) {
-            Label movieLabel = new Label(movie.getTitle());
-            favoritesLayout.getChildren().add(movieLabel);
-        }
-        Scene favoritesScene = new Scene(favoritesLayout, 400, 300);
-        favoritesStage.setTitle("Favorites");
-        favoritesStage.setScene(favoritesScene);
-        favoritesStage.show();
     }
 
     public static void main(String[] args) {
