@@ -51,12 +51,12 @@ tasks.named('test') {
     useJUnitPlatform()
 }
 
-task(runCLI, dependsOn: 'classes', type: JavaExec) {
+/*task(runCLI, dependsOn: 'classes', type: JavaExec) {
     main = 'moviesapp.AppCLI'
     classpath = sourceSets.main.runtimeClasspath
     standardInput = System.in
     // CL app in intellij console
-}
+}*/
 
 task(runCLI, dependsOn: 'classes', type: JavaExec) {
     main = 'moviesapp.MovieCatalogueApp'
