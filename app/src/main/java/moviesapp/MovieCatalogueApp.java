@@ -104,16 +104,37 @@ public class MovieCatalogueApp extends Application {
     }
 
     private void addToFavorites(Movie movie) {
-        movie.setFavorite(true);
-        favoriteMovies.add(movie); // Ajout du film à la liste des favoris
+        // Vérifie si le film est déjà présent dans la liste des favoris
+        boolean isAlreadyFavorite = favoriteMovies.stream()
+                .anyMatch(favorite -> favorite.getId() == movie.getId());
+
+        if (!isAlreadyFavorite) {
+            favoriteMovies.add(movie); // Ajoute le film à la liste des favoris seulement s'il n'est pas déjà présent
+            System.out.println("Added to favorites: " + movie.getTitle());
+        } else {
+            System.out.println(movie.getTitle() + " is already in favorites.");
+        }
     }
+
 
     private void showFavorites() {
         Stage favoritesStage = new Stage();
         VBox favoritesLayout = new VBox();
-        for (Movie movie : favoriteMovies) {
+        favoritesLayout.setPadding(new Insets(10));
+
+        for (Movie movie : new ArrayList<>(favoriteMovies)) {
+            HBox favoriteLayout = new HBox(10);
+
             Label movieLabel = new Label(movie.getTitle());
-            favoritesLayout.getChildren().add(movieLabel);
+            Button removeButton = new Button("Remove");
+            removeButton.setOnAction(e -> {
+                removeFromFavorites(movie);
+                favoritesLayout.getChildren().remove(favoriteLayout);
+            });
+
+            favoritesLayout.getChildren().addAll(movieLabel, removeButton);
+            favoritesLayout.getChildren().add(favoriteLayout);
+
         }
         Scene favoritesScene = new Scene(favoritesLayout, 400, 300);
         favoritesStage.setTitle("Favorites");
@@ -121,7 +142,9 @@ public class MovieCatalogueApp extends Application {
         favoritesStage.show();
     }
 
-
+    private void removeFromFavorites(Movie movie) {
+        favoriteMovies.remove(movie);
+    }
     public static void main(String[] args) {
         launch(args);
     }
