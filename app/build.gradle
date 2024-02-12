@@ -43,7 +43,7 @@ javafx {
 
 application {
     // Define the main class for the application.
-    mainClass = 'moviesapp.MainApp'
+    mainClass = 'moviesapp.MovieCatalogueApp'
 }
 
 tasks.named('test') {
@@ -58,7 +58,7 @@ run  {
 }
 
 task(runCLI, dependsOn: 'classes', type: JavaExec) {
-    main = 'moviesapp.AppCLI'
+    main = 'moviesapp.MovieCatalogueApp'
     classpath = sourceSets.main.runtimeClasspath
     standardInput = System.in
     args "list"
