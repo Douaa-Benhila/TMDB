@@ -5,11 +5,18 @@ import moviesapp.model.Favorites;
 import moviesapp.model.Movie;
 import java.util.Scanner;
 
+/**
+ * La classe AppCLI est responsable de l'interface utilisateur en ligne de commande
+ * de l'application MoviesApp.
+ */
 public class AppCLI {
     private static final Scanner scanner = new Scanner(System.in);
     private static final Favorites favorites = new Favorites();
     private static final MovieSearchManager searchManager = new MovieSearchManager();
 
+    /**
+     * Affiche le menu des options disponibles.
+     */
     public static void main(String[] args) {
         System.out.println("Bienvenue dans l'application MoviesApp!");
 
@@ -25,7 +32,10 @@ public class AppCLI {
 
             int choice = scanner.nextInt();
             scanner.nextLine(); // Consume newline left-over
-
+/**
+ * Méthode principale pour lancer l'application.
+ * @param args Les arguments de ligne de commande (non utilisés).
+ */
             switch (choice) {
                 case 1:
                     searchManager.searchMovies();

@@ -93,4 +93,33 @@ public class TMDBApi {
         return sendGET("/discover/movie", queryParams);
     }
 
+
+    public static List<Movie> searchMoviesByFilters(String title, String genre, String year, String rating) throws IOException {
+        StringBuilder queryParams = new StringBuilder();
+
+        if (!title.isEmpty()) {
+            queryParams.append("&query=").append(URLEncoder.encode(title, StandardCharsets.UTF_8));
+        }
+
+        if (!genre.isEmpty()) {
+            queryParams.append("&with_genres=").append(genre);
+        }
+
+        if (!year.isEmpty()) {
+            queryParams.append("&primary_release_year=").append(year);
+        }
+
+        if (!rating.isEmpty()) {
+            queryParams.append("&vote_average.gte=").append(rating);
+        }
+
+        String searchResult = sendGET("/search/movie", queryParams.toString());
+        MovieListResponse movieListResponse = JsonParser.parseMovieList(searchResult);
+
+        if (movieListResponse != null && movieListResponse.getResults() != null) {
+            return movieListResponse.getResults();
+        } else {
+            return Collections.emptyList();
+        }
+    }
 }

@@ -13,10 +13,10 @@ public class App extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-       // Parent root = FXMLLoader.load(getClass().getResource("/app/lyricsapp/view/lyricsapp.fxml"));
+        // Parent root = FXMLLoader.load(getClass().getResource("/app/lyricsapp/view/lyricsapp.fxml"));
 
-        Parent root = FXMLLoader.load(getClass().getResource("/moviesapp.fxml"));
-        primaryStage.setTitle("MoviesApp");
+        Parent root = FXMLLoader.load(getClass().getResource("/moviecatalogueapp.fxml"));
+        primaryStage.setTitle("MovieCatalogueApp");
         primaryStage.setScene(new Scene(root));
         primaryStage.show();
     }

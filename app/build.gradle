@@ -43,7 +43,7 @@ javafx {
 
 application {
     // Define the main class for the application.
-    mainClass = 'moviesapp.App'
+    mainClass = 'moviesapp.MovieCatalogueApp'
 }
 
 tasks.named('test') {
@@ -51,14 +51,15 @@ tasks.named('test') {
     useJUnitPlatform()
 }
 
-
-run  {
+/*task(runCLI, dependsOn: 'classes', type: JavaExec) {
+    main = 'moviesapp.AppCLI'
+    classpath = sourceSets.main.runtimeClasspath
     standardInput = System.in
     // CL app in intellij console
-}
+}*/
 
 task(runCLI, dependsOn: 'classes', type: JavaExec) {
-    main = 'moviesapp.AppCLI'
+    main = 'moviesapp.MovieCatalogueApp'
     classpath = sourceSets.main.runtimeClasspath
     standardInput = System.in
     args "list"
