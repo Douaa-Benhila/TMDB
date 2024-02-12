@@ -4,59 +4,58 @@ import javafx.scene.control.TableColumn;
 import moviesapp.ApiManager.TMDBApi;
 import moviesapp.model.Movie;
 
-
 import java.util.ArrayList;
 import java.util.List;
 /**
- * Manages a list of favorite movies. Provides functionality to add, remove, and display movies in the favorites list.
+ * Gère une liste de films favoris. Fournit des fonctionnalités pour ajouter, supprimer et afficher des films dans la liste des favoris.
  */
 public class Favorites {
     private List<Movie> favoriteMovies;
     /**
-     * Constructs a new Favorites instance.
-     * Initializes an empty list of favorite movies.
+     * Construit une nouvelle instance de Favoris.
+     * Initialise une liste vide de films favoris.
      */
     public Favorites() {
         favoriteMovies = new ArrayList<>();
     }
 
     /**
-     * Returns the list of favorite movies.
+     * Retourne la liste de films favoris.
      *
-     * @return A list of movies marked as favorites.
+     * @return Une liste de films marqués comme favoris.
      */
     public List<Movie> getFavoriteMovies() {
         return favoriteMovies;
     }
 
     /**
-     * Adds a movie to the list of favorites.
+     * Ajoute un film à la liste des favoris.
      *
-     * @param movie The movie to be added to the favorites list.
+     * @param movie Le film à ajouter à la liste des favoris.
      */
     public void addFavoriteMovie(Movie movie) {
         favoriteMovies.add(movie);
     }
 
     /**
-     * Removes a movie from the list of favorites.
+     * Supprime un film de la liste des favoris.
      *
-     * @param movie The movie to be removed from the favorites list.
+     * @param movie Le film à supprimer de la liste des favoris.
      */
     public void removeFavoriteMovie(Movie movie) {
         favoriteMovies.remove(movie);
     }
 
     /**
-     * Displays the list of favorite movies in the console.
-     * If the list is empty, a message indicating no favorite movies is shown.
+     * Affiche la liste des films favoris dans la console.
+     * Si la liste est vide, un message indiquant qu'il n'y a pas de films favoris est affiché.
      */
     public void showFavoritesMovies(){
         if(favoriteMovies.isEmpty()){
-            System.out.println("There is no favorite movie.");
+            System.out.println("Il n'y a aucun film favori.");
         }
         else {
-            System.out.println("Favorites movies list :");
+            System.out.println("Liste des films favoris :");
             for (Movie movie : favoriteMovies){
                 System.out.println(movie);
             }
@@ -69,10 +68,8 @@ public class Favorites {
                 return movie;
             }
         }
-        return null; // Movie not found
+        return null; // Film non trouvé
     }
-
-
 
     public void removeFavoriteByTitle(String title) {
         Movie movie = getFavoriteMovieByTitle(title);
@@ -83,8 +80,4 @@ public class Favorites {
             System.out.println("Film non trouvé dans les favoris.");
         }
     }
-
-
-
 }
-
