@@ -21,8 +21,10 @@ public class TMDBApi {
 
     private static final String API_KEY = "c2e5eea5f9078e7bd27be9838d32abf8";
     private static final String BASE_URL = "https://api.themoviedb.org/3";
+    public static final String IMAGE_BASE_URL = "https://image.tmdb.org/t/p/w500"; // Example base URL for width 500px images
 
-    //Envoie une requête GET à l'API TMDbv avec l'endpoint et les paramètres de requête spécifiés.
+
+    //Envoie une requête GET à l'API TMDb avec l'endpoint et les paramètres de requête spécifiés.
     public static String sendGET(String endpoint, String queryParams) throws IOException {
         String urlString = BASE_URL + endpoint + "?api_key=" + API_KEY + queryParams;
 
@@ -44,14 +46,6 @@ public class TMDBApi {
         }
     }
 
-    /**
-     * Recherche un film par son titre en utilisant l'API TMDb.
-     * l'endpoint est la partie de l'URL qui spécifie la ressource qu'on souhaite utiliser
-     *
-     * @param title
-     * @return
-     * @throws IOException
-     */
     //Recherche un film par son titre en utilisant l'API TMDb.
     //l'endpoint est la partie de l'URL qui spécifie la ressource qu'on souhaite utiliser
     public static String searchMovieByTitle(String title) throws IOException {
@@ -87,6 +81,26 @@ public class TMDBApi {
             return Collections.emptyList();
         }
     }
+
+    // ... other methods ...
+
+    /**
+     * Fetches the most popular movies from TMDb.
+     *
+     * @return A list of Movie objects representing the most popular movies.
+     * @throws IOException If an I/O error occurs.
+     */
+    public static List<Movie> getPopularMovies() throws IOException {
+        String response = sendGET("/movie/popular", "");
+        MovieListResponse movieListResponse = JsonParser.parseMovieList(response);
+
+        if (movieListResponse != null && movieListResponse.getResults() != null) {
+            return movieListResponse.getResults();
+        } else {
+            return Collections.emptyList();
+        }
+    }
+
 
 
     /**
