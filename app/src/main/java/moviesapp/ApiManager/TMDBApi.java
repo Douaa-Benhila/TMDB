@@ -22,7 +22,7 @@ public class TMDBApi {
     private static final String API_KEY = "c2e5eea5f9078e7bd27be9838d32abf8";
     private static final String BASE_URL = "https://api.themoviedb.org/3";
 
-    //Envoie une requête GET à l'API TMDb avec l'endpoint et les paramètres de requête spécifiés.
+    //Envoie une requête GET à l'API TMDbv avec l'endpoint et les paramètres de requête spécifiés.
     public static String sendGET(String endpoint, String queryParams) throws IOException {
         String urlString = BASE_URL + endpoint + "?api_key=" + API_KEY + queryParams;
 
@@ -44,6 +44,14 @@ public class TMDBApi {
         }
     }
 
+    /**
+     * Recherche un film par son titre en utilisant l'API TMDb.
+     * l'endpoint est la partie de l'URL qui spécifie la ressource qu'on souhaite utiliser
+     *
+     * @param title
+     * @return
+     * @throws IOException
+     */
     //Recherche un film par son titre en utilisant l'API TMDb.
     //l'endpoint est la partie de l'URL qui spécifie la ressource qu'on souhaite utiliser
     public static String searchMovieByTitle(String title) throws IOException {
@@ -80,7 +88,6 @@ public class TMDBApi {
         }
     }
 
-    // Existing methods...
 
     /**
      * Discover movies with specified search filters.
