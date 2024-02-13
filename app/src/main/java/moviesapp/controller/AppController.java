@@ -46,8 +46,10 @@ public class AppController {
             } else {
                 for (Movie movie : searchResults) {
                     try {
-                        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/moviesapp.fxml"));
+                        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/MovieTile.fxml"));
                         VBox movieTile = fxmlLoader.load();
+                        MovieTileController controller = fxmlLoader.getController();
+                        controller.setMovie(movie, this::addToFavorites, this::removeFromFavorites);
                         resultsSection.getChildren().add(movieTile);
 
                     } catch (IOException e) {
@@ -59,7 +61,6 @@ public class AppController {
             e.printStackTrace();
         }
     }
-
     private void showMovieDetails(Movie movie) {
         StringBuilder details = new StringBuilder();
         details.append("Title: ").append(movie.getTitle()).append("\n");

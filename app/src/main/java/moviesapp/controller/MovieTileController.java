@@ -32,7 +32,6 @@ public class MovieTileController {
         titleLabel.setText(movie.getTitle());
         yearLabel.setText(movie.getRelease_date().toString()); // Adjust depending on how your date is formatted
         ratingLabel.setText(String.format("      %.1f", movie.getVote_average()));
-
     }
 
 
