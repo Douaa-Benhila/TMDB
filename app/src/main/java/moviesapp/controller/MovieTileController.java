@@ -34,6 +34,15 @@ public class MovieTileController {
         yearLabel.setText(movie.getRelease_date().toString()); // Adjust depending on how your date is formatted
         ratingLabel.setText(String.format("      %.1f", movie.getVote_average()));
     }
+    public void updateButtonAppearance() {
+        if (MovieCatalogueApp.favoriteMovies.contains(movie)) {
+            addToFavoritesButton.setText("Liked");
+            addToFavoritesButton.setStyle("-fx-background-color: #00ff00;");
+        } else {
+            addToFavoritesButton.setText("like");
+            addToFavoritesButton.setStyle("");
+        }
+    }
     @FXML
     private void handleAddToFavorites() {
         if (MovieCatalogueApp.favoriteMovies.contains(movie)) {
@@ -43,6 +52,8 @@ public class MovieTileController {
         }
         updateButtonAppearance();
     }
+
+
 
 
 }
