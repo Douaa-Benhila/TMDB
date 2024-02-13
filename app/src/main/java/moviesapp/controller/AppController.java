@@ -80,4 +80,17 @@ public class AppController {
         alert.setContentText(details.toString());
         alert.showAndWait();
     }
+    public void addToFavorites(Movie movie) {
+        if (!favoriteMovies.contains(movie)) {
+            movie.setFavorite(true);
+            favoriteMovies.add(movie);
+        }
+    }
+
+    private void removeFromFavorites(Movie movie) {
+        if (favoriteMovies.contains(movie)) {
+            movie.setFavorite(false);
+            favoriteMovies.remove(movie);
+        }
+    }
 }
