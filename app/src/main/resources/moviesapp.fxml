@@ -1,14 +1,34 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+<?import java.net.*?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="moviesapp.controller.AppController"
-            prefHeight="400.0" prefWidth="600.0">
 
-</AnchorPane>
+<HBox spacing="20" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="moviesapp.controller.AppController">
+
+    <padding>
+        <Insets top="10" right="10" bottom="10" left="10"/>
+    </padding>
+
+    <VBox spacing="10" fx:id="shearchSection" styleClass="search-section">
+        <Label text="Chercher un Film :" styleClass="title-section"/>
+
+        <TextField fx:id="titleField" promptText="Nom du film"/>h
+        <TextField fx:id="genreField" promptText="Genre"/>
+        <TextField fx:id="startYearField" promptText="Depuis Année"/>
+        <TextField fx:id="endYearField" promptText="Jusqu'à Année"/>
+        <TextField fx:id="ratingField" promptText="Note"/>
+
+        <Button text="Search" onAction="#onSearch"/>
+        <Button text="Favorites" />
+        <Button text="Detail" />
+
+
+    </VBox>
+
+    <VBox fx:id="resultSection" ></VBox>
+</HBox>
+
+
