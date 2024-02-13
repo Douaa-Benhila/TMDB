@@ -15,7 +15,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AppController  {
+public class AppController {
 
     @FXML
     private TextField titleField, genreField, startYearField, endYearField, ratingField;
@@ -28,9 +28,35 @@ public class AppController  {
     private List<Movie> favoriteMovies = new ArrayList<>(); // Liste pour stocker les films favoris
 
 
+    @FXML
+    private void onSearch() {
 
+        String title = titleField.getText().trim();
+        String genre = genreField.getText().trim();
+        String startYear = startYearField.getText().trim();
+        String endYear = endYearField.getText().trim();
 
+        try {
+            sectionTitle.setText("-> Search Results");
+            List<Movie> searchResults = TMDBApi.searchMoviesByFilters(title, genre, startYear, endYear);
+            resultsSection.getChildren().clear();
 
+            if (searchResults.isEmpty()) {
+                resultsSection.getChildren().add(new Label("No movies found with the given criteria."));
+            } else {
+                for (Movie movie : searchResults) {
+                    try {
+                        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/moviesapp.fxml"));
+                        VBox movieTile = fxmlLoader.load();
+                        resultsSection.getChildren().add(movieTile);
 
-
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }
