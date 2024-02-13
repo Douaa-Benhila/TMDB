@@ -26,14 +26,23 @@ public class MovieTileController {
     private ImageView starImageView;
 
     private Movie movie ;
-
+    private Consumer<Movie> onAddToFavorites;
+    private Consumer<Movie> onRemoveFromFavorites;
     public void setMovie(Movie movie, Consumer<Movie> onAddToFavorites, Consumer<Movie> onRemoveFromFavorites) {
         this.movie = movie;
         titleLabel.setText(movie.getTitle());
         yearLabel.setText(movie.getRelease_date().toString()); // Adjust depending on how your date is formatted
         ratingLabel.setText(String.format("      %.1f", movie.getVote_average()));
     }
-
+    @FXML
+    private void handleAddToFavorites() {
+        if (MovieCatalogueApp.favoriteMovies.contains(movie)) {
+            onRemoveFromFavorites.accept(movie);
+        } else {
+            onAddToFavorites.accept(movie);
+        }
+        updateButtonAppearance();
+    }
 
 
 

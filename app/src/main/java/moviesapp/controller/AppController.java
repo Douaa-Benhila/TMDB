@@ -81,6 +81,34 @@ public class AppController {
         alert.setContentText(details.toString());
         alert.showAndWait();
     }
+    @FXML
+    private void onShowFavorites() {
+        // Clear the current results to make space for the favorites list.
+        resultsSection.getChildren().clear();
+        sectionTitle.setText("-> Favourite section :");
+
+        if (favoriteMovies.isEmpty()) {
+            resultsSection.getChildren().add(new Label("No favorites added."));
+        } else {
+            for (Movie movie : favoriteMovies) {
+                try {
+                    // Load the MovieTile for each favorite movie
+                    FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/MovieTile.fxml"));
+                    VBox movieTile = fxmlLoader.load();
+
+                    // Get the controller and set the movie and the favorite state
+                    MovieTileController controller = fxmlLoader.getController();
+                    controller.setMovie(movie, this::addToFavorites, this::removeFromFavorites); // Use addToFavorites and removeFromFavorites methods
+
+                    // Add the loaded tile to the results section
+                    resultsSection.getChildren().add(movieTile);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
     public void addToFavorites(Movie movie) {
         if (!favoriteMovies.contains(movie)) {
             movie.setFavorite(true);
