@@ -3,7 +3,12 @@ package moviesapp.controller;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import moviesapp.model.Movie;
+
+
+import java.util.function.Consumer;
 
 
 public class MovieTileController {
@@ -19,6 +24,19 @@ public class MovieTileController {
     private Button addToFavoritesButton;
     @FXML
     private ImageView starImageView;
+
+    private Movie movie ;
+
+    public void setMovie(Movie movie, Consumer<Movie> onAddToFavorites, Consumer<Movie> onRemoveFromFavorites) {
+        this.movie = movie;
+        titleLabel.setText(movie.getTitle());
+        yearLabel.setText(movie.getRelease_date().toString()); // Adjust depending on how your date is formatted
+        ratingLabel.setText(String.format("      %.1f", movie.getVote_average()));
+
+    }
+
+
+
 
 
 }
