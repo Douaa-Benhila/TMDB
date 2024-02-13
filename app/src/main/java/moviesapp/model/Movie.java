@@ -4,12 +4,14 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-
-/**
- * Represents a movie with various attributes such as title, genre, release date, and more.
- * This class provides getters and setters for accessing and modifying movie properties.
+/*
+ * Représente un film avec divers attributs tels que le titre, le genre, la date de sortie, et plus encore.
+ * Cette classe fournit des getters et des setters pour accéder et modifier les propriétés du film.
  */
+
 public class Movie {
+
+    private boolean favorite; //Ajoutez un nouvel attribut favorite de type boolean pour indiquer si un film est ajouté aux favoris ou non.
     private boolean adult;
     private String backdrop_path;
     private List<Integer> genre_ids;
@@ -26,22 +28,21 @@ public class Movie {
     private int vote_count;
 
     /**
-     * Constructs a new Movie instance.
-     *
-     * @param adult Indicates if the movie is for adults.
-     * @param backdrop_path The path to the movie's backdrop image.
-     * @param genre_ids A list of genre IDs associated with the movie.
-     * @param id The unique identifier of the movie.
-     * @param original_language The original language of the movie.
-     * @param original_title The original title of the movie.
-     * @param overview A brief overview or description of the movie.
-     * @param popularity The popularity score of the movie.
-     * @param poster_path The path to the movie's poster image.
-     * @param release_date The release date of the movie.
-     * @param title The title of the movie.
-     * @param video Indicates if the movie is a video.
-     * @param vote_average The average vote score of the movie.
-     * @param vote_count The count of votes received by the movie.
+     *Construit une nouvelle instance de Movie.
+     * @param adult Indique si le film est destiné aux adultes.
+     * @param backdrop_path Le chemin vers l'image de fond du film.
+     * @param genre_ids Une liste d'identifiants de genre associés au film.
+     * @param id L'identifiant unique du film.
+     * @param original_language La langue originale du film.
+     * @param original_title Le titre original du film.
+     * @param overview  Un bref résumé ou description du film.
+     * @param popularity Le score de popularité du film.
+     * @param poster_path Le chemin vers l'affiche du film.
+     * @param release_date La date de sortie du film.
+     * @param title Le titre du film.
+     * @param video Indique si le film est une vidéo.
+     * @param vote_average  La note moyenne du film.
+     * @param vote_count  Le nombre de votes reçus par le film.
      */
     public Movie(boolean adult, String backdrop_path, List<Integer> genre_ids, int id, String original_language, String original_title, String overview, double popularity, String poster_path, String release_date, String title, boolean video, double vote_average, int vote_count) {
         this.adult = adult;
@@ -171,6 +172,16 @@ public class Movie {
 
     public void setVote_count(int vote_count) {
         this.vote_count = vote_count;
+    }
+
+
+    // Getters et setters pour l'attribut favori
+    public boolean isFavorite() {
+        return favorite;
+    }
+
+    public void setFavorite(boolean favorite) {
+        this.favorite = favorite;
     }
 
     @Override

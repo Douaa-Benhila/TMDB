@@ -94,7 +94,7 @@ public class TMDBApi {
     }
 
 
-    public static List<String> searchMoviesByFilters(String title, String genre, String year, String rating) throws IOException {
+    public static List<Movie> searchMoviesByFilters(String title, String genre, String year, String rating) throws IOException {
         StringBuilder queryParams = new StringBuilder();
 
         if (!title.isEmpty()) {
@@ -117,9 +117,7 @@ public class TMDBApi {
         MovieListResponse movieListResponse = JsonParser.parseMovieList(searchResult);
 
         if (movieListResponse != null && movieListResponse.getResults() != null) {
-            return movieListResponse.getResults().stream()
-                    .map(Movie::getTitle)
-                    .collect(Collectors.toList());
+            return movieListResponse.getResults();
         } else {
             return Collections.emptyList();
         }
