@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox styleClass="movie-tile" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="moviesapp.controller.MovieTileController">
+    <ImageView fx:id="posterImage" fitWidth="200" fitHeight="300"/>
+    <Label fx:id="titleLabel" styleClass="movie-title"/>
+    <HBox>
+        <Label fx:id="yearLabel" styleClass="movie-year"/>
+        <Label fx:id="ratingLabel" styleClass="movie-rating"/>
+        <ImageView fx:id="starImageView" fitWidth="15" fitHeight="15" preserveRatio="true"/>
+        <Label text="         " styleClass="movie-year"/>
+        <Button fx:id="addToFavoritesButton" text="like" />
+    </HBox>
+</VBox>
