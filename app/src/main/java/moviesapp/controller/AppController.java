@@ -1,6 +1,7 @@
 package moviesapp.controller;
 
 import javafx.application.Application;
+import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -121,5 +122,37 @@ public class AppController {
             movie.setFavorite(false);
             favoriteMovies.remove(movie);
         }
+    }
+
+    public void displayMostViralMovies() {
+        Task<List<Movie>> task = new Task<>() {
+            @Override
+            protected List<Movie> call() throws Exception {
+                return TMDBApi.getPopularMovies();
+            }
+        };
+
+        task.setOnSucceeded(e -> {
+            resultsSection.getChildren().clear();
+
+
+            for (Movie movie : task.getValue()) {
+                try {
+                    FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/MovieTile.fxml"));
+                    VBox movieTile = fxmlLoader.load();
+                    MovieTileController controller = fxmlLoader.getController();
+                    controller.setMovie(movie, this::addToFavorites, this::removeFromFavorites);
+                    resultsSection.getChildren().add(movieTile);
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                }
+            }
+        });
+
+        task.setOnFailed(e -> {
+            System.out.println("Failed to fetch popular movies: " + task.getException());
+        });
+
+        new Thread(task).start();
     }
 }
