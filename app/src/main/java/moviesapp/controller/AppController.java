@@ -59,4 +59,25 @@ public class AppController {
             e.printStackTrace();
         }
     }
+
+    private void showMovieDetails(Movie movie) {
+        StringBuilder details = new StringBuilder();
+        details.append("Title: ").append(movie.getTitle()).append("\n");
+        details.append("Release Date: ").append(movie.getRelease_date()).append("\n");
+        details.append("Overview: ").append(movie.getOverview()).append("\n");
+        details.append("Adult: ").append(movie.isAdult()).append("\n");
+        details.append("Genre IDs: ").append(movie.getGenre_ids()).append("\n");
+        details.append("Original Language: ").append(movie.getOriginal_language()).append("\n");
+        details.append("Original Title: ").append(movie.getOriginal_title()).append("\n");
+        details.append("Popularity: ").append(movie.getPopularity()).append("\n");
+        details.append("Video: ").append(movie.isVideo()).append("\n");
+        details.append("Vote Average: ").append(movie.getVote_average()).append("\n");
+        details.append("Vote Count: ").append(movie.getVote_count()).append("\n");
+
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Movie Details");
+        alert.setHeaderText(null);
+        alert.setContentText(details.toString());
+        alert.showAndWait();
+    }
 }
