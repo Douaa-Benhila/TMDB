@@ -11,7 +11,7 @@
         <Label fx:id="ratingLabel" styleClass="movie-rating"/>
         <ImageView fx:id="starImageView" fitWidth="15" fitHeight="15" preserveRatio="true"/>
         <Label text="         " styleClass="movie-year"/>
-        <Button fx:id="addToFavoritesButton" text="like" />
+        <Button fx:id="addToFavoritesButton" text="like" onAction="#handleAddToFavorites"/>
     </HBox>
 
 </VBox>
