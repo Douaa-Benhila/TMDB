@@ -26,8 +26,10 @@ public class AppController {
     private Label sectionTitle; // Reference to the title label
     FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/MovieTile.fxml"));
 
-    private List<Movie> favoriteMovies = new ArrayList<>(); // Liste pour stocker les films favoris
+    public static List<Movie> favoriteMovies = new ArrayList<>(); // Liste pour stocker les films favoris
 
+    @FXML
+    public void initialize() {displayMostViralMovies();}
 
     @FXML
     private void onSearch() {
@@ -100,6 +102,7 @@ public class AppController {
                     // Get the controller and set the movie and the favorite state
                     MovieTileController controller = fxmlLoader.getController();
                     controller.setMovie(movie, this::addToFavorites, this::removeFromFavorites); // Use addToFavorites and removeFromFavorites methods
+                    controller.updateButtonAppearance(); // Call this method to ensure the correct appearance of the button
 
                     // Add the loaded tile to the results section
                     resultsSection.getChildren().add(movieTile);
