@@ -1,14 +1,10 @@
 package moviesapp.controller;
 
-import javafx.application.Application;
 import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
-import javafx.stage.Stage;
-import javafx.geometry.Insets;
 import moviesapp.ApiManager.TMDBApi;
 import moviesapp.model.Movie;
 
@@ -24,7 +20,6 @@ public class AppController {
     private FlowPane resultsSection;
     @FXML
     private Label sectionTitle;
-    FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/MovieTile.fxml"));
 
     public static List<Movie> favoriteMovies = new ArrayList<>(); // Liste pour stocker les films favoris
 
@@ -38,6 +33,7 @@ public class AppController {
         String genre = genreField.getText().trim();
         String startYear = startYearField.getText().trim();
         String endYear = endYearField.getText().trim();
+        String rating = ratingField.getText().trim();
 
         try {
             sectionTitle.setText("-> Search Results");
