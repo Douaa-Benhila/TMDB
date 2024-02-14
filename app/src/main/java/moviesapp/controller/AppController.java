@@ -23,7 +23,7 @@ public class AppController {
     @FXML
     private FlowPane resultsSection;
     @FXML
-    private Label sectionTitle; // Reference to the title label
+    private Label sectionTitle;
     FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/MovieTile.fxml"));
 
     public static List<Movie> favoriteMovies = new ArrayList<>(); // Liste pour stocker les films favoris
@@ -134,6 +134,8 @@ public class AppController {
                 return TMDBApi.getPopularMovies();
             }
         };
+
+
 
         task.setOnSucceeded(e -> {
             resultsSection.getChildren().clear();

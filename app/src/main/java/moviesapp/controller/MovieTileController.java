@@ -33,6 +33,7 @@ public class MovieTileController {
         this.movie = movie;
         this.onAddToFavorites = onAddToFavorites;
         this.onRemoveFromFavorites = onRemoveFromFavorites;
+
         if (movie.getPoster_path() != null && !movie.getPoster_path().isEmpty()) {
             String imageUrl = TMDBApi.IMAGE_BASE_URL + movie.getPoster_path();
             Image image = new Image(imageUrl, true);
@@ -51,7 +52,6 @@ public class MovieTileController {
         ratingLabel.setText(String.format("      %.1f", movie.getVote_average()));
         Image starImage = new Image("/img2.png"); // Replace with the path to your star image
         starImageView.setImage(starImage);
-
 
         updateButtonAppearance();
     }
@@ -73,8 +73,5 @@ public class MovieTileController {
         }
         updateButtonAppearance();
     }
-
-
-
 
 }
