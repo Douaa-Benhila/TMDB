@@ -13,4 +13,5 @@
         <Label text="         " styleClass="movie-year"/>
         <Button fx:id="addToFavoritesButton" text="like" />
     </HBox>
+
 </VBox>
