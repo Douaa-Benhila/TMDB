@@ -38,7 +38,7 @@ public class AppController {
 
         try {
             sectionTitle.setText("-> Search Results");
-            List<Movie> searchResults = TMDBApi.searchMoviesByFilters(title, genre, startYear, endYear);
+            List<Movie> searchResults = TMDBApi.searchMovies(title, genre, startYear, endYear, rating);
             resultsSection.getChildren().clear();
 
             if (searchResults.isEmpty()) {
