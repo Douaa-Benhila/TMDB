@@ -56,7 +56,7 @@ public class MovieTileController {
         updateButtonAppearance();
     }
     public void updateButtonAppearance() {
-        if (AppController.favoriteMovies.contains(movie)) {
+        if (AppController.favoriteMovies.getFavoriteMovies().contains(movie)) {
             addToFavoritesButton.setText("Liked");
             addToFavoritesButton.setStyle("-fx-background-color: #00ff00;");
         } else {
@@ -66,7 +66,7 @@ public class MovieTileController {
     }
     @FXML
     private void handleAddToFavorites() {
-        if (AppController.favoriteMovies.contains(movie)) {
+        if (AppController.favoriteMovies.getFavoriteMovies().contains(movie)) {
             onRemoveFromFavorites.accept(movie);
         } else {
             onAddToFavorites.accept(movie);
