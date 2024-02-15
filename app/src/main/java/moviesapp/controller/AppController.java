@@ -6,6 +6,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import moviesapp.ApiManager.TMDBApi;
+import moviesapp.model.Favorites;
 import moviesapp.model.Movie;
 
 import java.io.IOException;
@@ -21,7 +22,7 @@ public class AppController {
     @FXML
     private Label sectionTitle;
 
-    public static List<Movie> favoriteMovies = new ArrayList<>(); // Liste pour stocker les films favoris
+    public static Favorites favoriteMovies = new Favorites(); // Liste pour stocker les films favoris
 
     @FXML
     public void initialize() {displayMostViralMovies();}
@@ -86,10 +87,10 @@ public class AppController {
         resultsSection.getChildren().clear();
         sectionTitle.setText("-> Favourite section :");
 
-        if (favoriteMovies.isEmpty()) {
+        if (favoriteMovies.getFavoriteMovies().isEmpty()) {
             resultsSection.getChildren().add(new Label("No favorites added."));
         } else {
-            for (Movie movie : favoriteMovies) {
+            for (Movie movie : favoriteMovies.getFavoriteMovies()) {
                 try {
                     // Load the MovieTile for each favorite movie
                     FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/MovieTile.fxml"));
@@ -110,16 +111,16 @@ public class AppController {
     }
 
     public void addToFavorites(Movie movie) {
-        if (!favoriteMovies.contains(movie)) {
+        if (!favoriteMovies.getFavoriteMovies().contains(movie)) {
             movie.setFavorite(true);
-            favoriteMovies.add(movie);
+            favoriteMovies.addFavoriteMovie(movie);
         }
     }
 
     private void removeFromFavorites(Movie movie) {
-        if (favoriteMovies.contains(movie)) {
+        if (favoriteMovies.getFavoriteMovies().contains(movie)) {
             movie.setFavorite(false);
-            favoriteMovies.remove(movie);
+            favoriteMovies.removeFavoriteMovie(movie);
         }
     }
 
