@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<?import java.net.URL?>
+<?import javafx.geometry.Insets?>
+<VBox fx:id="detailsContainer"  xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="moviesapp.controller.MovieDetailsController" styleClass="movie-details-container">
+    <stylesheets>
+        <URL value="@style.css"></URL>
+    </stylesheets>
+    <padding>
+        <Insets top="20" right="20" bottom="20" left="20"/>
+    </padding>
+
+    <!-- Backdrop Image -->
+    <ImageView fx:id="backdropImageView" preserveRatio="true" />
+
+    <HBox alignment="TOP_LEFT" spacing="20">
+        <!-- Poster and Title Information -->
+        <VBox spacing="10" styleClass="movie-poster-container">
+            <ImageView fx:id="posterImageView" fitWidth="200" fitHeight="300" preserveRatio="true"/>
+            <Label fx:id="titleLabel" styleClass="movie-title"/>
+            <Label fx:id="releaseDateLabel" styleClass="movie-detail"/>
+            <Label fx:id="originalTitleLabel" styleClass="movie-detail"/>
+            <Label fx:id="originalLanguageLabel" styleClass="movie-detail"/>
+            <Label fx:id="genreLabel" styleClass="movie-detail"/>
+            <Label fx:id="popularityLabel" styleClass="movie-detail"/>
+            <Label fx:id="voteAverageLabel" styleClass="movie-detail"/>
+            <Label fx:id="voteCountLabel" styleClass="movie-detail"/>
+            <Label fx:id="adultLabel" styleClass="movie-detail"/>
+            <Label fx:id="videoLabel" styleClass="movie-detail"/>
+        </VBox>
+
+        <!-- Overview Text -->
+        <TextFlow styleClass="movie-overview-container">
+            <Text fx:id="overviewText" styleClass="movie-overview"/>
+        </TextFlow>
+    </HBox>
+</VBox>
