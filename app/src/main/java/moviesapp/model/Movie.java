@@ -215,7 +215,7 @@ public class Movie {
     }
 
     @Override
-    public boolean equals(Object o) {
+    public boolean equals(Object o) { // utilité de cette méthode est de voir si un film existait déjà
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Movie movie = (Movie) o;
@@ -223,7 +223,7 @@ public class Movie {
     }
 
     @Override
-    public int hashCode() {
+    public int hashCode() { // permet d'attribuer un identifiant unique à chaque objet, ce qui facilite leur recherche et leur utilisation
         return Objects.hash(id);
     }
 
