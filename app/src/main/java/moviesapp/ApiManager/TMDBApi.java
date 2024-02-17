@@ -143,7 +143,8 @@ public class TMDBApi {
         }
 
         return filteredStream.collect(Collectors.toList());
-    }    public static List<Movie> discoverMoviesWithFilters(String genre, String startYear, String endYear, String rating) throws IOException {
+    }
+    public static List<Movie> discoverMoviesWithFilters(String genre, String startYear, String endYear, String rating) throws IOException {
         StringBuilder queryParams = new StringBuilder();
 
         if (!genre.isEmpty()) {

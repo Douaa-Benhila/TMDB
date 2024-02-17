@@ -23,11 +23,12 @@ public class AppCLI {
         boolean running = true;
         while (running) {
             System.out.println("\nOptions:");
-            System.out.println("1. Rechercher des films");
-            System.out.println("2. Afficher les favoris");
-            System.out.println("3. Ajouter un film aux favoris par titre");
-            System.out.println("4. Supprimer un film des favoris par titre");
-            System.out.println("5. Quitter");
+            System.out.println("1. Rechercher des films par titre");
+            System.out.println("2. Rechercher un film par filtres");
+            System.out.println("3. Afficher les favoris");
+            System.out.println("4. Ajouter un film aux favoris par titre");
+            System.out.println("5. Supprimer un film des favoris par titre");
+            System.out.println("6. Quitter");
             System.out.print("Choisissez une option: ");
 
             int choice = scanner.nextInt();
@@ -38,18 +39,22 @@ public class AppCLI {
  */
             switch (choice) {
                 case 1:
-                    searchManager.searchMovies();
+                    searchManager.searchByTitle();
                     break;
                 case 2:
+                    searchManager.searchByFilters();
+                    break;
+
+                case 3:
                     displayFavorites();
                     break;
-                case 3:
+                case 4:
                     addFavoriteByTitle();
                     break;
-                case 4:
+                case 5:
                     removeFavoriteByTitle();
                     break;
-                case 5:
+                case 6:
                     running = false;
                     break;
                 default:

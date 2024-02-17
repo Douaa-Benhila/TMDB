@@ -14,39 +14,33 @@ import java.util.Scanner;
  */
 public class MovieSearchManager {
     private static final Scanner scanner = new Scanner(System.in);
-    /**
-     * Méthode permettant de démarrer le processus de recherche de films.
-     * L'utilisateur est invité à choisir entre une recherche par titre ou une recherche avancée par filtres.
-     */
-    public void searchMovies() {
-        System.out.println("Choisissez le type de recherche :");
-        System.out.println("1. Recherche par nom");
-        System.out.println("2. Recherche avancée par filtres");
-        System.out.print("Votre choix : ");
-        int choix = scanner.nextInt();
-        scanner.nextLine(); // Nettoyer le buffer
+    private String title;
+    private String year;
+    private String voteAverage;
+    private String language;
+    private String minDuration;
+    private String contentType;
+    private String minPopularity;
+    private String actors;
+    private String directors;
 
-        switch (choix) {
-            case 1:
-                searchByTitle();
-                break;
-            case 2:
-                searchByFilters();
-                break;
-            default:
-                System.out.println("Option non valide, réessayez.");
-                break;
-        }
+    public MovieSearchManager() {
+        // Initialisez les filtres à des valeurs par défaut ou à des chaînes vides si nécessaire
+        this.title = "";
+        this.year = "";
+        this.voteAverage = "";
+        this.language = "";
+        this.minDuration = "";
+        this.contentType = "";
+        this.minPopularity = "";
+        this.actors = "";
+        this.directors = "";
     }
-    /**
-     * Méthode permettant de démarrer le processus de recherche de films.
-     * L'utilisateur est invité à choisir entre une recherche par titre ou une recherche avancée par filtres.
-     */
-    private void searchByTitle() {
+    public void searchByTitle() {
         System.out.print("Entrez le titre du film à rechercher : ");
-        String title = validateInput(scanner.nextLine());
+        this.title = scanner.nextLine();
         try {
-            String searchResult = TMDBApi.searchMovieByTitle(title);
+            String searchResult = TMDBApi.searchMovieByTitle(this.title);
             handleSearchResult(searchResult);
         } catch (IOException e) {
             System.err.println("Erreur lors de la recherche du film : " + e.getMessage());
@@ -56,30 +50,30 @@ public class MovieSearchManager {
      * Effectue une recherche de films avancée par filtres.
      * L'utilisateur saisit les critères de recherche facultatifs.
      */
-    private void searchByFilters() {
+    public void searchByFilters() {
+        // Demandez à l'utilisateur de saisir les filtres et stockez-les dans les variables membres
         System.out.println("Entrez les critères de recherche (laissez vide pour ignorer) :");
+        this.title = getTitle();
+        this.year = getYear();
+        this.voteAverage = getVoteAverage();
+        this.language = getLanguage();
+        this.minDuration = getMinDuration();
+        this.contentType = getContentType();
+        this.minPopularity = getMinPopularity();
+        this.actors = getActors();
+        this.directors = getDirectors();
 
-        String title = getTitle();
-        String year = getYear();
-        String voteAverage = getVoteAverage();
-        String language = getLanguage();
-        String minDuration = getMinDuration();
-        String contentType = getContentType();
-        String minPopularity = getMinPopularity();
-        String actors = getActors();
-        String directors = getDirectors();
-
+        // Effectuez la recherche en utilisant les filtres spécifiés
         try {
-            String searchResult = discoverMoviesWithFilters(title, year, voteAverage, language, minDuration, contentType, minPopularity, actors, directors);
+            String searchResult = discoverMoviesWithFilters();
             handleSearchResult(searchResult);
         } catch (IOException e) {
             System.err.println("Erreur lors de la recherche des films : " + e.getMessage());
         }
     }
-
     private String getTitle() {
-        System.out.print("Titre (laissez vide pour ignorer) : ");
-        return validateInput(scanner.nextLine());
+        // Retourne une chaîne vide pour indiquer que l'utilisateur a choisi de ne pas saisir de titre
+        return "";
     }
 
     private String getYear() {
@@ -139,7 +133,7 @@ public class MovieSearchManager {
         }
     }
 
-    private String discoverMoviesWithFilters(String title, String year, String voteAverage, String language, String minDuration, String contentType, String minPopularity, String actors, String directors) throws IOException {
+    private String discoverMoviesWithFilters() throws IOException {
         // Construction de la requête en fonction des filtres spécifiés
         StringBuilder queryParams = new StringBuilder();
 
