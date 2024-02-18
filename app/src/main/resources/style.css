@@ -33,13 +33,31 @@
 
 }
 
-.vbox {
+
+/* Centrer le conteneur de l'affiche du film */
+.movie-poster-container {
     -fx-spacing: 10px;
+    -fx-alignment: center;
 }
 
-.hbox {
+/* Centrer le conteneur des détails du film */
+.movie-details-container {
     -fx-spacing: 10px;
+    -fx-alignment: center;
 }
+
+.movie-title {
+    -fx-alignment: center;
+}
+
+
+/* Centrer le conteneur de la vue d'ensemble du film */
+.movie-overview-container {
+    -fx-alignment: center;
+    -fx-text-fill: white;
+}
+
+
 
 .alert {
     -fx-font-size: 18px;

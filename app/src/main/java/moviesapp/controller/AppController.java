@@ -1,5 +1,8 @@
 package moviesapp.controller;
 
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -13,6 +16,7 @@ import javafx.scene.layout.*;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import moviesapp.ApiManager.TMDBApi;
+import moviesapp.JsonManager.JsonParser;
 import moviesapp.model.Favorites;
 import moviesapp.model.Movie;
 
@@ -168,4 +172,5 @@ public class AppController {
             e.printStackTrace();
         }
     }
+
 }
