@@ -3,12 +3,17 @@ package moviesapp.controller;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
+import javafx.stage.Stage;
 import moviesapp.ApiManager.TMDBApi;
 import moviesapp.model.Movie;
 
@@ -30,6 +35,8 @@ public class MovieDetailsController {
     @FXML private Label adultLabel;
     @FXML private Label videoLabel;
     @FXML private Label directorLabel;
+    @FXML private Hyperlink directorHyperlink;
+    private String directorId;
 
     public void setMovieDetails(Movie movie) {
         String imagePath = "https://image.tmdb.org/t/p/w500"; // Base path for images from TMDB (adjust as necessary)
@@ -47,18 +54,51 @@ public class MovieDetailsController {
         adultLabel.setText("Adult: " + (movie.isAdult() ? "Yes" : "No"));
         videoLabel.setText("Video: " + (movie.isVideo() ? "Yes" : "No"));
 
-        updateDirectorName(movie.getId());
+        updateDirectorDetails(movie.getId());
     }
-    public void updateDirectorName(int movieId) {
+    public void updateDirectorDetails(int movieId) {
         new Thread(() -> {
             try {
-                String directorName = TMDBApi.getDirectorName(movieId);
-                Platform.runLater(() -> directorLabel.setText("Director: " + directorName));
+                String[] directorDetails = TMDBApi.getDirectorDetails(movieId);
+                if (directorDetails != null) {
+                    String directorName = directorDetails[0];
+                    String directorId = directorDetails[1];
+                    Platform.runLater(() -> {
+                        directorHyperlink.setText("Director: " + directorName);
+                        // Stockage de directorId pour l'utiliser lors de l'affichage des films du réalisateur
+                        this.directorId = directorId;
+                    });
+                }
             } catch (IOException | InterruptedException e) {
                 e.printStackTrace();
-                Platform.runLater(() -> directorLabel.setText("Director: Error loading"));
+                Platform.runLater(() -> directorHyperlink.setText("Director: Error loading"));
             }
         }).start();
+    }
+
+
+    @FXML
+    private void handleDirectorHyperlinkAction(ActionEvent event) {
+        showDirectorMovies(directorId);
+    }
+
+
+
+    private void showDirectorMovies(String directorId) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/DirectorMoviesView.fxml"));
+
+            Parent root = loader.load();
+
+            DirectorMoviesController controller = loader.getController();
+            controller.loadMovies(directorId);
+            Stage stage = new Stage();
+            stage.setTitle("Films du réalisateur");
+            stage.setScene(new Scene(root));
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 
@@ -66,3 +106,8 @@ public class MovieDetailsController {
 
 
 }
+
+
+
+
+

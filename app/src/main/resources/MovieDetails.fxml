@@ -33,7 +33,7 @@
     <Label fx:id="voteCountLabel" styleClass="movie-detail"/>
     <Label fx:id="adultLabel" styleClass="movie-detail"/>
     <Label fx:id="videoLabel" styleClass="movie-detail"/>
-    <Label fx:id="directorLabel" styleClass="movie-detail"/>
+    <Hyperlink fx:id="directorHyperlink" onAction="#handleDirectorHyperlinkAction"/>
 
 
 
