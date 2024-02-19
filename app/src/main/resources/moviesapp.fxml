@@ -26,9 +26,6 @@
         <TextField fx:id="ratingField" promptText="Note"/>
 
 
-        <Button text="Séries" onAction="#filterSeries"/>
-        <Button text="Films" onAction="#filterMovies"/>
-
         <Button text="Search" onAction="#onSearch"/>
         <Button text="Favorites" onAction="#onShowFavorites"/>
     </VBox>

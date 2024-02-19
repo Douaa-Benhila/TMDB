@@ -23,10 +23,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
-
-
-
-
+import java.util.stream.Stream;
 
 
 //La classe TMDBApi interagit avec l'API The Movie Database pour récupérer des informations liées aux films.
@@ -162,6 +159,44 @@ public class TMDBApi {
         }
     }
 
+    public static List<Movie> searchMovies(String title, String genre, String startYear, String endYear, String rating) throws IOException {
+        if (title != null && !title.trim().isEmpty()) {
+            // If title is provided, use the search by title method and then filter results
+            return searchMoviesByTitleAndFilter(title.trim(), genre, startYear, endYear, rating);
+        } else {
+            // If no title is provided, use the discover method with filters
+            return discoverMoviesWithFilters(genre, startYear, endYear, rating);
+        }
+    }
+
+    public static List<Movie> discoverMoviesWithFilters(String genre, String startYear, String endYear, String rating) throws IOException {
+        StringBuilder queryParams = new StringBuilder();
+
+        if (!genre.isEmpty()) {
+            queryParams.append("&with_genres=").append(genre);
+        }
+        if (!startYear.isEmpty()) {
+            queryParams.append("&primary_release_date.gte=").append(startYear + "-01-01");
+        }
+        if (!endYear.isEmpty()) {
+            queryParams.append("&primary_release_date.lte=").append(endYear + "-12-31");
+        }
+        if (!rating.isEmpty()) {
+            queryParams.append("&vote_average.gte=").append(rating);
+        }
+
+        String searchResult = sendGET("/discover/movie", queryParams.toString());
+        MovieListResponse movieListResponse = JsonParser.parseMovieList(searchResult);
+
+        if (movieListResponse != null && movieListResponse.getResults() != null) {
+            return movieListResponse.getResults();
+        } else {
+            return Collections.emptyList();
+        }
+    }
+
+
+
     public static String getDirectorName(int movieId) throws IOException, InterruptedException {
         String url = "https://api.themoviedb.org/3/movie/" + movieId + "/credits?api_key=" + API_KEY;
         HttpRequest request = HttpRequest.newBuilder()
@@ -183,6 +218,34 @@ public class TMDBApi {
         }
 
         return "Inconnu"; // Retourne "Inconnu" si aucun réalisateur n'est trouvé
+    }
+
+    public static List<Movie> searchMoviesByTitleAndFilter(String title, String genre, String startYear, String endYear, String rating) throws IOException {
+        // Search by title
+        String searchResult = sendGET("/search/movie", "&query=" + URLEncoder.encode(title, StandardCharsets.UTF_8));
+        MovieListResponse movieListResponse = JsonParser.parseMovieList(searchResult);
+
+        if (movieListResponse == null || movieListResponse.getResults() == null) {
+            return Collections.emptyList();
+        }
+
+        // Filter the results manually
+        Stream<Movie> filteredStream = movieListResponse.getResults().stream();
+
+        if (!genre.isEmpty()) {
+            filteredStream = filteredStream.filter(movie -> movie.getGenre_ids().contains(Integer.parseInt(genre)));
+        }
+        if (!startYear.isEmpty()) {
+            filteredStream = filteredStream.filter(movie -> movie.getRelease_date().compareTo(startYear + "-01-01") >= 0);
+        }
+        if (!endYear.isEmpty()) {
+            filteredStream = filteredStream.filter(movie -> movie.getRelease_date().compareTo(endYear + "-12-31") <= 0);
+        }
+        if (!rating.isEmpty()) {
+            filteredStream = filteredStream.filter(movie -> movie.getVote_average() >= Double.parseDouble(rating));
+        }
+
+        return filteredStream.collect(Collectors.toList());
     }
 
 
