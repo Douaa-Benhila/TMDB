@@ -47,4 +47,12 @@
 
         </VBox>
     </HBox>
+    <Label text="- Actors:" id="actor" alignment="CENTER"/>
+    <HBox id="container2">
+        <FlowPane fx:id="actorsSection" hgap="10" vgap="10" prefWidth="900" styleClass="actors-section">
+            <padding>
+                <Insets top="20" right="10" bottom="10" left="10"/>
+            </padding>
+        </FlowPane>
+    </HBox>
 </VBox>

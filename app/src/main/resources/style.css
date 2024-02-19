@@ -170,3 +170,62 @@
     -fx-border-radius: 5;
     -fx-background-radius: 5; /* Match this with border-radius if you have a background color */
 }
+
+/* Style for the section containing the actors */
+
+.section-title {
+    -fx-font-size: 22px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #ffffff; /* White text color */
+    -fx-padding: 0 0 0 10px; /* Left padding to align with the actors' images */
+}
+
+/* Style for the FlowPane that contains the actors */
+.actors-section {
+    -fx-background-color: rgba(244, 6, 18, 0.33);
+    -fx-border-color: #f40612;
+    -fx-border-width: 2px; /* Border width */
+    -fx-border-radius: 5px; /* Rounded border corners */
+    -fx-background-radius: 5px; /* Match background radius with border radius for rounded corners */
+    -fx-padding: 20px; /* Padding inside the FlowPane */
+}
+
+/* Style for individual actor containers (if using VBox for each actor) */
+.actor-container {
+    -fx-alignment: center;
+    -fx-padding: 5px;
+    -fx-background-color: #2e4057; /* Slightly lighter background for each actor container */
+    -fx-background-radius: 4px; /* Rounded corners for actor containers */
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 10); /* Shadow for depth */
+}
+
+/* Style for actor images */
+.actor-image {
+    -fx-fit-width: 100px; /* Preferred width */
+    -fx-fit-height: 150px; /* Preferred height */
+    -fx-preserve-ratio: true;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.6), 5, 0.1, 2, 2); /* Soft shadow for the images */
+}
+
+/* Style for actor names */
+.actor-name {
+    -fx-font-size: 14px;
+    -fx-text-fill: #dcdcdc; /* Light grey color for readability */
+    -fx-wrap-text: true;
+    -fx-padding: 5px; /* Padding around the actor name for spacing */
+    -fx-text-alignment: center; /* Center align actor names */
+}
+
+#actor {
+    -fx-font-size: 24px; /* Larger font size for prominence */
+    -fx-font-weight: bold; /* Bold font weight for emphasis */
+    -fx-text-fill: #e8e8e8; /* Light color for high contrast */
+    -fx-background-color: rgba(244, 6, 18, 0.33);
+    -fx-padding: 10px; /* Padding around the text for more space */
+    -fx-background-radius: 5px; /* Rounded corners for the background */
+    -fx-border-radius: 5px; /* Rounded corners for the border */
+    -fx-border-width: 2px; /* Border width */
+    -fx-border-color: #606060; /* Border color */
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.7), 10, 0, 0, 5); /* Shadow for depth */
+    -fx-alignment: center; /* Center alignment for the text */
+}

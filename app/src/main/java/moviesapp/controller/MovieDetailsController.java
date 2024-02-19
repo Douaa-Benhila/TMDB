@@ -2,15 +2,26 @@ package moviesapp.controller;
 
 import javafx.application.Platform;
 import javafx.fxml.FXML;
+import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import moviesapp.ApiManager.TMDBApi;
+import moviesapp.JsonManager.JsonParser;
 import moviesapp.model.Movie;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import java.io.IOException;
+import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
+
+import static moviesapp.ApiManager.TMDBApi.API_KEY;
 
 public class MovieDetailsController {
 
@@ -48,6 +59,7 @@ public class MovieDetailsController {
         videoLabel.setText("- Video: " + (movie.isVideo() ? "Yes" : "No"));
 
         updateDirectorName(movie.getId());
+        fetchActors(movie.getId());
     }
     public void updateDirectorName(int movieId) {
         new Thread(() -> {
@@ -60,4 +72,50 @@ public class MovieDetailsController {
             }
         }).start();
     }
+
+    @FXML private FlowPane actorsSection;
+
+    private void fetchActors(int movieId) {
+        HttpClient client = HttpClient.newHttpClient();
+        String url = "https://api.themoviedb.org/3/movie/" + movieId + "/credits?api_key=" + API_KEY;
+
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(url))
+                .build();
+
+        client.sendAsync(request, HttpResponse.BodyHandlers.ofString())
+                .thenApply(HttpResponse::body)
+                .thenAccept(this::parseAndDisplayActors)
+                .join();
+    }
+
+    private void parseAndDisplayActors(String responseBody) {
+        JSONObject jsonObject = new JSONObject(responseBody);
+        JSONArray castArray = jsonObject.getJSONArray("cast");
+        String imageBaseURL = "https://image.tmdb.org/t/p/w185"; // Base URL for actor images
+
+        Platform.runLater(() -> {
+            actorsSection.getChildren().clear();
+            for (int i = 0; i < castArray.length(); i++) {
+                JSONObject actor = castArray.getJSONObject(i);
+                String actorName = actor.getString("name");
+                String profilePath = actor.optString("profile_path", ""); // Use optString to handle null profile_path
+                Image actorImage = new Image(imageBaseURL + profilePath, true); // true for background loading
+
+                ImageView imageView = new ImageView(actorImage);
+                imageView.setFitWidth(100); // Set preferred width
+                imageView.setFitHeight(150); // Set preferred height
+                imageView.setPreserveRatio(true);
+
+                Label actorLabel = new Label(actorName);
+                actorLabel.getStyleClass().add("actor-name");
+
+                VBox actorContainer = new VBox(7, imageView, actorLabel); // 5 is the spacing between elements
+                actorContainer.setAlignment(Pos.CENTER);
+
+                actorsSection.getChildren().add(actorContainer);
+            }
+        });
+    }
+
 }
