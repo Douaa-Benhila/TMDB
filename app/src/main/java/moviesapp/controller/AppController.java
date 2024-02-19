@@ -1,14 +1,30 @@
 package moviesapp.controller;
 
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 import moviesapp.ApiManager.TMDBApi;
+import moviesapp.JsonManager.JsonParser;
 import moviesapp.model.Favorites;
 import moviesapp.model.Movie;
+import java.io.IOException;
 
+
+import javafx.scene.input.MouseEvent;
+
+import java.awt.event.ActionEvent;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -21,8 +37,14 @@ public class AppController {
     private FlowPane resultsSection;
     @FXML
     private Label sectionTitle;
+    @FXML
+
+
+
 
     public static Favorites favoriteMovies = new Favorites(); // Liste pour stocker les films favoris
+
+    private List<MovieTileController> movieTileControllers = new ArrayList<>();
 
     @FXML
     public void initialize() {displayMostViralMovies();}
@@ -49,7 +71,7 @@ public class AppController {
                         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/MovieTile.fxml"));
                         VBox movieTile = fxmlLoader.load();
                         MovieTileController controller = fxmlLoader.getController();
-                        controller.setMovie(movie, this::addToFavorites, this::removeFromFavorites);
+                        controller.setMovie(movie, this::addToFavorites, this::removeFromFavorites, this::displayMovieDetails);
                         resultsSection.getChildren().add(movieTile);
 
                     } catch (IOException e) {
@@ -61,26 +83,8 @@ public class AppController {
             e.printStackTrace();
         }
     }
-    private void showMovieDetails(Movie movie) {
-        StringBuilder details = new StringBuilder();
-        details.append("Title: ").append(movie.getTitle()).append("\n");
-        details.append("Release Date: ").append(movie.getRelease_date()).append("\n");
-        details.append("Overview: ").append(movie.getOverview()).append("\n");
-        details.append("Adult: ").append(movie.isAdult()).append("\n");
-        details.append("Genre IDs: ").append(movie.getGenre_ids()).append("\n");
-        details.append("Original Language: ").append(movie.getOriginal_language()).append("\n");
-        details.append("Original Title: ").append(movie.getOriginal_title()).append("\n");
-        details.append("Popularity: ").append(movie.getPopularity()).append("\n");
-        details.append("Video: ").append(movie.isVideo()).append("\n");
-        details.append("Vote Average: ").append(movie.getVote_average()).append("\n");
-        details.append("Vote Count: ").append(movie.getVote_count()).append("\n");
 
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Movie Details");
-        alert.setHeaderText(null);
-        alert.setContentText(details.toString());
-        alert.showAndWait();
-    }
+
     @FXML
     private void onShowFavorites() {
         // Clear the current results to make space for the favorites list.
@@ -98,7 +102,7 @@ public class AppController {
 
                     // Get the controller and set the movie and the favorite state
                     MovieTileController controller = fxmlLoader.getController();
-                    controller.setMovie(movie, this::addToFavorites, this::removeFromFavorites); // Use addToFavorites and removeFromFavorites methods
+                    controller.setMovie(movie, this::addToFavorites, this::removeFromFavorites, this::displayMovieDetails);
                     controller.updateButtonAppearance(); // Call this method to ensure the correct appearance of the button
 
                     // Add the loaded tile to the results section
@@ -143,7 +147,7 @@ public class AppController {
                     FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/MovieTile.fxml"));
                     VBox movieTile = fxmlLoader.load();
                     MovieTileController controller = fxmlLoader.getController();
-                    controller.setMovie(movie, this::addToFavorites, this::removeFromFavorites);
+                    controller.setMovie(movie, this::addToFavorites, this::removeFromFavorites, this::displayMovieDetails);
                     resultsSection.getChildren().add(movieTile);
                 } catch (IOException ex) {
                     ex.printStackTrace();
@@ -157,4 +161,23 @@ public class AppController {
 
         new Thread(task).start();
     }
+
+    public void displayMovieDetails(Movie movie) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/MovieDetails.fxml"));
+            Node detailsView = loader.load();
+            MovieDetailsController controller = loader.getController();
+            controller.setMovieDetails(movie);
+
+
+            resultsSection.getChildren().clear(); // Clear the tiles
+            resultsSection.getChildren().add(detailsView); // Add the details view
+
+            sectionTitle.setText("Movie Details"); // Update the section title accordingly
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
 }

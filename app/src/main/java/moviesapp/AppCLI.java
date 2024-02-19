@@ -79,4 +79,5 @@ public class AppCLI {
         String title = scanner.nextLine();
         favorites.removeFavoriteByTitle(title);
     }
+
 }

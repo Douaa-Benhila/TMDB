@@ -6,6 +6,7 @@
 <?import java.net.*?>
 
 
+<?import javafx.scene.image.ImageView?>
 <HBox spacing="20" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="moviesapp.controller.AppController">
     <stylesheets>
         <URL value="@style.css" />
@@ -23,6 +24,7 @@
         <TextField fx:id="startYearField" promptText="Depuis Année"/>
         <TextField fx:id="endYearField" promptText="Jusqu'à Année"/>
         <TextField fx:id="ratingField" promptText="Note"/>
+
 
         <Button text="Search" onAction="#onSearch"/>
         <Button text="Favorites" onAction="#onShowFavorites"/>
