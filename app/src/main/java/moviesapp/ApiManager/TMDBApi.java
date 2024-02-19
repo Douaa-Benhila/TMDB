@@ -7,6 +7,8 @@ import com.google.gson.JsonObject;
 import moviesapp.JsonManager.JsonParser;
 import moviesapp.JsonManager.MovieListResponse;
 import moviesapp.model.Movie;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -248,7 +250,23 @@ public class TMDBApi {
         return filteredStream.collect(Collectors.toList());
     }
 
+    public static List<Movie> getRelatedMovies(int movieId) throws IOException {
+        // Construct the endpoint for fetching related movies
+        String endpoint = "/movie/" + movieId + "/similar";
+        // Use the sendGET method to make the API call
+        String response = sendGET(endpoint, "");
 
+        // Parse the response
+        Gson gson = new Gson();
+        // Assuming MovieListResponse is structured to parse the list of movies from the response
+        MovieListResponse movieListResponse = gson.fromJson(response, MovieListResponse.class);
+
+        if (movieListResponse != null && movieListResponse.getResults() != null) {
+            return movieListResponse.getResults();
+        } else {
+            return Collections.emptyList();
+        }
+    }
 
 }
 

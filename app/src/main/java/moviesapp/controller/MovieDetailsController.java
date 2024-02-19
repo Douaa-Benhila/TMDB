@@ -1,7 +1,9 @@
 package moviesapp.controller;
 
 import javafx.application.Platform;
+import javafx.concurrent.Task;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
@@ -20,6 +22,8 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.util.List;
+import java.util.function.Consumer;
 
 import static moviesapp.ApiManager.TMDBApi.API_KEY;
 
@@ -60,6 +64,7 @@ public class MovieDetailsController {
 
         updateDirectorName(movie.getId());
         fetchActors(movie.getId());
+        displayRelatedMovies(movie);
     }
     public void updateDirectorName(int movieId) {
         new Thread(() -> {
@@ -115,7 +120,53 @@ public class MovieDetailsController {
 
                 actorsSection.getChildren().add(actorContainer);
             }
+
+
         });
+    }
+    @FXML
+    private FlowPane relatedMoviesSection;
+    private Consumer<Movie> onAddToFavorites;
+    private Consumer<Movie> onRemoveFromFavorites;
+    private Consumer<Movie> onDisplayMovieDetails;
+
+
+    public void displayRelatedMovies(Movie movie) {
+        Task<List<Movie>> task = new Task<>() {
+            @Override
+            protected List<Movie> call() throws Exception {
+                // Correctly calling the TMDBApi method to fetch related movies
+                return TMDBApi.getRelatedMovies(movie.getId());
+            }
+        };
+
+        task.setOnSucceeded(e -> {
+            relatedMoviesSection.getChildren().clear();
+            for (Movie relatedMovie : task.getValue()) {
+                try {
+                    FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/MovieTile.fxml"));
+                    VBox movieTile = fxmlLoader.load();
+                    MovieTileController controller = fxmlLoader.getController();
+                    // Ensure the setMovie method correctly initializes the movie tile
+                    // Adjust the callback methods as necessary for your application's functionality
+                    controller.setMovie(relatedMovie, onAddToFavorites, onRemoveFromFavorites, onDisplayMovieDetails);
+                    relatedMoviesSection.getChildren().add(movieTile);
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                }
+            }
+        });
+
+        task.setOnFailed(e -> System.out.println("Failed to fetch related movies: " + task.getException()));
+
+        new Thread(task).start();
+    }
+
+    // In MovieDetailsController
+    public void setFavoritesActions(Consumer<Movie> add, Consumer<Movie> remove, Consumer<Movie> displayDetails) {
+        this.onAddToFavorites = add;
+        this.onRemoveFromFavorites = remove;
+        this.onDisplayMovieDetails = displayDetails;
     }
 
 }

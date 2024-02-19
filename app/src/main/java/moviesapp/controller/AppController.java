@@ -169,6 +169,8 @@ public class AppController {
             MovieDetailsController controller = loader.getController();
             controller.setMovieDetails(movie);
 
+            controller.setFavoritesActions(this::addToFavorites, this::removeFromFavorites, this::displayMovieDetails);
+
 
             resultsSection.getChildren().clear(); // Clear the tiles
             resultsSection.getChildren().add(detailsView); // Add the details view
@@ -179,5 +181,7 @@ public class AppController {
             e.printStackTrace();
         }
     }
+
+
 
 }

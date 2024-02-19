@@ -128,7 +128,7 @@
 /************************************************************/
 #container1 {
     -fx-background-color: transparent;
-    -fx-padding: -450px 20px 20px 20px;
+    -fx-padding: -650px 20px 20px 20px;
     -fx-alignment: center;
 }
 
@@ -229,3 +229,18 @@
     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.7), 10, 0, 0, 5); /* Shadow for depth */
     -fx-alignment: center; /* Center alignment for the text */
 }
+
+#relatedMovies {
+     -fx-font-size: 24px; /* Larger font size for prominence */
+     -fx-font-weight: bold; /* Bold font weight for emphasis */
+     -fx-text-fill: #e8e8e8; /* Light color for high contrast */
+     -fx-background-color: rgba(244, 6, 18, 0.33);
+     -fx-padding: 10px; /* Padding around the text for more space */
+     -fx-background-radius: 5px; /* Rounded corners for the background */
+     -fx-border-radius: 5px; /* Rounded corners for the border */
+     -fx-border-width: 2px; /* Border width */
+     -fx-border-color: #606060; /* Border color */
+     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.7), 10, 0, 0, 5); /* Shadow for depth */
+     -fx-alignment: center; /* Center alignment for the text */
+ }
+
