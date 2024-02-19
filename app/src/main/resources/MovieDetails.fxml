@@ -3,40 +3,48 @@
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
-
 <?import java.net.URL?>
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.shape.Rectangle?>
-<VBox fx:id="detailsContainer" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="moviesapp.controller.MovieDetailsController" styleClass="movie-details-container" alignment="CENTER">
+<?import javafx.geometry.*?>
+
+<?import javafx.scene.shape.Circle?>
+<VBox  fx:id="detailsContainer" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="moviesapp.controller.MovieDetailsController" styleClass="movie-details-container" alignment="CENTER" fillWidth="true">
     <stylesheets>
-        <URL value="@style.css"></URL>
+        <URL value="@style.css" />
     </stylesheets>
 
-    <!-- Backdrop Image -->
-    <ImageView fx:id="backdropImageView" preserveRatio="true" />
-    <Label fx:id="titleLabel" styleClass="movie-title"/>
+    <ImageView fx:id="backdropImageView" fitWidth="2100" fitHeight="500" preserveRatio="true" />
 
-    <StackPane>
-        <!-- Rectangle blanc pour le résumé -->
-        <Rectangle width="200" height="200" arcHeight="10" arcWidth="10" fill="white" />
+    <HBox alignment="CENTER" spacing="20" id="container1" >
 
-        <!-- Texte du résumé -->
-        <Text fx:id="overviewText" styleClass="movie-overview" wrappingWidth="180"/>
-    </StackPane>
+        <ImageView fx:id="posterImageView" id="poster_image_d" fitWidth="260" fitHeight="380" preserveRatio="true" />
 
-    <Label fx:id="releaseDateLabel" styleClass="movie-detail"/>
-    <Label fx:id="originalTitleLabel" styleClass="movie-detail"/>
-    <Label fx:id="originalLanguageLabel" styleClass="movie-detail"/>
-    <Label fx:id="genreLabel" styleClass="movie-detail"/>
-    <Label fx:id="popularityLabel" styleClass="movie-detail"/>
-    <Label fx:id="voteAverageLabel" styleClass="movie-detail"/>
-    <Label fx:id="voteCountLabel" styleClass="movie-detail"/>
-    <Label fx:id="adultLabel" styleClass="movie-detail"/>
-    <Label fx:id="videoLabel" styleClass="movie-detail"/>
-    <Label fx:id="directorLabel" styleClass="movie-detail"/>
+        <VBox spacing="10" styleClass="details-text-container"  fillWidth="true" id="container1_1" alignment="CENTER_LEFT">
+
+            <Label fx:id="titleLabel"  id="title"/>
+            <Label fx:id="originalTitleLabel" styleClass="movie-info-details" />
+            <Label fx:id="releaseDateLabel" styleClass="movie-info-details" />
 
 
+            <HBox spacing="20">
+                <Label fx:id="genreLabel" styleClass="movie-info-details" />
+                <Label fx:id="originalLanguageLabel" styleClass="movie-info-details" />
+            </HBox>
 
+            <HBox spacing="20">
+                <Label fx:id="voteAverageLabel" styleClass="movie-info-details" />
+                <Label fx:id="voteCountLabel" styleClass="movie-info-details" />
+            </HBox>
 
-    <ImageView fx:id="posterImageView" fitWidth="200" fitHeight="300" preserveRatio="true" visible="false"/>
+            <Label fx:id="popularityLabel" styleClass="movie-info-details" />
+
+            <HBox spacing="30">
+                <Label fx:id="adultLabel" styleClass="movie-info-details" />
+                <Label fx:id="videoLabel" styleClass="movie-info-details" />
+            </HBox>
+
+            <Label fx:id="overviewText" id="description" />
+            <Label fx:id="directorLabel" styleClass="movie-info-details" />
+
+        </VBox>
+    </HBox>
 </VBox>

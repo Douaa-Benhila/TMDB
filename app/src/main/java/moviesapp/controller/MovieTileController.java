@@ -49,7 +49,7 @@ public class MovieTileController {
         posterImage.setImage(new Image(imageUrl, true));
         titleLabel.setText(movie.getTitle());
         yearLabel.setText(movie.getRelease_date()); // Ensure this is formatted correctly
-        ratingLabel.setText(String.format("%.1f", movie.getVote_average()));
+        ratingLabel.setText(String.format("       %.1f", movie.getVote_average()));
         Image starImage = new Image("/img2.png"); // Path to your star image
         starImageView.setImage(starImage);
 
@@ -97,5 +97,4 @@ public class MovieTileController {
             e.printStackTrace();
         }
     }
-
 }

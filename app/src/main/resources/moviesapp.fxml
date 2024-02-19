@@ -37,7 +37,7 @@
         <Label  fx:id="sectionTitle" text="-> Most Popular Movies" styleClass="title-section"/>
         <ScrollPane fitToWidth="true" fitToHeight="true" hbarPolicy="AS_NEEDED" vbarPolicy="AS_NEEDED" styleClass="scrollpan-section">
             <content>
-                <FlowPane fx:id="resultsSection" hgap="10" vgap="10" prefWrapLength="2000" styleClass="results-section">
+                <FlowPane fx:id="resultsSection" hgap="10" vgap="10" prefWrapLength="2000" styleClass="results-section" alignment="TOP_CENTER">
                     <padding>
                         <Insets top="10" right="10" bottom="10" left="20"/>
                     </padding>
