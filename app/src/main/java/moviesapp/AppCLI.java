@@ -58,4 +58,21 @@ public class AppCLI {
         }
         System.out.println("Merci d'avoir utilisé l'application MoviesApp!");
     }
+
+    private static void displayFavorites() {
+        favorites.showFavoritesMovies();
+    }
+
+    private static void addFavoriteByTitle() {
+        System.out.print("Entrez le titre du film à ajouter aux favoris : ");
+        String title = scanner.nextLine();
+        searchManager.addFavoriteByTitle(title, favorites);
+    }
+
+    private static void removeFavoriteByTitle() {
+        System.out.print("Entrez le titre du film à retirer des favoris : ");
+        String title = scanner.nextLine();
+        favorites.removeFavoriteByTitle(title);
+    }
+
 }

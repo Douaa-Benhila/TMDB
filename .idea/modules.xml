@@ -3,9 +3,9 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/equipe-d.iml" filepath="$PROJECT_DIR$/.idea/equipe-d.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/equipe-d.moviesapp.iml" filepath="$PROJECT_DIR$/.idea/modules/equipe-d.moviesapp.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/equipe-d.moviesapp.app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/equipe-d.moviesapp.app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/equipe-d.moviesapp.app.main.iml" filepath="$PROJECT_DIR$/.idea/modules/app/equipe-d.moviesapp.app.main.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/equipe-d.moviesapp.app.main~1.iml" filepath="$PROJECT_DIR$/.idea/modules/app/equipe-d.moviesapp.app.main~1.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/equipe-d.moviesapp.app.test.iml" filepath="$PROJECT_DIR$/.idea/modules/app/equipe-d.moviesapp.app.test.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/equipe-d.moviesapp.app.test~1.iml" filepath="$PROJECT_DIR$/.idea/modules/app/equipe-d.moviesapp.app.test~1.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/moviesapp.iml" filepath="$PROJECT_DIR$/.idea/modules/moviesapp.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/moviesapp.app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/moviesapp.app.iml" />

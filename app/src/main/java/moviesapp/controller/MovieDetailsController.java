@@ -42,4 +42,5 @@ public class MovieDetailsController {
         videoLabel.setText("Video: " + (movie.isVideo() ? "Yes" : "No"));
     }
 
-    }
+
+}

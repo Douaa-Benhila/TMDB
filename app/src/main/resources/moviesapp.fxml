@@ -25,6 +25,7 @@
         <TextField fx:id="endYearField" promptText="Jusqu'à Année"/>
         <TextField fx:id="ratingField" promptText="Note"/>
 
+
         <Button text="Search" onAction="#onSearch"/>
         <Button text="Favorites" onAction="#onShowFavorites"/>
     </VBox>

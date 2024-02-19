@@ -19,9 +19,12 @@ import moviesapp.ApiManager.TMDBApi;
 import moviesapp.JsonManager.JsonParser;
 import moviesapp.model.Favorites;
 import moviesapp.model.Movie;
+import java.io.IOException;
+
 
 import javafx.scene.input.MouseEvent;
 
+import java.awt.event.ActionEvent;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -34,6 +37,10 @@ public class AppController {
     private FlowPane resultsSection;
     @FXML
     private Label sectionTitle;
+    @FXML
+
+
+
 
     public static Favorites favoriteMovies = new Favorites(); // Liste pour stocker les films favoris
 
@@ -162,7 +169,7 @@ public class AppController {
             MovieDetailsController controller = loader.getController();
             controller.setMovieDetails(movie);
 
-            // Ensure resultsSection is cleared or directly set the content of the ScrollPane
+
             resultsSection.getChildren().clear(); // Clear the tiles
             resultsSection.getChildren().add(detailsView); // Add the details view
 

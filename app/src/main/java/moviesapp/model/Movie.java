@@ -1,9 +1,7 @@
 package moviesapp.model;
 
 import java.util.List;
-import java.util.Map;
 import java.util.Objects;
-import java.util.stream.Collectors;
 
 /*
  * Représente un film avec divers attributs tels que le titre, le genre, la date de sortie, et plus encore.
@@ -27,6 +25,15 @@ public class Movie {
     private boolean video;
     private double vote_average;
     private int vote_count;
+
+    private String director;
+
+    private String directorId;
+
+
+
+
+
 
     /**
      *Construit une nouvelle instance de Movie.
@@ -185,6 +192,24 @@ public class Movie {
         this.favorite = favorite;
     }
 
+
+    public String getDirector() {
+        return director;
+    }
+
+    public void setDirector(String director) {
+        this.director = director;
+    }
+    public String getDirectorId() {
+        return directorId;
+    }
+
+    public void setDirectorId(String directorId) {
+        this.directorId = directorId;
+    }
+
+
+
     @Override
     public String toString() {
         // Création d'une représentation de chaîne de caractères plus lisible pour un film
@@ -226,6 +251,7 @@ public class Movie {
     public int hashCode() {
         return Objects.hash(id);
     }
+
 
 }
 

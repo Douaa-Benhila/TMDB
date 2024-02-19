@@ -2,6 +2,7 @@ package moviesapp.controller;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
@@ -17,6 +18,7 @@ import moviesapp.model.Movie;
 
 import java.awt.event.MouseEvent;
 import java.io.IOException;
+import java.util.List;
 import java.util.function.Consumer;
 
 
@@ -52,7 +54,8 @@ public class MovieTileController {
         starImageView.setImage(starImage);
 
         updateButtonAppearance();
-        movieTile.setOnMouseClicked(event -> onDisplayDetails.accept(movie)); // Use the consumer to notify about the click
+        movieTile.setOnMouseClicked(event -> onDisplayDetails.accept(movie));// Use the consumer to notify about the click
+
     }
     public void updateButtonAppearance() {
         if (AppController.favoriteMovies.getFavoriteMovies().contains(movie)) {
@@ -94,4 +97,5 @@ public class MovieTileController {
             e.printStackTrace();
         }
     }
+
 }

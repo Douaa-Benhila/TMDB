@@ -1,6 +1,9 @@
 package moviesapp.ApiManager;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import moviesapp.JsonManager.JsonParser;
 import moviesapp.JsonManager.MovieListResponse;
 import moviesapp.model.Movie;
@@ -9,18 +12,27 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
+import java.net.URI;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
 import java.nio.charset.StandardCharsets;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
+
 //La classe TMDBApi interagit avec l'API The Movie Database pour récupérer des informations liées aux films.
 public class TMDBApi {
 
-    private static final String API_KEY = "c2e5eea5f9078e7bd27be9838d32abf8";
-    private static final String BASE_URL = "https://api.themoviedb.org/3";
+    private static HttpClient httpClient = HttpClient.newHttpClient();
+
+
+    public static final String API_KEY = "c2e5eea5f9078e7bd27be9838d32abf8";
+    public static final String BASE_URL = "https://api.themoviedb.org/3";
+
     public static final String IMAGE_BASE_URL = "https://image.tmdb.org/t/p/w500"; // Example base URL for width 500px images
 
 
@@ -102,7 +114,6 @@ public class TMDBApi {
     }
 
 
-
     /**
      * Discover movies with specified search filters.
      *
@@ -143,4 +154,8 @@ public class TMDBApi {
             return Collections.emptyList();
         }
     }
+
+
+
+    
 }
