@@ -4,6 +4,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import javafx.concurrent.Task;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -24,7 +25,6 @@ import java.io.IOException;
 
 import javafx.scene.input.MouseEvent;
 
-import java.awt.event.ActionEvent;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -179,5 +179,28 @@ public class AppController {
             e.printStackTrace();
         }
     }
+
+    @FXML
+    private void onHome(ActionEvent event) {
+        // Code pour revenir à la page d'accueil
+        loadHomePage();
+    }
+
+    /*private void loadHomePage() {
+        // Code pour charger la page d'accueil
+        // Par exemple, effacer les résultats de la recherche et afficher la page d'accueil
+        resultsSection.getChildren().clear(); // Effacer les résultats de la recherche
+        sectionTitle.setText("Accueil"); // Mettre à jour le titre de la section
+        // Autres actions nécessaires pour afficher la page d'accueil
+    }*/
+
+    private void loadHomePage() {
+        // Charger la vue des films les plus populaires
+        displayMostViralMovies(); // Cette méthode devrait charger les films les plus populaires
+
+        // Mettre à jour le titre de la section
+        sectionTitle.setText("-> Most Popular Movies");
+    }
+
 
 }
