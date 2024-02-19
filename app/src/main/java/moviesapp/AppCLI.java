@@ -20,7 +20,42 @@ public class AppCLI {
     public static void main(String[] args) {
         System.out.println("Bienvenue dans l'application MoviesApp!");
 
+        boolean running = true;
+        while (running) {
+            System.out.println("\nOptions:");
+            System.out.println("1. Rechercher des films");
+            System.out.println("2. Afficher les favoris");
+            System.out.println("3. Ajouter un film aux favoris par titre");
+            System.out.println("4. Supprimer un film des favoris par titre");
+            System.out.println("5. Quitter");
+            System.out.print("Choisissez une option: ");
 
+            int choice = scanner.nextInt();
+            scanner.nextLine(); // Consume newline left-over
+/**
+ * Méthode principale pour lancer l'application.
+ * @param args Les arguments de ligne de commande (non utilisés).
+ */
+            switch (choice) {
+                case 1:
+                    searchManager.searchMovies();
+                    break;
+                case 2:
+                    displayFavorites();
+                    break;
+                case 3:
+                    addFavoriteByTitle();
+                    break;
+                case 4:
+                    removeFavoriteByTitle();
+                    break;
+                case 5:
+                    running = false;
+                    break;
+                default:
+                    System.out.println("Option non valide, veuillez réessayer.");
+            }
+        }
         System.out.println("Merci d'avoir utilisé l'application MoviesApp!");
     }
 
