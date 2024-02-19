@@ -19,13 +19,20 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
 
+
+
+
+
 //La classe TMDBApi interagit avec l'API The Movie Database pour récupérer des informations liées aux films.
 public class TMDBApi {
+
+
 
     private static HttpClient httpClient = HttpClient.newHttpClient();
 
@@ -155,7 +162,33 @@ public class TMDBApi {
         }
     }
 
+    public static String getDirectorName(int movieId) throws IOException, InterruptedException {
+        String url = "https://api.themoviedb.org/3/movie/" + movieId + "/credits?api_key=" + API_KEY;
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(url))
+                .GET()
+                .build();
+        HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
+
+        // Utilisation de Gson pour parser la chaîne JSON
+        Gson gson = new Gson();
+        JsonObject jsonResponse = gson.fromJson(response.body(), JsonObject.class);
+        JsonArray crew = jsonResponse.getAsJsonArray("crew");
+
+        for (JsonElement element : crew) {
+            JsonObject crewMember = element.getAsJsonObject();
+            if ("Director".equals(crewMember.get("job").getAsString())) {
+                return crewMember.get("name").getAsString(); // Retourne le nom du premier réalisateur trouvé
+            }
+        }
+
+        return "Inconnu"; // Retourne "Inconnu" si aucun réalisateur n'est trouvé
+    }
+
+
+
+}
+
 
 
     
-}
