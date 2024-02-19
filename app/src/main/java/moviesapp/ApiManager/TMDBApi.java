@@ -21,9 +21,7 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -266,6 +264,30 @@ public class TMDBApi {
         } else {
             return Collections.emptyList();
         }
+    }
+
+    public static Map<Integer, String> fetchMovieGenres() throws IOException, InterruptedException {
+        Map<Integer, String> genresMap = new HashMap<>();
+        String url = BASE_URL + "/genre/movie/list?api_key=" + API_KEY + "&language=en-US";
+
+        HttpClient client = HttpClient.newHttpClient();
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(url))
+                .GET()
+                .build();
+
+        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+
+        JSONObject responseObject = new JSONObject(response.body());
+        JSONArray genresArray = responseObject.getJSONArray("genres");
+        for (int i = 0; i < genresArray.length(); i++) {
+            JSONObject genre = genresArray.getJSONObject(i);
+            int id = genre.getInt("id");
+            String name = genre.getString("name");
+            genresMap.put(id, name);
+        }
+
+        return genresMap;
     }
 
 }

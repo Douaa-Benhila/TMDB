@@ -23,7 +23,9 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.util.List;
+import java.util.Map;
 import java.util.function.Consumer;
+import java.util.stream.Collectors;
 
 import static moviesapp.ApiManager.TMDBApi.API_KEY;
 
@@ -54,11 +56,11 @@ public class MovieDetailsController {
         releaseDateLabel.setText("- Release Date: " + movie.getRelease_date());
         originalTitleLabel.setText("- Original Title: " + movie.getOriginal_title());
         originalLanguageLabel.setText("- Language: " + movie.getOriginal_language().toUpperCase());
-        genreLabel.setText("- Genres: " + movie.getGenre_ids().toString());
+        updateGenreLabel(movie.getGenre_ids());
         overviewText.setText("- Overview: " + movie.getOverview());
-        popularityLabel.setText("- Popularity: " + movie.getPopularity());
-        voteAverageLabel.setText("- Rating: " + movie.getVote_average() + " / 10");
-        voteCountLabel.setText("- Votes: " + movie.getVote_count());
+        popularityLabel.setText("- Popularity: " + String.format("%.1f", movie.getPopularity()));
+        voteAverageLabel.setText("- Rating: " + String.format("%.1f", movie.getVote_average()) + " / 10");
+        voteCountLabel.setText("- Votes: " + String.format("%.1f", movie.getVote_count()));
         adultLabel.setText("- Adult: " + (movie.isAdult() ? "Yes" : "No"));
         videoLabel.setText("- Video: " + (movie.isVideo() ? "Yes" : "No"));
 
@@ -66,6 +68,24 @@ public class MovieDetailsController {
         fetchActors(movie.getId());
         displayRelatedMovies(movie);
     }
+
+    private void updateGenreLabel(List<Integer> genreIds) {
+        Task<String> fetchGenresTask = new Task<>() {
+            @Override
+            protected String call() throws Exception {
+                Map<Integer, String> genresMap = TMDBApi.fetchMovieGenres();
+                return genreIds.stream()
+                        .map(id -> genresMap.getOrDefault(id, "Unknown"))
+                        .collect(Collectors.joining(", "));
+            }
+        };
+
+        fetchGenresTask.setOnSucceeded(e -> genreLabel.setText("- Genres: " + fetchGenresTask.getValue()));
+        fetchGenresTask.setOnFailed(e -> genreLabel.setText("- Genres: Unknown"));
+
+        new Thread(fetchGenresTask).start();
+    }
+
     public void updateDirectorName(int movieId) {
         new Thread(() -> {
             try {
