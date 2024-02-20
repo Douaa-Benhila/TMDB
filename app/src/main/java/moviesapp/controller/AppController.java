@@ -199,13 +199,6 @@ public class AppController {
         loadHomePage();
     }
 
-    /*private void loadHomePage() {
-        // Code pour charger la page d'accueil
-        // Par exemple, effacer les résultats de la recherche et afficher la page d'accueil
-        resultsSection.getChildren().clear(); // Effacer les résultats de la recherche
-        sectionTitle.setText("Accueil"); // Mettre à jour le titre de la section
-        // Autres actions nécessaires pour afficher la page d'accueil
-    }*/
 
     private void loadHomePage() {
         // Charger la vue des films les plus populaires
