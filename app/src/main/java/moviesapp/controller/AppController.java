@@ -1,38 +1,25 @@
 package moviesapp.controller;
 
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
+import javafx.application.Platform;
 import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
-import javafx.stage.Modality;
-import javafx.stage.Stage;
 import moviesapp.ApiManager.TMDBApi;
-import moviesapp.JsonManager.JsonParser;
 import moviesapp.model.Favorites;
 import moviesapp.model.Movie;
 import java.io.IOException;
-
-
-import javafx.scene.input.MouseEvent;
-
-import java.io.IOException;
-import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class AppController {
 
     @FXML
-    private TextField titleField, genreField, startYearField, endYearField, ratingField;
+    private TextField titleField, startYearField, endYearField, ratingField;
     @FXML
     private FlowPane resultsSection;
     @FXML
@@ -40,22 +27,55 @@ public class AppController {
     @FXML
     public static Favorites favoriteMovies = new Favorites(); // Liste pour stocker les films favoris
     @FXML
+    private ComboBox<String> genreComboBox;
+
+    private Map<String, Integer> genreMap = new HashMap<>();
+    @FXML
     public void initialize() {
         displayMostViralMovies();
+        fetchAndPopulateGenres();
+    }
+
+    private void fetchAndPopulateGenres() {
+        Task<Map<Integer, String>> fetchGenresTask = new Task<>() {
+            @Override
+            protected Map<Integer, String> call() throws Exception {
+                return TMDBApi.fetchMovieGenres();
+            }
+        };
+
+        fetchGenresTask.setOnSucceeded(e -> {
+            genreMap.clear();
+            Platform.runLater(() -> {
+                genreComboBox.getItems().clear();
+                // Add "No Genre" option
+                genreComboBox.getItems().add("No Genre");
+            });
+            for (Map.Entry<Integer, String> entry : fetchGenresTask.getValue().entrySet()) {
+                genreMap.put(entry.getValue(), entry.getKey());
+                Platform.runLater(() -> genreComboBox.getItems().add(entry.getValue()));
+
+            }
+        });
+
+        new Thread(fetchGenresTask).start();
     }
 
     @FXML
     private void onSearch() {
 
         String title = titleField.getText().trim();
-        String genre = genreField.getText().trim();
+        String selectedGenre = genreComboBox.getSelectionModel().getSelectedItem();
         String startYear = startYearField.getText().trim();
         String endYear = endYearField.getText().trim();
         String rating = ratingField.getText().trim();
 
+        String genreQueryParam = selectedGenre != null && !selectedGenre.equals("No Genre") ? genreMap.get(selectedGenre).toString() : "";
+
+
         try {
             sectionTitle.setText("-> Search Results");
-            List<Movie> searchResults = TMDBApi.searchMovies(title, genre, startYear, endYear, rating);
+            List<Movie> searchResults = TMDBApi.searchMovies(title, genreQueryParam, startYear, endYear, rating);
             resultsSection.getChildren().clear();
 
             if (searchResults.isEmpty()) {

@@ -98,8 +98,6 @@ public class TMDBApi {
         }
     }
 
-    // ... other methods ...
-
     /**
      * Fetches the most popular movies from TMDb.
      *
@@ -194,8 +192,6 @@ public class TMDBApi {
             return Collections.emptyList();
         }
     }
-
-
 
     public static String getDirectorName(int movieId) throws IOException, InterruptedException {
         String url = "https://api.themoviedb.org/3/movie/" + movieId + "/credits?api_key=" + API_KEY;

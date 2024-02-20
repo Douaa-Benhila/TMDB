@@ -10,9 +10,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.VBox;
-import javafx.scene.text.Text;
 import moviesapp.ApiManager.TMDBApi;
-import moviesapp.JsonManager.JsonParser;
 import moviesapp.model.Movie;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -60,7 +58,7 @@ public class MovieDetailsController {
         overviewText.setText("- Overview: " + movie.getOverview());
         popularityLabel.setText("- Popularity: " + String.format("%.1f", movie.getPopularity()));
         voteAverageLabel.setText("- Rating: " + String.format("%.1f", movie.getVote_average()) + " / 10");
-        voteCountLabel.setText("- Votes: " + String.format("%.1f", movie.getVote_count()));
+        voteCountLabel.setText("- Votes: " + movie.getVote_count());
         adultLabel.setText("- Adult: " + (movie.isAdult() ? "Yes" : "No"));
         videoLabel.setText("- Video: " + (movie.isVideo() ? "Yes" : "No"));
 
