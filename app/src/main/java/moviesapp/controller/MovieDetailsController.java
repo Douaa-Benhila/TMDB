@@ -43,6 +43,8 @@ public class MovieDetailsController {
     @FXML private Label adultLabel;
     @FXML private Label videoLabel;
     @FXML private Label directorLabel;
+    @FXML private Hyperlink directorHyperlink;
+    private String directorId;
 
 
     public void setMovieDetails(Movie movie) {
@@ -91,7 +93,7 @@ public class MovieDetailsController {
                 Platform.runLater(() -> directorLabel.setText("- Director: " + directorName));
             } catch (IOException | InterruptedException e) {
                 e.printStackTrace();
-                Platform.runLater(() -> directorLabel.setText("Director: Error loading"));
+                Platform.runLater(() -> directorHyperlink.setText("Director: Error loading"));
             }
         }).start();
     }
@@ -138,6 +140,37 @@ public class MovieDetailsController {
 
                 actorsSection.getChildren().add(actorContainer);
             }
+
+    @FXML
+    private void handleDirectorHyperlinkAction(ActionEvent event) {
+        showDirectorMovies(directorId);
+    }
+
+
+
+    private void showDirectorMovies(String directorId) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/DirectorMoviesView.fxml"));
+
+            Parent root = loader.load();
+
+            DirectorMoviesController controller = loader.getController();
+            controller.loadMovies(directorId);
+            Stage stage = new Stage();
+            stage.setTitle("Films du réalisateur");
+            stage.setScene(new Scene(root));
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+
+
+
+}
+
 
 
         });
