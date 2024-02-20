@@ -7,6 +7,8 @@ import com.google.gson.JsonObject;
 import moviesapp.JsonManager.JsonParser;
 import moviesapp.JsonManager.MovieListResponse;
 import moviesapp.model.Movie;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -19,9 +21,7 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -97,8 +97,6 @@ public class TMDBApi {
             return Collections.emptyList();
         }
     }
-
-    // ... other methods ...
 
     /**
      * Fetches the most popular movies from TMDb.
@@ -195,6 +193,28 @@ public class TMDBApi {
         }
     }
 
+    public static String getDirectorName(int movieId) throws IOException, InterruptedException {
+        String url = "https://api.themoviedb.org/3/movie/" + movieId + "/credits?api_key=" + API_KEY;
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(url))
+                .GET()
+                .build();
+        HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
+
+        // Utilisation de Gson pour parser la chaîne JSON
+        Gson gson = new Gson();
+        JsonObject jsonResponse = gson.fromJson(response.body(), JsonObject.class);
+        JsonArray crew = jsonResponse.getAsJsonArray("crew");
+
+        for (JsonElement element : crew) {
+            JsonObject crewMember = element.getAsJsonObject();
+            if ("Director".equals(crewMember.get("job").getAsString())) {
+                return crewMember.get("name").getAsString(); // Retourne le nom du premier réalisateur trouvé
+            }
+        }
+
+        return "Inconnu"; // Retourne "Inconnu" si aucun réalisateur n'est trouvé
+    }
 
     public static List<Movie> searchMoviesByTitleAndFilter(String title, String genre, String startYear, String endYear, String rating) throws IOException {
         // Search by title
@@ -224,59 +244,47 @@ public class TMDBApi {
         return filteredStream.collect(Collectors.toList());
     }
 
-    public static List<String> getMoviesByDirector(String directorId) throws IOException, InterruptedException {
-        List<String> movies = new ArrayList<>();
-        String url = "https://api.themoviedb.org/3/person/" + directorId + "/movie_credits?api_key=" + API_KEY;
-        HttpRequest request = HttpRequest.newBuilder().uri(URI.create(url)).GET().build();
-        HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
+    public static List<Movie> getRelatedMovies(int movieId) throws IOException {
+        // Construct the endpoint for fetching related movies
+        String endpoint = "/movie/" + movieId + "/similar";
+        // Use the sendGET method to make the API call
+        String response = sendGET(endpoint, "");
 
+        // Parse the response
         Gson gson = new Gson();
-        JsonObject jsonResponse = gson.fromJson(response.body(), JsonObject.class);
+        // Assuming MovieListResponse is structured to parse the list of movies from the response
+        MovieListResponse movieListResponse = gson.fromJson(response, MovieListResponse.class);
 
-        JsonElement crewElement = jsonResponse.get("crew");
-        if (crewElement != null && crewElement.isJsonArray()) {
-            JsonArray crewMovies = crewElement.getAsJsonArray();
-
-            for (JsonElement movieElement : crewMovies) {
-                JsonObject movie = movieElement.getAsJsonObject();
-                JsonElement jobElement = movie.get("job");
-                JsonElement titleElement = movie.get("title");
-                if (jobElement != null && "Director".equals(jobElement.getAsString()) && titleElement != null) {
-                    String title = titleElement.getAsString();
-                    movies.add(title);
-                }
-            }
+        if (movieListResponse != null && movieListResponse.getResults() != null) {
+            return movieListResponse.getResults();
+        } else {
+            return Collections.emptyList();
         }
-        return movies;
     }
 
-    public static String[] getDirectorDetails(int movieId) throws IOException, InterruptedException {
-        String url = "https://api.themoviedb.org/3/movie/" + movieId + "/credits?api_key=" + API_KEY;
+    public static Map<Integer, String> fetchMovieGenres() throws IOException, InterruptedException {
+        Map<Integer, String> genresMap = new HashMap<>();
+        String url = BASE_URL + "/genre/movie/list?api_key=" + API_KEY + "&language=en-US";
+
+        HttpClient client = HttpClient.newHttpClient();
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create(url))
                 .GET()
                 .build();
-        HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
 
-        Gson gson = new Gson();
-        JsonObject jsonResponse = gson.fromJson(response.body(), JsonObject.class);
-        JsonArray crew = jsonResponse.getAsJsonArray("crew");
+        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
 
-        for (JsonElement element : crew) {
-            JsonObject crewMember = element.getAsJsonObject();
-            if ("Director".equals(crewMember.get("job").getAsString())) {
-                String name = crewMember.get("name").getAsString();
-                String id = crewMember.get("id").getAsString(); // Extrait l'ID
-                return new String[]{name, id}; // Retourne le nom et l'ID
-            }
+        JSONObject responseObject = new JSONObject(response.body());
+        JSONArray genresArray = responseObject.getJSONArray("genres");
+        for (int i = 0; i < genresArray.length(); i++) {
+            JSONObject genre = genresArray.getJSONObject(i);
+            int id = genre.getInt("id");
+            String name = genre.getString("name");
+            genresMap.put(id, name);
         }
 
-        return null; // Ou une valeur par défaut
+        return genresMap;
     }
-
-
-
-
 
 }
 
