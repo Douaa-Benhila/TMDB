@@ -2,14 +2,19 @@ package moviesapp.controller;
 
 import javafx.application.Platform;
 import javafx.concurrent.Task;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.geometry.Pos;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
+import javafx.geometry.Pos;
 import moviesapp.ApiManager.TMDBApi;
 import moviesapp.model.Movie;
 import org.json.JSONArray;
@@ -24,8 +29,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
-
-import static moviesapp.ApiManager.TMDBApi.API_KEY;
 
 public class MovieDetailsController {
 
@@ -44,12 +47,12 @@ public class MovieDetailsController {
     @FXML private Label videoLabel;
     @FXML private Label directorLabel;
     @FXML private Hyperlink directorHyperlink;
+
     private String directorId;
 
-
     public void setMovieDetails(Movie movie) {
-        String imageOriginalPath = "https://image.tmdb.org/t/p/original"; // Base path for images from TMDB (adjust as necessary)
-        String imagePath = "https://image.tmdb.org/t/p/w500"; // Base path for images from TMDB (adjust as necessary)
+        String imageOriginalPath = "https://image.tmdb.org/t/p/original";
+        String imagePath = "https://image.tmdb.org/t/p/w500";
         backdropImageView.setImage(new Image(imageOriginalPath + movie.getBackdrop_path(), true));
         posterImageView.setImage(new Image(imagePath + movie.getPoster_path(), true));
         titleLabel.setText(movie.getTitle());
@@ -98,11 +101,33 @@ public class MovieDetailsController {
         }).start();
     }
 
+    @FXML
+    private void handleDirectorHyperlinkAction(ActionEvent event) {
+        showDirectorMovies(directorId);
+    }
+
+    private void showDirectorMovies(String directorId) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/DirectorMoviesView.fxml"));
+            Parent root = loader.load();
+
+            DirectorMoviesController controller = loader.getController();
+            controller.loadMovies(directorId);
+
+            Stage stage = new Stage();
+            stage.setTitle("Films du réalisateur");
+            stage.setScene(new Scene(root));
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     @FXML private FlowPane actorsSection;
 
     private void fetchActors(int movieId) {
         HttpClient client = HttpClient.newHttpClient();
-        String url = "https://api.themoviedb.org/3/movie/" + movieId + "/credits?api_key=" + API_KEY;
+        String url = "https://api.themoviedb.org/3/movie/" + movieId + "/credits?api_key=" + TMDBApi.API_KEY;
 
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create(url))
@@ -117,76 +142,41 @@ public class MovieDetailsController {
     private void parseAndDisplayActors(String responseBody) {
         JSONObject jsonObject = new JSONObject(responseBody);
         JSONArray castArray = jsonObject.getJSONArray("cast");
-        String imageBaseURL = "https://image.tmdb.org/t/p/w185"; // Base URL for actor images
+        String imageBaseURL = "https://image.tmdb.org/t/p/w185";
 
         Platform.runLater(() -> {
             actorsSection.getChildren().clear();
             for (int i = 0; i < castArray.length(); i++) {
                 JSONObject actor = castArray.getJSONObject(i);
                 String actorName = actor.getString("name");
-                String profilePath = actor.optString("profile_path", ""); // Use optString to handle null profile_path
-                Image actorImage = new Image(imageBaseURL + profilePath, true); // true for background loading
+                String profilePath = actor.optString("profile_path", "");
+                Image actorImage = new Image(imageBaseURL + profilePath, true);
 
                 ImageView imageView = new ImageView(actorImage);
-                imageView.setFitWidth(100); // Set preferred width
-                imageView.setFitHeight(150); // Set preferred height
+                imageView.setFitWidth(100);
+                imageView.setFitHeight(150);
                 imageView.setPreserveRatio(true);
 
                 Label actorLabel = new Label(actorName);
                 actorLabel.getStyleClass().add("actor-name");
 
-                VBox actorContainer = new VBox(7, imageView, actorLabel); // 5 is the spacing between elements
+                VBox actorContainer = new VBox(7, imageView, actorLabel);
                 actorContainer.setAlignment(Pos.CENTER);
 
                 actorsSection.getChildren().add(actorContainer);
             }
-
-    @FXML
-    private void handleDirectorHyperlinkAction(ActionEvent event) {
-        showDirectorMovies(directorId);
-    }
-
-
-
-    private void showDirectorMovies(String directorId) {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/DirectorMoviesView.fxml"));
-
-            Parent root = loader.load();
-
-            DirectorMoviesController controller = loader.getController();
-            controller.loadMovies(directorId);
-            Stage stage = new Stage();
-            stage.setTitle("Films du réalisateur");
-            stage.setScene(new Scene(root));
-            stage.show();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-
-
-
-
-}
-
-
-
         });
     }
-    @FXML
-    private FlowPane relatedMoviesSection;
+
+    @FXML private FlowPane relatedMoviesSection;
     private Consumer<Movie> onAddToFavorites;
     private Consumer<Movie> onRemoveFromFavorites;
     private Consumer<Movie> onDisplayMovieDetails;
-
 
     public void displayRelatedMovies(Movie movie) {
         Task<List<Movie>> task = new Task<>() {
             @Override
             protected List<Movie> call() throws Exception {
-                // Correctly calling the TMDBApi method to fetch related movies
                 return TMDBApi.getRelatedMovies(movie.getId());
             }
         };
@@ -198,8 +188,6 @@ public class MovieDetailsController {
                     FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/MovieTile.fxml"));
                     VBox movieTile = fxmlLoader.load();
                     MovieTileController controller = fxmlLoader.getController();
-                    // Ensure the setMovie method correctly initializes the movie tile
-                    // Adjust the callback methods as necessary for your application's functionality
                     controller.setMovie(relatedMovie, onAddToFavorites, onRemoveFromFavorites, onDisplayMovieDetails);
                     relatedMoviesSection.getChildren().add(movieTile);
                 } catch (IOException ex) {
@@ -213,7 +201,6 @@ public class MovieDetailsController {
         new Thread(task).start();
     }
 
-    // In MovieDetailsController
     public void setFavoritesActions(Consumer<Movie> add, Consumer<Movie> remove, Consumer<Movie> displayDetails) {
         this.onAddToFavorites = add;
         this.onRemoveFromFavorites = remove;
