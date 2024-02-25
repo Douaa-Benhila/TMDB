@@ -6,6 +6,8 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
@@ -31,6 +33,12 @@ public class AppController {
     private ComboBox<String> genreComboBox;
 
     private Map<String, Integer> genreMap = new HashMap<>();
+
+    private Stage stage;
+
+    public void setStage(Stage stage) {
+        this.stage = stage;
+    }
     @FXML
     public void initialize() {
         displayMostViralMovies();
@@ -211,9 +219,25 @@ public class AppController {
 
     @FXML
     private void handleBackButtonAction(ActionEvent event) {
-        // Fermer la fenêtre actuelle
-        Node source = (Node) event.getSource();
-        Stage stage = (Stage) source.getScene().getWindow();
-        stage.close();
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("votre_fichier_fxml_precedent.fxml"));
+            Parent root = loader.load();
+
+            // Obtenez la référence de la scène actuelle à partir de n'importe quel nœud de la scène
+            Scene scene = ((Node) event.getSource()).getScene();
+
+            // Obtenez la référence de la scène actuelle à partir de la fenêtre de la scène
+            Stage stage = (Stage) scene.getWindow();
+
+            // Configurez la nouvelle scène avec le contenu chargé à partir du fichier FXML précédent
+            scene.setRoot(root);
+
+            // Affichez la nouvelle scène
+            stage.setScene(scene);
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
+
 }
