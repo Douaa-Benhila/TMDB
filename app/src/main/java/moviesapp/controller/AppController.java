@@ -8,6 +8,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
+import javafx.stage.Stage;
 import moviesapp.ApiManager.TMDBApi;
 import moviesapp.model.Favorites;
 import moviesapp.model.Movie;
@@ -206,5 +207,13 @@ public class AppController {
 
         // Mettre à jour le titre de la section
         sectionTitle.setText("-> Most Popular Movies");
+    }
+
+    @FXML
+    private void handleBackButtonAction(ActionEvent event) {
+        // Fermer la fenêtre actuelle
+        Node source = (Node) event.getSource();
+        Stage stage = (Stage) source.getScene().getWindow();
+        stage.close();
     }
 }

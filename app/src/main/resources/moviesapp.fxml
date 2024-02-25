@@ -27,6 +27,7 @@
 
         <Button text="Search" onAction="#onSearch"/>
         <Button text="Favorites" onAction="#onShowFavorites"/>
+        <Button text="Retour" onAction="#handleBackButtonAction" />
         <Button text="Home" onAction="#onHome"/>
 
     </VBox>
