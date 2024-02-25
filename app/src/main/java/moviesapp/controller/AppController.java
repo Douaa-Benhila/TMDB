@@ -15,6 +15,7 @@ import moviesapp.ApiManager.TMDBApi;
 import moviesapp.model.Favorites;
 import moviesapp.model.Movie;
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -233,6 +234,10 @@ public class AppController {
             e.printStackTrace();
         }
     }
+
+
+
+
 
 
 
