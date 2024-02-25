@@ -6,6 +6,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import moviesapp.JsonManager.JsonParser;
 import moviesapp.JsonManager.MovieListResponse;
+import moviesapp.model.Author;
 import moviesapp.model.Movie;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -28,7 +29,6 @@ import java.util.stream.Stream;
 
 //La classe TMDBApi interagit avec l'API The Movie Database pour récupérer des informations liées aux films.
 public class TMDBApi {
-
 
 
     private static HttpClient httpClient = HttpClient.newHttpClient();
@@ -286,8 +286,53 @@ public class TMDBApi {
         return genresMap;
     }
 
+
+    public static String[] getDirectorDetails(int movieId) throws IOException, InterruptedException {
+        String url = "https://api.themoviedb.org/3/movie/" + movieId + "/credits?api_key=" + API_KEY;
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(url))
+                .GET()
+                .build();
+        HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
+
+        Gson gson = new Gson();
+        JsonObject jsonResponse = gson.fromJson(response.body(), JsonObject.class);
+        JsonArray crew = jsonResponse.getAsJsonArray("crew");
+
+        for (JsonElement element : crew) {
+            JsonObject crewMember = element.getAsJsonObject();
+            if ("Director".equals(crewMember.get("job").getAsString())) {
+                String name = crewMember.get("name").getAsString();
+                String id = crewMember.get("id").getAsString(); // Extrait l'ID
+                return new String[]{name, id}; // Retourne le nom et l'ID
+            }
+        }
+
+        return null; // Ou une valeur par défaut
+    }
+
+    public static Author getDirectorDetails(String directorId) throws IOException, InterruptedException {
+        String url = BASE_URL + "/person/" + directorId + "?api_key=" + API_KEY;
+        HttpRequest request = HttpRequest.newBuilder().uri(URI.create(url)).GET().build();
+        HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
+
+        Gson gson = new Gson();
+        JsonObject jsonResponse = gson.fromJson(response.body(), JsonObject.class);
+
+        // Utilisez JsonElement pour éviter JsonNull
+        JsonElement nameElement = jsonResponse.get("name");
+        String name = (nameElement != null && !nameElement.isJsonNull()) ? nameElement.getAsString() : "Name not available";
+
+        JsonElement biographyElement = jsonResponse.get("biography");
+        String biography = (biographyElement != null && !biographyElement.isJsonNull()) ? biographyElement.getAsString() : "Biography not available";
+
+        JsonElement imagePathElement = jsonResponse.get("profile_path");
+        String imagePath = (imagePathElement != null && !imagePathElement.isJsonNull()) ? "https://image.tmdb.org/t/p/w500" + imagePathElement.getAsString() : "";
+
+        return new Author(name, biography, imagePath);
+    }
+
+
+
+
 }
-
-
-
-    
