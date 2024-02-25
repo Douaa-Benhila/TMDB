@@ -220,26 +220,20 @@ public class AppController {
     @FXML
     private void handleBackButtonAction(ActionEvent event) {
         try {
-            // Charger le fichier FXML précédent
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("chemin_vers_le_fichier_fxml_precedent.fxml"));
+            // Charger le fichier FXML de la page précédente
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("VotreFichierFXMLPrecedent.fxml"));
             Parent root = loader.load();
 
             // Obtenez la référence de la scène actuelle à partir de n'importe quel nœud de la scène
             Scene scene = ((Node) event.getSource()).getScene();
 
-            // Obtenez la référence de la scène actuelle à partir de la fenêtre de la scène
-            Stage stage = (Stage) scene.getWindow();
-
             // Configurez la nouvelle scène avec le contenu chargé à partir du fichier FXML précédent
             scene.setRoot(root);
-
-            // Affichez la nouvelle scène
-            stage.setScene(scene);
-            stage.show();
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
+
 
 
 }
