@@ -220,7 +220,8 @@ public class AppController {
     @FXML
     private void handleBackButtonAction(ActionEvent event) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("votre_fichier_fxml_precedent.fxml"));
+            // Charger le fichier FXML précédent
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("chemin_vers_le_fichier_fxml_precedent.fxml"));
             Parent root = loader.load();
 
             // Obtenez la référence de la scène actuelle à partir de n'importe quel nœud de la scène
@@ -239,5 +240,6 @@ public class AppController {
             e.printStackTrace();
         }
     }
+
 
 }
