@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.image.ImageView?>
+
+<VBox xmlns:fx="http://javafx.com/fxml/1" fx:controller="moviesapp.controller.DirectorMoviesController" spacing="10">
+    <ImageView fx:id="directorImageView" fitWidth="200" fitHeight="300" preserveRatio="true"/>
+    <Label fx:id="directorNameLabel"/>
+    <Label fx:id="directorBiographyLabel" wrapText="true"/>
+    <ListView fx:id="moviesListView"/>
+</VBox>

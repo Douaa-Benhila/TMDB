@@ -1,8 +1,7 @@
 package moviesapp.model;
 
 import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
+import java.util.Objects;
 
 /*
  * Représente un film avec divers attributs tels que le titre, le genre, la date de sortie, et plus encore.
@@ -26,6 +25,14 @@ public class Movie {
     private boolean video;
     private double vote_average;
     private int vote_count;
+
+    private String director;
+
+    private String directorId;
+
+    private String posterPath;
+
+
 
     /**
      *Construit une nouvelle instance de Movie.
@@ -59,6 +66,17 @@ public class Movie {
         this.video = video;
         this.vote_average = vote_average;
         this.vote_count = vote_count;
+    }
+
+    public Movie() {
+    }
+
+    public void setPosterPath(String posterPath) {
+        this.posterPath = posterPath;
+    }
+
+    public String getPosterPath() {
+        return posterPath;
     }
 
     public boolean isAdult() {
@@ -184,6 +202,24 @@ public class Movie {
         this.favorite = favorite;
     }
 
+
+    public String getDirector() {
+        return director;
+    }
+
+    public void setDirector(String director) {
+        this.director = director;
+    }
+    public String getDirectorId() {
+        return directorId;
+    }
+
+    public void setDirectorId(String directorId) {
+        this.directorId = directorId;
+    }
+
+
+
     @Override
     public String toString() {
         // Création d'une représentation de chaîne de caractères plus lisible pour un film
@@ -212,6 +248,20 @@ public class Movie {
 
         return info;
     }
+
+    @Override
+    public boolean equals(Object o) { // utilité de cette méthode est de voir si un film existait déjà
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Movie movie = (Movie) o;
+        return id == movie.id;
+    }
+
+    @Override
+    public int hashCode() { // permet d'attribuer un identifiant unique à chaque objet, ce qui facilite leur recherche et leur utilisation
+        return Objects.hash(id);
+    }
+
 
 }
 

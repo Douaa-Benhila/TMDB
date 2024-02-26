@@ -1,34 +1,44 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.geometry.Insets?>
 <?import java.net.*?>
 
-
 <HBox spacing="20" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="moviesapp.controller.AppController">
+    <stylesheets>
+        <URL value="@style.css" />
+    </stylesheets>
 
     <padding>
         <Insets top="10" right="10" bottom="10" left="10"/>
     </padding>
 
-    <VBox spacing="10" fx:id="shearchSection" styleClass="search-section">
+    <!-- Section de recherche -->
+    <VBox spacing="10" fx:id="searchSection" styleClass="search-section">
         <Label text="Chercher un Film :" styleClass="title-section"/>
 
-        <TextField fx:id="titleField" promptText="Nom du film"/>h
-        <TextField fx:id="genreField" promptText="Genre"/>
+        <TextField fx:id="titleField" promptText="Nom du film"/>
+        <ComboBox fx:id="genreComboBox" promptText="Genre"/>
         <TextField fx:id="startYearField" promptText="Depuis Année"/>
         <TextField fx:id="endYearField" promptText="Jusqu'à Année"/>
         <TextField fx:id="ratingField" promptText="Note"/>
 
         <Button text="Search" onAction="#onSearch"/>
-        <Button text="Favorites" />
-        <Button text="Detail" />
-
-
+        <Button text="Favorites" onAction="#onShowFavorites"/>
+        <Button text="Home" onAction="#onHome"/>
     </VBox>
 
-    <VBox fx:id="resultSection" ></VBox>
+    <!-- Section de contenu dynamique -->
+    <StackPane fx:id="mainContentArea" VBox.vgrow="ALWAYS" styleClass="content-section">
+        <Label  fx:id="sectionTitle" text="-> Most Popular Movies" styleClass="title-section"/>
+        <ScrollPane fitToWidth="true" fitToHeight="true">
+            <content>
+                <FlowPane fx:id="resultsSection" hgap="10" vgap="10" prefWrapLength="2000" styleClass="results-section" alignment="TOP_CENTER">
+                    <padding>
+                        <Insets top="10" right="10" bottom="10" left="20"/>
+                    </padding>
+                </FlowPane>
+            </content>
+        </ScrollPane>
+    </StackPane>
 </HBox>
-
-
