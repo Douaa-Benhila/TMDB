@@ -27,21 +27,25 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 
-//La classe TMDBApi interagit avec l'API The Movie Database pour récupérer des informations liées aux films.
-public class TMDBApi {
-
-
-    private static HttpClient httpClient = HttpClient.newHttpClient();
-
-
+/**
+ * Fournit des méthodes statiques pour interagir avec l'API de The Movie Database (TMDb).
+ * Permet de rechercher des films, découvrir des films selon des critères spécifiques, obtenir des films populaires,
+ * et récupérer des informations détaillées sur les films et leurs genres.
+ */public class TMDBApi {
+    // Constantes pour l'API
+    private final static HttpClient httpClient = HttpClient.newHttpClient();
     public static final String API_KEY = "c2e5eea5f9078e7bd27be9838d32abf8";
     public static final String BASE_URL = "https://api.themoviedb.org/3";
+    public static final String IMAGE_BASE_URL = "https://image.tmdb.org/t/p/w500";
 
-    public static final String IMAGE_BASE_URL = "https://image.tmdb.org/t/p/w500"; // Example base URL for width 500px images
-
-
-    //Envoie une requête GET à l'API TMDb avec l'endpoint et les paramètres de requête spécifiés.
-    public static String sendGET(String endpoint, String queryParams) throws IOException {
+    /**
+     * Envoie une requête GET à l'API TMDb.
+     *
+     * @param endpoint    Le point de terminaison spécifique de l'API à appeler.
+     * @param queryParams Les paramètres de la requête à ajouter à l'URL.
+     * @return La réponse de l'API sous forme de chaîne de caractères JSON.
+     * @throws IOException Si une erreur d'entrée/sortie se produit pendant l'envoi de la requête.
+     */    public static String sendGET(String endpoint, String queryParams) throws IOException {
         String urlString = BASE_URL + endpoint + "?api_key=" + API_KEY + queryParams;
 
         URL url = new URL(urlString);
@@ -62,8 +66,13 @@ public class TMDBApi {
         }
     }
 
-    //Recherche un film par son titre en utilisant l'API TMDb.
-    //l'endpoint est la partie de l'URL qui spécifie la ressource qu'on souhaite utiliser
+    /**
+     * Recherche des films par titre.
+     *
+     * @param title Le titre du film à rechercher.
+     * @return La réponse de l'API sous forme de chaîne de caractères JSON.
+     * @throws IOException Si une erreur d'entrée/sortie se produit pendant la recherche.
+     */
     public static String searchMovieByTitle(String title) throws IOException {
         String encodedTitle = URLEncoder.encode(title, StandardCharsets.UTF_8);
         String endpoint = "/search/movie";
@@ -71,7 +80,12 @@ public class TMDBApi {
         return sendGET(endpoint, queryParams);
     }
 
-    //Analyse un objet Movie à partir du résultat de recherche JSON obtenu de l'API TMDb
+    /**
+     * Analyse les détails d'un film à partir d'une réponse JSON.
+     *
+     * @param searchResult La chaîne JSON contenant les résultats de la recherche.
+     * @return Un objet Movie représentant le premier film trouvé dans les résultats de la recherche.
+     */
     public static Movie parseMovieFromSearchResult(String searchResult) {
         Gson gson = new Gson();
         MovieListResponse movieListResponse = gson.fromJson(searchResult, MovieListResponse.class);
@@ -84,25 +98,11 @@ public class TMDBApi {
         }
     }
 
-    //Recherche des titres de films en fonction d'un terme de recherche en utilisant l'API TMDb.
-    public static List<String> searchMovieTitles(String title) throws IOException {
-        String searchResult = sendGET("/search/movie", "&query=" + URLEncoder.encode(title, StandardCharsets.UTF_8));
-        MovieListResponse movieListResponse = JsonParser.parseMovieList(searchResult);
-
-        if (movieListResponse != null && movieListResponse.getResults() != null) {
-            return movieListResponse.getResults().stream()
-                    .map(Movie::getTitle)
-                    .collect(Collectors.toList());
-        } else {
-            return Collections.emptyList();
-        }
-    }
-
     /**
-     * Fetches the most popular movies from TMDb.
+     * Obtient les films populaires.
      *
-     * @return A list of Movie objects representing the most popular movies.
-     * @throws IOException If an I/O error occurs.
+     * @return Une liste d'objets Movie représentant les films populaires.
+     * @throws IOException Si une erreur d'entrée/sortie se produit lors de la récupération des films populaires.
      */
     public static List<Movie> getPopularMovies() throws IOException {
         String response = sendGET("/movie/popular", "");
@@ -115,20 +115,29 @@ public class TMDBApi {
         }
     }
 
-
     /**
-     * Discover movies with specified search filters.
+     * Découvre des films selon des filtres spécifiés.
      *
-     * @param queryParams The query parameters for filtering movies.
-     * @return The JSON response string from TMDB API.
-     * @throws IOException If an I/O error occurs.
+     * @param queryParams Les paramètres de requête pour filtrer les films.
+     * @return La réponse de l'API sous forme de chaîne de caractères JSON.
+     * @throws IOException Si une erreur d'entrée/sortie se produit pendant la découverte des films.
      */
     public static String discoverMovies(String queryParams) throws IOException {
         return sendGET("/discover/movie", queryParams);
     }
 
-
-
+    /**
+     * Recherche des films en fonction du titre, du genre, de l'année de début, de l'année de fin et du classement.
+     * Si un titre est fourni, la recherche s'effectue par titre puis filtre les résultats. Sinon, découvre les films avec les filtres fournis.
+     *
+     * @param title Le titre du film à rechercher.
+     * @param genre Le genre du film.
+     * @param startYear L'année de début pour filtrer les films.
+     * @param endYear L'année de fin pour filtrer les films.
+     * @param rating Le classement minimal des films.
+     * @return Une liste des films correspondant aux critères de recherche.
+     * @throws IOException Si une erreur se produit lors de la communication avec l'API.
+     */
     public static List<Movie> searchMovies(String title, String genre, String startYear, String endYear, String rating) throws IOException {
         if (title != null && !title.trim().isEmpty()) {
             // If title is provided, use the search by title method and then filter results
@@ -139,6 +148,16 @@ public class TMDBApi {
         }
     }
 
+    /**
+     * Découvre des films en appliquant des filtres de genre, d'année de début, d'année de fin et de classement.
+     *
+     * @param genre Le genre du film.
+     * @param startYear L'année de début pour filtrer les films.
+     * @param endYear L'année de fin pour filtrer les films.
+     * @param rating Le classement minimal des films.
+     * @return Une liste des films correspondant aux critères de filtre.
+     * @throws IOException Si une erreur se produit lors de la communication avec l'API.
+     */
     public static List<Movie> discoverMoviesWithFilters(String genre, String startYear, String endYear, String rating) throws IOException {
         StringBuilder queryParams = new StringBuilder();
 
@@ -146,10 +165,10 @@ public class TMDBApi {
             queryParams.append("&with_genres=").append(genre);
         }
         if (!startYear.isEmpty()) {
-            queryParams.append("&primary_release_date.gte=").append(startYear + "-01-01");
+            queryParams.append("&primary_release_date.gte=").append(startYear).append("-01-01");
         }
         if (!endYear.isEmpty()) {
-            queryParams.append("&primary_release_date.lte=").append(endYear + "-12-31");
+            queryParams.append("&primary_release_date.lte=").append(endYear).append("-12-31");
         }
         if (!rating.isEmpty()) {
             queryParams.append("&vote_average.gte=").append(rating);
@@ -165,8 +184,16 @@ public class TMDBApi {
         }
     }
 
-
-
+    /**
+     * Découvre des films en appliquant des filtres de genre, d'année de début, d'année de fin et de classement.
+     *
+     * @param genre Le genre du film.
+     * @param startYear L'année de début pour filtrer les films.
+     * @param endYear L'année de fin pour filtrer les films.
+     * @param rating Le classement minimal des films.
+     * @return Une liste des films correspondant aux critères de filtre.
+     * @throws IOException Si une erreur se produit lors de la communication avec l'API.
+     */
     public static List<Movie> searchMoviesByTitleAndFilter(String title, String genre, String startYear, String endYear, String rating) throws IOException {
         // Search by title
         String searchResult = sendGET("/search/movie", "&query=" + URLEncoder.encode(title, StandardCharsets.UTF_8));
@@ -195,6 +222,13 @@ public class TMDBApi {
         return filteredStream.collect(Collectors.toList());
     }
 
+    /**
+     * Obtient des films similaires à un film donné.
+     *
+     * @param movieId L'identifiant du film pour lequel trouver des films similaires.
+     * @return Une liste des films similaires.
+     * @throws IOException Si une erreur se produit lors de la communication avec l'API.
+     */
     public static List<Movie> getRelatedMovies(int movieId) throws IOException {
         // Construct the endpoint for fetching related movies
         String endpoint = "/movie/" + movieId + "/similar";
@@ -213,6 +247,13 @@ public class TMDBApi {
         }
     }
 
+    /**
+     * Récupère une liste des genres de films disponibles.
+     *
+     * @return Une carte des genres de films, où la clé est l'identifiant du genre et la valeur est le nom du genre.
+     * @throws IOException Si une erreur se produit lors de la communication avec l'API.
+     * @throws InterruptedException Si l'opération est interrompue.
+     */
     public static Map<Integer, String> fetchMovieGenres() throws IOException, InterruptedException {
         Map<Integer, String> genresMap = new HashMap<>();
         String url = BASE_URL + "/genre/movie/list?api_key=" + API_KEY + "&language=en-US";
@@ -237,7 +278,14 @@ public class TMDBApi {
         return genresMap;
     }
 
-
+    /**
+     * Obtient une liste de films dirigés par un réalisateur spécifique.
+     *
+     * @param directorId L'identifiant du réalisateur.
+     * @return Une liste des titres de films dirigés par le réalisateur.
+     * @throws IOException Si une erreur se produit lors de la communication avec l'API.
+     * @throws InterruptedException Si l'opération est interrompue.
+     */
     public static List<String> getMoviesByDirector(String directorId) throws IOException, InterruptedException {
         List<String> movies = new ArrayList<>();
         String url = "https://api.themoviedb.org/3/person/" + directorId + "/movie_credits?api_key=" + API_KEY;
@@ -264,6 +312,20 @@ public class TMDBApi {
         return movies;
     }
 
+    public static List<String> getMoviesByDirector(String directorId) throws IOException, InterruptedException {
+        List<String> movies = new ArrayList<>();
+        String url = "https://api.themoviedb.org/3/person/" + directorId + "/movie_credits?api_key=" + API_KEY;
+        HttpRequest request = HttpRequest.newBuilder().uri(URI.create(url)).GET().build();
+        HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
+
+    /**
+     * Obtient les détails du réalisateur d'un film spécifique.
+     *
+     * @param movieId L'identifiant du film pour lequel obtenir les détails du réalisateur.
+     * @return Un tableau contenant le nom et l'identifiant du réalisateur, ou null si aucun réalisateur n'est trouvé.
+     * @throws IOException Si une erreur se produit lors de la communication avec l'API.
+     * @throws InterruptedException Si l'opération est interrompue.
+     */
     public static String[] getDirectorDetails(int movieId) throws IOException, InterruptedException {
         String url = "https://api.themoviedb.org/3/movie/" + movieId + "/credits?api_key=" + API_KEY;
         HttpRequest request = HttpRequest.newBuilder()
@@ -285,6 +347,7 @@ public class TMDBApi {
             }
         }
 
-        return null;
+        return null; // Ou une valeur par défaut
     }
+
 }

@@ -11,17 +11,6 @@ public class Authors {
         this.authorsList = new ArrayList<>(authorsList);
     }
 
-    public void addAuthor(Author author) {
-        authorsList.add(author);
-    }
-
-    public Author getAuthorByName(String name) {
-        return authorsList.stream()
-                .filter(author -> author.getName().equalsIgnoreCase(name))
-                .findFirst()
-                .orElse(null);
-    }
-
     @Override
     public String toString() {
         return authorsList.stream()

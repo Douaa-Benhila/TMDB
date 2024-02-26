@@ -25,14 +25,9 @@ public class Movie {
     private boolean video;
     private double vote_average;
     private int vote_count;
-
     private String director;
-
     private String directorId;
-
     private String posterPath;
-
-
 
     /**
      *Construit une nouvelle instance de Movie.
