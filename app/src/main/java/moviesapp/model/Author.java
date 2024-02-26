@@ -4,27 +4,18 @@ public class Author {
     private String name;
     private String imageUrl;
     private String biography;
-
     private String directorId;
-
-    public Author(String name, String imageUrl, String biography,String directorId) {
-        this.name = name;
-        this.imageUrl = imageUrl;
-        this.biography = biography;
-        this.directorId = directorId;
-    }
 
     public Author(String name, String imageUrl, String biography) {
         this.name = name;
         this.imageUrl = imageUrl;
         this.biography = biography;
-        this.directorId = ""; // Ou null, selon la logique de votre application
+        this.directorId = "";
     }
 
     public String getName() {
         return name;
     }
-
 
     public String getImageUrl() {
         return imageUrl;

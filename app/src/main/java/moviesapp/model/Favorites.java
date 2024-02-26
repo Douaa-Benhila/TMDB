@@ -1,9 +1,5 @@
 package moviesapp.model;
 
-import javafx.scene.control.TableColumn;
-import moviesapp.ApiManager.TMDBApi;
-import moviesapp.model.Movie;
-
 import java.util.ArrayList;
 import java.util.List;
 /**
@@ -62,6 +58,16 @@ public class Favorites {
         }
     }
 
+    /**
+     * Recherche un film par son titre dans la liste des films favoris.
+     * Cette méthode parcourt la liste des films favoris et retourne le premier film dont le titre
+     * correspond exactement (sans tenir compte de la casse) au titre fourni en paramètre. Cela permet
+     * de retrouver facilement un film spécifique parmi les favoris en utilisant son titre comme critère
+     * de recherche.
+     *
+     * @param title Le titre du film à rechercher parmi les favoris.
+     * @return Le film correspondant au titre fourni, ou {@code null} si aucun film correspondant n'est trouvé.
+     */
     public Movie getFavoriteMovieByTitle(String title) {
         for (Movie movie : favoriteMovies) {
             if (movie.getTitle().equalsIgnoreCase(title)) {
@@ -71,6 +77,15 @@ public class Favorites {
         return null; // Film non trouvé
     }
 
+    /**
+     * Retire un film des favoris en utilisant son titre comme critère de recherche.
+     * Cette méthode utilise {@link #getFavoriteMovieByTitle(String)} pour trouver le film spécifique
+     * par son titre. Si le film est trouvé dans la liste des favoris, il est retiré de cette liste.
+     * Un message est affiché pour confirmer la suppression du film des favoris ou pour informer
+     * l'utilisateur si le film n'est pas trouvé dans la liste des favoris.
+     *
+     * @param title Le titre du film à retirer des favoris.
+     */
     public void removeFavoriteByTitle(String title) {
         Movie movie = getFavoriteMovieByTitle(title);
         if (movie != null) {

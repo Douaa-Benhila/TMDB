@@ -6,16 +6,12 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
-import javafx.stage.Stage;
 import moviesapp.ApiManager.TMDBApi;
 import moviesapp.model.Favorites;
 import moviesapp.model.Movie;
 import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -34,16 +30,11 @@ public class AppController {
     private ComboBox<String> genreComboBox;
 
     private Map<String, Integer> genreMap = new HashMap<>();
-
-    private Stage stage;
-
-    public void setStage(Stage stage) {
-        this.stage = stage;
-    }
     @FXML
     public void initialize() {
         displayMostViralMovies();
         fetchAndPopulateGenres();
+
     }
 
     private void fetchAndPopulateGenres() {
@@ -217,28 +208,4 @@ public class AppController {
         // Mettre à jour le titre de la section
         sectionTitle.setText("-> Most Popular Movies");
     }
-
-    @FXML
-    private void handleBackButtonAction(ActionEvent event) {
-        try {
-            // Charger le fichier FXML de la page précédente
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("VotreFichierFXMLPrecedent.fxml"));
-            Parent root = loader.load();
-
-            // Obtenez la référence de la scène actuelle à partir de n'importe quel nœud de la scène
-            Scene scene = ((Node) event.getSource()).getScene();
-
-            // Configurez la nouvelle scène avec le contenu chargé à partir du fichier FXML précédent
-            scene.setRoot(root);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-
-
-
-
-
-
 }

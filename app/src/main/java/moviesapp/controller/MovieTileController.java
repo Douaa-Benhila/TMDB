@@ -2,10 +2,8 @@ package moviesapp.controller;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
@@ -15,13 +13,18 @@ import javafx.stage.Stage;
 import moviesapp.ApiManager.TMDBApi;
 import moviesapp.model.Movie;
 
-
-import java.awt.event.MouseEvent;
 import java.io.IOException;
-import java.util.List;
 import java.util.function.Consumer;
 
-
+/**
+ * Contrôleur pour la tuile de film dans l'application MoviesApp.
+ * Cette classe gère l'affichage des informations d'un film spécifique dans une tuile.
+ * Elle inclut le titre du film, l'année de sortie, le classement, ainsi qu'une image du poster.
+ * Les utilisateurs peuvent ajouter ou retirer un film de leurs favoris directement depuis cette tuile.
+ * Un clic sur la tuile ouvre une fenêtre détaillée avec plus d'informations sur le film.
+ *
+ * @see Movie - La classe du modèle représentant les données d'un film.
+ */
 public class MovieTileController {
     @FXML
     private ImageView posterImage;
@@ -35,11 +38,20 @@ public class MovieTileController {
     private Button addToFavoritesButton;
     @FXML
     private ImageView starImageView;
+    @FXML
+    private VBox movieTile;
     public Movie movie ;
     private Consumer<Movie> onAddToFavorites;
     private Consumer<Movie> onRemoveFromFavorites;
-    private Consumer<Movie> onDisplayDetails; // Add a new consumer for displaying details
 
+    /**
+     * Initialise la tuile avec les données d'un film et les callbacks pour les actions.
+     *
+     * @param movie Le film à afficher.
+     * @param onAddToFavorites Callback à exécuter lors de l'ajout du film aux favoris.
+     * @param onRemoveFromFavorites Callback à exécuter lors du retrait du film des favoris.
+     * @param onDisplayDetails Callback à exécuter lors du clic sur la tuile pour afficher les détails du film.
+     */
     public void setMovie(Movie movie, Consumer<Movie> onAddToFavorites, Consumer<Movie> onRemoveFromFavorites, Consumer<Movie> onDisplayDetails){
         this.movie = movie;
         this.onAddToFavorites = onAddToFavorites;
@@ -48,15 +60,19 @@ public class MovieTileController {
         String imageUrl = TMDBApi.IMAGE_BASE_URL + (movie.getPoster_path() != null ? movie.getPoster_path() : "/img.webp");
         posterImage.setImage(new Image(imageUrl, true));
         titleLabel.setText(movie.getTitle());
-        yearLabel.setText(movie.getRelease_date()); // Ensure this is formatted correctly
+        yearLabel.setText(movie.getRelease_date());
         ratingLabel.setText(String.format("       %.1f", movie.getVote_average()));
-        Image starImage = new Image("/img2.png"); // Path to your star image
+        Image starImage = new Image("/img2.png");
         starImageView.setImage(starImage);
 
         updateButtonAppearance();
-        movieTile.setOnMouseClicked(event -> onDisplayDetails.accept(movie));// Use the consumer to notify about the click
+        movieTile.setOnMouseClicked(event -> onDisplayDetails.accept(movie));
 
     }
+
+    /**
+     * Met à jour l'apparence du bouton de favoris en fonction du statut de favori du film.
+     */
     public void updateButtonAppearance() {
         if (AppController.favoriteMovies.getFavoriteMovies().contains(movie)) {
             addToFavoritesButton.setText("Liked");
@@ -66,6 +82,10 @@ public class MovieTileController {
             addToFavoritesButton.setStyle("");
         }
     }
+
+    /**
+     * Gère l'action d'ajouter ou de retirer un film des favoris.
+     */
     @FXML
     private void handleAddToFavorites() {
         if (AppController.favoriteMovies.getFavoriteMovies().contains(movie)) {
@@ -76,18 +96,22 @@ public class MovieTileController {
         updateButtonAppearance();
     }
 
-    @FXML
-    private VBox movieTile;
+    /**
+     * Initialisation de la classe contrôleur. Configure l'action de clic sur la tuile.
+     */
     public void initialize() {
-        movieTile.setOnMouseClicked(event -> handleMovieTileClick()); // Set the click event on the movie tile
+        movieTile.setOnMouseClicked(event -> handleMovieTileClick());
     }
+
+    /**
+     * Gère le clic sur la tuile de film, ouvrant la fenêtre de détails du film.
+     */
     private void handleMovieTileClick() {
-        // Logic to open movie details view
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/MovieDetails.fxml"));
             Parent root = loader.load();
             MovieDetailsController controller = loader.getController();
-            controller.setMovieDetails(movie); // Pass the movie to the details controller
+            controller.setMovieDetails(movie);
 
             Stage detailsStage = new Stage();
             detailsStage.setTitle(movie.getTitle());

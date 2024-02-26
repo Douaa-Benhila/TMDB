@@ -43,7 +43,8 @@
             </HBox>
 
             <Label fx:id="overviewText" id="description" />
-            <Label fx:id="directorLabel" styleClass="movie-info-details" />
+            <Hyperlink fx:id="directorHyperlink" onAction="#handleDirectorHyperlinkAction" />
+
 
         </VBox>
     </HBox>

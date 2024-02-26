@@ -121,6 +121,14 @@ public class MovieSearchManager {
         return input.trim();
     }
 
+    /**
+     * Traite le résultat d'une recherche de films et affiche les films trouvés ou un message indiquant qu'aucun film n'a été trouvé.
+     * Cette méthode analyse d'abord la chaîne de caractères JSON représentant le résultat de la recherche en utilisant un parseur JSON spécifique
+     * pour obtenir une instance de `MovieListResponse`. Si des films sont trouvés, elle itère sur la liste des films et les affiche.
+     * Sinon, elle informe l'utilisateur qu'aucun film n'a été trouvé.
+     *
+     * @param searchResult Le résultat de la recherche sous forme de chaîne de caractères JSON à analyser.
+     */
     private void handleSearchResult(String searchResult) {
         MovieListResponse movieListResponse = JsonParser.parseMovieList(searchResult);
         if (movieListResponse != null && movieListResponse.getResults() != null && !movieListResponse.getResults().isEmpty()) {
@@ -133,6 +141,16 @@ public class MovieSearchManager {
         }
     }
 
+    /**
+     * Découvre des films en utilisant divers filtres spécifiés par l'utilisateur et retourne le résultat sous forme de chaîne de caractères JSON.
+     * Cette méthode construit dynamiquement les paramètres de requête en fonction des filtres fournis, tels que l'année de sortie,
+     * la note moyenne, la langue, la durée minimale, le type de contenu, la popularité minimale, et les identifiants des acteurs et des réalisateurs.
+     * Si le titre n'est pas vide, elle effectue une recherche directe par titre à la place. La méthode retourne ensuite le résultat de la découverte
+     * ou de la recherche de films en fonction des paramètres de requête construits.
+     *
+     * @return Le résultat de la découverte de films sous forme de chaîne de caractères JSON.
+     * @throws IOException Si une erreur d'entrée/sortie se produit pendant l'exécution de la requête.
+     */
     private String discoverMoviesWithFilters() throws IOException {
         // Construction de la requête en fonction des filtres spécifiés
         StringBuilder queryParams = new StringBuilder();
@@ -169,6 +187,14 @@ public class MovieSearchManager {
         return TMDBApi.discoverMovies(queryParams.toString());
     }
 
+    /**
+     * Ajoute un film aux favoris en recherchant d'abord le film par son titre. Cette méthode utilise l'API pour rechercher le film
+     * par son titre et, si trouvé, l'ajoute à la liste des favoris spécifiée. Elle informe l'utilisateur si le film a été ajouté avec succès
+     * aux favoris ou si le film n'a pas été trouvé.
+     *
+     * @param title Le titre du film à ajouter aux favoris.
+     * @param favorites L'instance de `Favorites` où le film sera ajouté si trouvé.
+     */
     public void addFavoriteByTitle(String title, Favorites favorites) {
         try {
             String searchResult = TMDBApi.searchMovieByTitle(title);

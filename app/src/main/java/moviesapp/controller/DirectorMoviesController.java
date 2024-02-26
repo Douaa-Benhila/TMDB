@@ -1,10 +1,25 @@
 package moviesapp.controller;
 
+import javafx.application.Platform;
+import javafx.concurrent.Task;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.FlowPane;
+import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
+import moviesapp.ApiManager.TMDBApi;
 import moviesapp.model.Author;
+import moviesapp.model.Movie;
+
+import java.io.IOException;
+import java.util.List;
+import java.util.function.Consumer;
 
 public class DirectorMoviesController {
 
@@ -12,10 +27,37 @@ public class DirectorMoviesController {
     private ImageView directorImageView;
     @FXML private Label directorNameLabel;
     @FXML private Label directorBiographyLabel;
+    @FXML
+    private FlowPane filmDirector;
 
-    public void setDirectorDetails(Author author) {
-        directorNameLabel.setText(author.getName());
-        directorBiographyLabel.setText(author.getBiography());
-        directorImageView.setImage(new Image(author.getImageUrl()));
+    @FXML
+    private VBox moviesVBox;
+
+    @FXML
+    private ListView<String> moviesListView;
+
+
+    private TMDBApi tmdbApi = new TMDBApi();
+
+    public void loadMovies(String directorId) {
+        new Thread(() -> {
+            try {
+                List<String> movieTitles = tmdbApi.getMoviesByDirector(directorId);
+                Platform.runLater(() -> {
+                    System.out.println("Affichage des films : " + movieTitles);
+                    moviesListView.getItems().setAll(movieTitles);
+                });
+            } catch (IOException | InterruptedException e) {
+                e.printStackTrace();
+                Platform.runLater(() -> {
+                    moviesListView.getItems().setAll("Impossible de charger les films");
+                });
+            }
+        }).start();
     }
+
+
+
+
+
 }
