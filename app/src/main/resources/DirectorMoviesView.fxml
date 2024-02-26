@@ -3,7 +3,11 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.image.ImageView?>
 
+<?import javafx.geometry.Insets?>
 <VBox xmlns:fx="http://javafx.com/fxml/1" fx:controller="moviesapp.controller.DirectorMoviesController" spacing="10">
+    <padding>
+        <Insets top="10" right="700" bottom="10" left="100"/>
+    </padding>
     <ImageView fx:id="directorImageView" fitWidth="200" fitHeight="300" preserveRatio="true"/>
     <Label fx:id="directorNameLabel"/>
     <Label fx:id="directorBiographyLabel" wrapText="true"/>

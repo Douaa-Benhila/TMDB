@@ -165,28 +165,7 @@ public class TMDBApi {
         }
     }
 
-    public static String getDirectorName(int movieId) throws IOException, InterruptedException {
-        String url = "https://api.themoviedb.org/3/movie/" + movieId + "/credits?api_key=" + API_KEY;
-        HttpRequest request = HttpRequest.newBuilder()
-                .uri(URI.create(url))
-                .GET()
-                .build();
-        HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
 
-        // Utilisation de Gson pour parser la chaîne JSON
-        Gson gson = new Gson();
-        JsonObject jsonResponse = gson.fromJson(response.body(), JsonObject.class);
-        JsonArray crew = jsonResponse.getAsJsonArray("crew");
-
-        for (JsonElement element : crew) {
-            JsonObject crewMember = element.getAsJsonObject();
-            if ("Director".equals(crewMember.get("job").getAsString())) {
-                return crewMember.get("name").getAsString(); // Retourne le nom du premier réalisateur trouvé
-            }
-        }
-
-        return "Inconnu"; // Retourne "Inconnu" si aucun réalisateur n'est trouvé
-    }
 
     public static List<Movie> searchMoviesByTitleAndFilter(String title, String genre, String startYear, String endYear, String rating) throws IOException {
         // Search by title
@@ -306,7 +285,6 @@ public class TMDBApi {
             }
         }
 
-        return null; // Ou une valeur par défaut
+        return null;
     }
-
 }
