@@ -4,22 +4,35 @@ import javafx.application.Platform;
 import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.FlowPane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Font;
+import javafx.stage.Stage;
 import moviesapp.ApiManager.TMDBApi;
+import moviesapp.model.Author;
 import moviesapp.model.Movie;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.awt.event.ActionEvent;
 import java.io.IOException;
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
@@ -29,22 +42,50 @@ import static moviesapp.ApiManager.TMDBApi.API_KEY;
 
 public class MovieDetailsController {
 
-    @FXML private ImageView backdropImageView;
-    @FXML private ImageView posterImageView;
-    @FXML private Label titleLabel;
-    @FXML private Label releaseDateLabel;
-    @FXML private Label originalTitleLabel;
-    @FXML private Label originalLanguageLabel;
-    @FXML private Label genreLabel;
-    @FXML private Label overviewText;
-    @FXML private Label popularityLabel;
-    @FXML private Label voteAverageLabel;
-    @FXML private Label voteCountLabel;
-    @FXML private Label adultLabel;
-    @FXML private Label videoLabel;
-    @FXML private Label directorLabel;
-    @FXML private Hyperlink directorHyperlink;
+    @FXML
+    private ImageView backdropImageView;
+    @FXML
+    private ImageView posterImageView;
+    @FXML
+    private Label titleLabel;
+    @FXML
+    private Label releaseDateLabel;
+    @FXML
+    private Label originalTitleLabel;
+    @FXML
+    private Label originalLanguageLabel;
+    @FXML
+    private Label genreLabel;
+    @FXML
+    private Label overviewText;
+    @FXML
+    private Label popularityLabel;
+    @FXML
+    private Label voteAverageLabel;
+    @FXML
+    private Label voteCountLabel;
+    @FXML
+    private Label adultLabel;
+    @FXML
+    private Label videoLabel;
+
+    @FXML
+    private Hyperlink directorHyperlink;
     private String directorId;
+
+    @FXML
+    private Label directorNameLabel;
+    @FXML
+    private Label directorBiographyLabel;
+    @FXML
+    private ImageView directorImageView;
+    @FXML
+    private VBox moviesVBox;
+
+    @FXML
+    private StackPane mainContentArea;
+
+
 
 
     public void setMovieDetails(Movie movie) {
@@ -64,10 +105,34 @@ public class MovieDetailsController {
         adultLabel.setText("- Adult: " + (movie.isAdult() ? "Yes" : "No"));
         videoLabel.setText("- Video: " + (movie.isVideo() ? "Yes" : "No"));
 
-        updateDirectorName(movie.getId());
         fetchActors(movie.getId());
         displayRelatedMovies(movie);
+        updateDirectorDetails(movie.getId());
+
     }
+
+
+    public void updateDirectorDetails(int movieId) {
+        new Thread(() -> {
+            try {
+                String[] directorDetails = TMDBApi.getDirectorDetails(movieId);
+                if (directorDetails != null) {
+                    String directorName = directorDetails[0];
+                    String directorId = directorDetails[1];
+                    Platform.runLater(() -> {
+                        directorHyperlink.setText("Director: " + directorName);
+                        // Stockage de directorId pour l'utiliser lors de l'affichage des films du réalisateur
+                        this.directorId = directorId;
+                    });
+                }
+            } catch (IOException | InterruptedException e) {
+                e.printStackTrace();
+                Platform.runLater(() -> directorHyperlink.setText("Director: Error loading"));
+            }
+        }).start();
+    }
+
+
 
     private void updateGenreLabel(List<Integer> genreIds) {
         Task<String> fetchGenresTask = new Task<>() {
@@ -86,19 +151,9 @@ public class MovieDetailsController {
         new Thread(fetchGenresTask).start();
     }
 
-    public void updateDirectorName(int movieId) {
-        new Thread(() -> {
-            try {
-                String directorName = TMDBApi.getDirectorName(movieId);
-                Platform.runLater(() -> directorLabel.setText("- Director: " + directorName));
-            } catch (IOException | InterruptedException e) {
-                e.printStackTrace();
-                Platform.runLater(() -> directorHyperlink.setText("Director: Error loading"));
-            }
-        }).start();
-    }
 
-    @FXML private FlowPane actorsSection;
+    @FXML
+    private FlowPane actorsSection;
 
     private void fetchActors(int movieId) {
         HttpClient client = HttpClient.newHttpClient();
@@ -140,41 +195,9 @@ public class MovieDetailsController {
 
                 actorsSection.getChildren().add(actorContainer);
             }
-
-    @FXML
-    private void handleDirectorHyperlinkAction(ActionEvent event) {
-        showDirectorMovies(directorId);
-    }
-
-
-
-    private void showDirectorMovies(String directorId) {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/DirectorMoviesView.fxml"));
-
-            Parent root = loader.load();
-
-            DirectorMoviesController controller = loader.getController();
-            controller.loadMovies(directorId);
-            Stage stage = new Stage();
-            stage.setTitle("Films du réalisateur");
-            stage.setScene(new Scene(root));
-            stage.show();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-
-
-
-
-}
-
-
-
         });
     }
+
     @FXML
     private FlowPane relatedMoviesSection;
     private Consumer<Movie> onAddToFavorites;
@@ -186,7 +209,6 @@ public class MovieDetailsController {
         Task<List<Movie>> task = new Task<>() {
             @Override
             protected List<Movie> call() throws Exception {
-                // Correctly calling the TMDBApi method to fetch related movies
                 return TMDBApi.getRelatedMovies(movie.getId());
             }
         };
@@ -220,4 +242,72 @@ public class MovieDetailsController {
         this.onDisplayMovieDetails = displayDetails;
     }
 
+
+
+
+
+    private void showDirectorMovies(String directorId) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/DirectorMoviesView.fxml"));
+
+            Parent root = loader.load();
+
+            DirectorMoviesController controller = loader.getController();
+            controller.loadMovies(directorId);
+            Stage stage = new Stage();
+            stage.setTitle("Films du réalisateur");
+            stage.setScene(new Scene(root));
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    public void handleDirectorHyperlinkAction(javafx.event.ActionEvent actionEvent) {
+        showDirectorMovies(directorId);
+
+    }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+    /*private void showDirectorDetails(String directorId) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/DirectorMoviesView.fxml"));
+            Parent root = loader.load();
+
+            DirectorMoviesController controller = loader.getController();
+
+            // Supposons que vous ayez une fonction pour obtenir les détails du réalisateur par son ID
+            Author director = (Author) TMDBApi.getMoviesByDirectorId(directorId);
+            controller.setDirectorDetails(director);
+
+            // Récupérer les films du réalisateur et les afficher
+            List<Movie> directorMovies = TMDBApi.getMoviesByDirectorId(directorId);
+            controller.displayDirectorMovies((Movie) directorMovies);
+
+            Stage stage = new Stage();
+            stage.setTitle(director.getName());
+            stage.setScene(new Scene(root));
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    public void handleDirectorHyperlinkAction(javafx.event.ActionEvent actionEvent) {
+        showDirectorDetails(directorId);
+    }*/
+

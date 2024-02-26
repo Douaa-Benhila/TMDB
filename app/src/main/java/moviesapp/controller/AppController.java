@@ -34,6 +34,7 @@ public class AppController {
     public void initialize() {
         displayMostViralMovies();
         fetchAndPopulateGenres();
+
     }
 
     private void fetchAndPopulateGenres() {

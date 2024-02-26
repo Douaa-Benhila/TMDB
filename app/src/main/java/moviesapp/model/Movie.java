@@ -30,6 +30,8 @@ public class Movie {
 
     private String directorId;
 
+    private String posterPath;
+
 
 
 
@@ -67,6 +69,17 @@ public class Movie {
         this.video = video;
         this.vote_average = vote_average;
         this.vote_count = vote_count;
+    }
+
+    public Movie() {
+    }
+
+    public void setPosterPath(String posterPath) {
+        this.posterPath = posterPath;
+    }
+
+    public String getPosterPath() {
+        return posterPath;
     }
 
     public boolean isAdult() {
