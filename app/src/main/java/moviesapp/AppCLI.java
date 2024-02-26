@@ -11,7 +11,7 @@ import java.util.Scanner;
  */
 public class AppCLI {
     private static final Scanner scanner = new Scanner(System.in);
-    private static final Favorites favorites = new Favorites();
+    public static Favorites favorites = new Favorites();
     private static final MovieSearchManager searchManager = new MovieSearchManager();
 
     /**
