@@ -93,8 +93,16 @@ public class MovieTileController {
             detailsStage.setTitle(movie.getTitle());
             detailsStage.setScene(new Scene(root));
             detailsStage.show();
+            if (movie == null) {
+                System.err.println("Error: Movie is null.");
+
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public void setMovie(Movie movie) {
+        this.movie = movie;
     }
 }

@@ -73,21 +73,6 @@ public class MovieDetailsController {
     private Hyperlink directorHyperlink;
     private String directorId;
 
-    @FXML
-    private Label directorNameLabel;
-    @FXML
-    private Label directorBiographyLabel;
-    @FXML
-    private ImageView directorImageView;
-    @FXML
-    private VBox moviesVBox;
-
-    @FXML
-    private StackPane mainContentArea;
-
-
-
-
     public void setMovieDetails(Movie movie) {
         String imageOriginalPath = "https://image.tmdb.org/t/p/original"; // Base path for images from TMDB (adjust as necessary)
         String imagePath = "https://image.tmdb.org/t/p/w500"; // Base path for images from TMDB (adjust as necessary)
@@ -255,7 +240,7 @@ public class MovieDetailsController {
             DirectorMoviesController controller = loader.getController();
             controller.loadMovies(directorId);
             Stage stage = new Stage();
-            stage.setTitle("Films du réalisateur");
+            stage.setTitle("Films du realisateur");
             stage.setScene(new Scene(root));
             stage.show();
         } catch (IOException e) {
@@ -269,45 +254,3 @@ public class MovieDetailsController {
 
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-    /*private void showDirectorDetails(String directorId) {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/DirectorMoviesView.fxml"));
-            Parent root = loader.load();
-
-            DirectorMoviesController controller = loader.getController();
-
-            // Supposons que vous ayez une fonction pour obtenir les détails du réalisateur par son ID
-            Author director = (Author) TMDBApi.getMoviesByDirectorId(directorId);
-            controller.setDirectorDetails(director);
-
-            // Récupérer les films du réalisateur et les afficher
-            List<Movie> directorMovies = TMDBApi.getMoviesByDirectorId(directorId);
-            controller.displayDirectorMovies((Movie) directorMovies);
-
-            Stage stage = new Stage();
-            stage.setTitle(director.getName());
-            stage.setScene(new Scene(root));
-            stage.show();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-
-    public void handleDirectorHyperlinkAction(javafx.event.ActionEvent actionEvent) {
-        showDirectorDetails(directorId);
-    }*/
-

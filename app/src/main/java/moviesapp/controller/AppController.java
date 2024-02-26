@@ -12,6 +12,7 @@ import moviesapp.ApiManager.TMDBApi;
 import moviesapp.model.Favorites;
 import moviesapp.model.Movie;
 import java.io.IOException;
+import java.security.cert.PolicyNode;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -208,4 +209,21 @@ public class AppController {
         // Mettre à jour le titre de la section
         sectionTitle.setText("-> Most Popular Movies");
     }
+    @FXML
+    private StackPane mainContentArea;
+    public void displayContent(Node content) {
+
+        mainContentArea.getChildren().setAll(content);
+    }
+
+    private static AppController instance;
+
+    public AppController() {
+        instance = this;
+    }
+
+    public static AppController getInstance() {
+        return instance;
+    }
+
 }

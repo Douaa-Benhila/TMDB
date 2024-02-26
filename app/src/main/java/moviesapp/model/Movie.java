@@ -34,9 +34,6 @@ public class Movie {
 
 
 
-
-
-
     /**
      *Construit une nouvelle instance de Movie.
      * @param adult Indique si le film est destiné aux adultes.
