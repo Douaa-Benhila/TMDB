@@ -81,34 +81,7 @@ public class MovieTileController {
         updateButtonAppearance();
     }
 
-    private Scene previousScene;
-    public void loadNewScene(String fxmlFile,ActionEvent event) {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlFile));
-            Parent root = loader.load();
-            Scene scene = new Scene(root);
 
-            // Sauvegarder la scène précédente
-            previousScene = scene;
-
-            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            stage.setScene(scene);
-            stage.show();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    @FXML
-    private void handleBackButtonAction(ActionEvent event) {
-        if (previousScene != null) {
-            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            stage.setScene(previousScene);
-            stage.show();
-        } else {
-            System.out.println("Aucune scène précédente à afficher.");
-        }
-    }
 
 
 
