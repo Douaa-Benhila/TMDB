@@ -1,36 +1,34 @@
 .root {
     -fx-font-family: 'Arial';
-    -fx-base: #202020;
-    -fx-background: rgba(56, 56, 56, 0.73);
+    -fx-base: #ffffff; /* Blanc */
+    -fx-background: rgba(255, 255, 255, 0.73); /* Blanc avec opacité */
 }
 
 .title-section {
-    -fx-text-fill: white;
+    -fx-text-fill: #ffffff; /* Blanc */
     -fx-font-size: 19px;
 }
 
 .button {
-    -fx-background-color: #4a4a4a;
-    -fx-text-fill: white;
-    -fx-border-color: white;
+    -fx-background-color: #ffffff; /* Blanc */
+    -fx-text-fill: #0000ff; /* Bleu */
+    -fx-border-color: #add8e6; /* Bleu clair */
     -fx-border-width: 2;
 }
 
 .button:hover {
-    -fx-background-color: #d06f6f;
-    -fx-text-fill: white;
-    -fx-border-color: white;
+    -fx-background-color: #0000ff; /* Bleu */
+    -fx-text-fill: #ffffff; /* Blanc */
+    -fx-border-color: #87ceeb; /* Bleu clair */
     -fx-border-width: 2;
 }
 
 .text-field {
-    -fx-background-color: #555555;
-    -fx-text-fill: white;
-    -fx-prompt-text-fill: rgba(255, 255, 255, 0.75);
+    -fx-background-color: #ffffff; /* Blanc */
+    -fx-text-fill: #0000ff; /* Bleu */
+    -fx-prompt-text-fill: rgba(255, 255, 255, 0.75); /* Blanc avec opacité */
     -fx-max-width: 150px;
     -fx-min-width: 100px;
-
-
 }
 
 
@@ -54,7 +52,7 @@
 /* Centrer le conteneur de la vue d'ensemble du film */
 .movie-overview-container {
     -fx-alignment: center;
-    -fx-text-fill: white;
+    -fx-text-fill: #ffffff; /* Blanc */
 }
 
 
@@ -65,64 +63,62 @@
 
 .search-section {
     -fx-padding: 10;
-    -fx-border-color: #2a2a2a;
+    -fx-border-color: #87ceeb; /* Bleu ciel */
     -fx-border-width: 2;
     -fx-border-radius: 5;
-    -fx-background-color: rgba(0, 0, 0, 0.32);
+    -fx-background-color: rgba(135, 206, 235, 0.32); /* Bleu ciel avec opacité */
     -fx-background-radius: 5;
-    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0);
+    -fx-effect: dropshadow(three-pass-box, rgba(135, 206, 235, 0.8), 10, 0, 0, 0); /* Bleu ciel avec opacité */
     -fx-pref-width: 250px; /* Set preferred width */
-    -fx-min-width: 200px;   /* Set minimum width */
-    -fx-max-width: 300px;   /* Set maximum width */
+    -fx-min-width: 200px; /* Set minimum width */
+    -fx-max-width: 300px; /* Set maximum width */
 }
-
 .search-section:hover {
-    -fx-border-color: #d06f6f;
-    -fx-background-color: rgba(0, 0, 0, 0.4);
-    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 15, 0, 0, 0);
-    -fx-border-color: red;
+    -fx-border-color: #87ceeb; /* Bleu clair */
+    -fx-background-color: rgba(135, 206, 235, 0.4); /* Bleu clair avec opacité */
+    -fx-effect: dropshadow(three-pass-box, rgba(135, 206, 235, 0.8), 15, 0, 0, 0); /* Bleu clair avec opacité */
+    -fx-border-color: #87ceeb; /* Bleu clair */
     -fx-border-width: 2;
 }
 
 /************************************/
-
 .movie-tile {
     -fx-alignment: top-center;
     -fx-padding: 15;
     -fx-spacing: 7;
-    -fx-background-color: #333;
+    -fx-background-color: #87ceeb; /* Bleu ciel */
     -fx-background-radius: 10;
-    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0);
-    -fx-border-color: rgba(255, 0, 0, 0.53);
-    -fx-border-width: 1;
+    -fx-effect: dropshadow(three-pass-box, rgba(135, 206, 235, 0.8), 10, 0, 0, 0); /* Bleu ciel avec opacité */
+    -fx-border-color: #87ceeb; /* Bleu ciel */
+    -fx-border-width: 2;
     -fx-border-radius: 10;
-
 }
+
 .movie-tile:hover {
     -fx-alignment: top-center;
     -fx-padding: 15;
     -fx-spacing: 7;
-    -fx-background-color: #754242;
-    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0);
-    -fx-border-color: red;
+    -fx-background-color: #add8e6; /* Bleu clair */
+    -fx-effect: dropshadow(three-pass-box, rgba(173, 216, 230, 0.8), 10, 0, 0, 0); /* Bleu clair avec opacité */
+    -fx-border-color: #add8e6; /* Bleu clair */
     -fx-border-width: 2;
     -fx-border-radius: 10;
 }
 
 .movie-title {
-    -fx-text-fill: white;
+    -fx-text-fill: #ffffff; /* Blanc */
     -fx-font-weight: bold;
     -fx-font-size: 14px;
     -fx-max-width: 190px;
 }
 
 .movie-year, .movie-rating {
-    -fx-text-fill: white;
+    -fx-text-fill: #ffffff; /* Blanc */
     -fx-font-size: 12px;
 }
 
 .scrollpan-section {
-    -fx-background-color: rgba(51, 51, 51, 0.56);
+    -fx-background-color: rgba(255, 255, 255, 0.56); /* Blanc avec opacité */
 }
 
 /************************************************************/
@@ -134,10 +130,10 @@
 
 #container1_1 {
     -fx-padding: 20px 20px 20px 20px;
-    -fx-background-color: rgba(128, 128, 128, 0.6); /* Adjust for glass effect */
+    -fx-background-color: rgba(255, 255, 255, 0.6); /* Blanc avec opacité */
     -fx-background-insets: 10;
     -fx-background-radius: 10;
-    -fx-border-color: rgba(255, 255, 255, 0.3);
+    -fx-border-color: rgba(255, 255, 255, 0.3); /* Blanc avec opacité */
     -fx-border-width: 1px;
     -fx-border-radius: 10;
     -fx-max-height: 390px; /* Set the maximum height to enforce the size */
@@ -147,24 +143,24 @@
 
 #title {
     -fx-font-size: 26px;
-    -fx-text-fill: white;
+    -fx-text-fill: #ffffff; /* Blanc */
     -fx-font-weight: bold;
 }
 
 .movie-info-details {
     -fx-font-size: 16px;
-    -fx-text-fill: white;
+    -fx-text-fill: #ffffff; /* Blanc */
 }
 
 #description {
     -fx-font-size: 16px;
-    -fx-text-fill: white;
+    -fx-text-fill: #ffffff; /* Blanc */
     -fx-wrap-text: true;
 }
 
 #poster_image_d{
-    -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.8), 20, 0, 0, 10);
-    -fx-border-color: white;
+    -fx-effect: dropshadow(three-pass-box, rgba(255, 255, 255, 0.8), 20, 0, 0, 10); /* Blanc avec opacité */
+    -fx-border-color: #add8e6; /* Bleu clair */
     -fx-border-width: 2;
     -fx-border-insets: 5;
     -fx-border-radius: 5;
@@ -176,14 +172,14 @@
 .section-title {
     -fx-font-size: 22px;
     -fx-font-weight: bold;
-    -fx-text-fill: #ffffff; /* White text color */
+    -fx-text-fill: #ffffff; /* Blanc */
     -fx-padding: 0 0 0 10px; /* Left padding to align with the actors' images */
 }
 
 /* Style for the FlowPane that contains the actors */
 .actors-section {
-    -fx-background-color: rgba(244, 6, 18, 0.33);
-    -fx-border-color: #f40612;
+    -fx-background-color: rgba(0, 0, 255, 0.33); /* Bleu avec opacité */
+    -fx-border-color: #0000ff; /* Bleu */
     -fx-border-width: 2px; /* Border width */
     -fx-border-radius: 5px; /* Rounded border corners */
     -fx-background-radius: 5px; /* Match background radius with border radius for rounded corners */
@@ -194,9 +190,9 @@
 .actor-container {
     -fx-alignment: center;
     -fx-padding: 5px;
-    -fx-background-color: #2e4057; /* Slightly lighter background for each actor container */
+    -fx-background-color: #ffffff; /* Blanc */
     -fx-background-radius: 4px; /* Rounded corners for actor containers */
-    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 10); /* Shadow for depth */
+    -fx-effect: dropshadow(three-pass-box, rgba(255, 255, 255, 0.8), 10, 0, 0, 10); /* Blanc avec opacité */
 }
 
 /* Style for actor images */
@@ -204,13 +200,13 @@
     -fx-fit-width: 100px; /* Preferred width */
     -fx-fit-height: 150px; /* Preferred height */
     -fx-preserve-ratio: true;
-    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.6), 5, 0.1, 2, 2); /* Soft shadow for the images */
+    -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 255, 0.6), 5, 0.1, 2, 2); /* Bleu avec opacité */
 }
 
 /* Style for actor names */
 .actor-name {
     -fx-font-size: 14px;
-    -fx-text-fill: #dcdcdc; /* Light grey color for readability */
+    -fx-text-fill: #ffffff; /* Blanc */
     -fx-wrap-text: true;
     -fx-padding: 5px; /* Padding around the actor name for spacing */
     -fx-text-alignment: center; /* Center align actor names */
@@ -219,28 +215,27 @@
 #actor {
     -fx-font-size: 24px; /* Larger font size for prominence */
     -fx-font-weight: bold; /* Bold font weight for emphasis */
-    -fx-text-fill: #e8e8e8; /* Light color for high contrast */
-    -fx-background-color: rgba(244, 6, 18, 0.33);
+    -fx-text-fill: #ffffff; /* Blanc */
+    -fx-background-color: rgba(0, 0, 255, 0.33); /* Bleu avec opacité */
     -fx-padding: 10px; /* Padding around the text for more space */
     -fx-background-radius: 5px; /* Rounded corners for the background */
     -fx-border-radius: 5px; /* Rounded corners for the border */
     -fx-border-width: 2px; /* Border width */
-    -fx-border-color: #606060; /* Border color */
-    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.7), 10, 0, 0, 5); /* Shadow for depth */
+    -fx-border-color: #0000ff; /* Bleu */
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 255, 0.7), 10, 0, 0, 5); /* Bleu avec opacité */
     -fx-alignment: center; /* Center alignment for the text */
 }
 
 #relatedMovies {
-     -fx-font-size: 24px; /* Larger font size for prominence */
-     -fx-font-weight: bold; /* Bold font weight for emphasis */
-     -fx-text-fill: #e8e8e8; /* Light color for high contrast */
-     -fx-background-color: rgba(244, 6, 18, 0.33);
-     -fx-padding: 10px; /* Padding around the text for more space */
-     -fx-background-radius: 5px; /* Rounded corners for the background */
-     -fx-border-radius: 5px; /* Rounded corners for the border */
-     -fx-border-width: 2px; /* Border width */
-     -fx-border-color: #606060; /* Border color */
-     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.7), 10, 0, 0, 5); /* Shadow for depth */
-     -fx-alignment: center; /* Center alignment for the text */
- }
-
+    -fx-font-size: 24px; /* Larger font size for prominence */
+    -fx-font-weight: bold; /* Bold font weight for emphasis */
+    -fx-text-fill: #ffffff; /* Blanc */
+    -fx-background-color: rgba(0, 0, 255, 0.33); /* Bleu avec opacité */
+    -fx-padding: 10px; /* Padding around the text for more space */
+    -fx-background-radius: 5px; /* Rounded corners for the background */
+    -fx-border-radius: 5px; /* Rounded corners for the border */
+    -fx-border-width: 2px; /* Border width */
+    -fx-border-color: #0000ff; /* Bleu */
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 255, 0.7), 10, 0, 0, 5); /* Bleu avec opacité */
+    -fx-alignment: center; /* Center alignment for the text */
+}
