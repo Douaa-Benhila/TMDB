@@ -227,29 +227,4 @@ public class MovieDetailsController {
     }
 
 
-
-
-
-    private void showDirectorMovies(String directorId) {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/DirectorMoviesView.fxml"));
-
-            Parent root = loader.load();
-
-            DirectorMoviesController controller = loader.getController();
-            controller.loadMovies(directorId);
-            Stage stage = new Stage();
-            stage.setTitle("Films du realisateur");
-            stage.setScene(new Scene(root));
-            stage.show();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-
-    public void handleDirectorHyperlinkAction(javafx.event.ActionEvent actionEvent) {
-        showDirectorMovies(directorId);
-
-    }
 }
