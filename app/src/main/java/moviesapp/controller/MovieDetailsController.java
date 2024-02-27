@@ -73,6 +73,26 @@ public class MovieDetailsController {
     private Hyperlink directorHyperlink;
     private String directorId;
 
+    public void setMovieDetails(Movie movie) {
+        String imageOriginalPath = "https://image.tmdb.org/t/p/original"; // Base path for images from TMDB (adjust as necessary)
+        String imagePath = "https://image.tmdb.org/t/p/w500"; // Base path for images from TMDB (adjust as necessary)
+        backdropImageView.setImage(new Image(imageOriginalPath + movie.getBackdrop_path(), true));
+        posterImageView.setImage(new Image(imagePath + movie.getPoster_path(), true));
+        titleLabel.setText(movie.getTitle());
+        releaseDateLabel.setText("- Release Date: " + movie.getRelease_date());
+        originalTitleLabel.setText("- Original Title: " + movie.getOriginal_title());
+        originalLanguageLabel.setText("- Language: " + movie.getOriginal_language().toUpperCase());
+        updateGenreLabel(movie.getGenre_ids());
+        overviewText.setText("- Overview: " + movie.getOverview());
+        popularityLabel.setText("- Popularity: " + String.format("%.1f", movie.getPopularity()));
+        voteAverageLabel.setText("- Rating: " + String.format("%.1f", movie.getVote_average()) + " / 10");
+        voteCountLabel.setText("- Votes: " + movie.getVote_count());
+        adultLabel.setText("- Adult: " + (movie.isAdult() ? "Yes" : "No"));
+        videoLabel.setText("- Video: " + (movie.isVideo() ? "Yes" : "No"));
+        fetchActors(movie.getId());
+        displayRelatedMovies(movie);
+        updateDirectorDetails(movie.getId());
+    }
 
 
 
