@@ -1,0 +1,10 @@
+#moviesListView {
+    -fx-background-color: #9c27b0; /* Couleur violette */
+    -fx-text-fill: white; /* Couleur du texte en blanc */
+    -fx-font-size: 14px; /* Taille de la police */
+    -fx-font-family: "Arial"; /* Police de caractères */
+    -fx-padding: 10px; /* Espacement intérieur */
+    -fx-border-color: #7b1fa2; /* Couleur de la bordure */
+    -fx-border-width: 2px; /* Largeur de la bordure */
+    -fx-border-radius: 5px; /* Rayon de la bordure */
+}

@@ -3,8 +3,16 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.image.ImageView?>
 
+<?import javafx.geometry.Insets?>
+<?import java.net.URL?>
 <VBox xmlns:fx="http://javafx.com/fxml/1" fx:controller="moviesapp.controller.DirectorMoviesController" spacing="10">
-    <ImageView fx:id="directorImageView"  preserveRatio="true"/>
+    <stylesheets>
+        <URL value="@styleDirector.css" />
+    </stylesheets>
+    <padding>
+        <Insets top="10" right="10" bottom="10" left="10"/>
+    </padding>
+    <ImageView fx:id="directorImageView" preserveRatio="true"/>
     <Label fx:id="directorNameLabel"/>
     <Label fx:id="directorBiographyLabel" wrapText="true"/>
     <ListView fx:id="moviesListView"/>
