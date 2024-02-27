@@ -26,6 +26,7 @@ import moviesapp.model.Movie;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.io.IOException;
 import java.net.URI;
@@ -73,6 +74,11 @@ public class MovieDetailsController {
     private Hyperlink directorHyperlink;
     private String directorId;
 
+    private String selectedMovieId;
+
+    private String trailerKey;
+
+
     public void setMovieDetails(Movie movie) {
         String imageOriginalPath = "https://image.tmdb.org/t/p/original"; // Base path for images from TMDB (adjust as necessary)
         String imagePath = "https://image.tmdb.org/t/p/w500"; // Base path for images from TMDB (adjust as necessary)
@@ -89,6 +95,7 @@ public class MovieDetailsController {
         voteCountLabel.setText("- Votes: " + movie.getVote_count());
         adultLabel.setText("- Adult: " + (movie.isAdult() ? "Yes" : "No"));
         videoLabel.setText("- Video: " + (movie.isVideo() ? "Yes" : "No"));
+        this.selectedMovieId = String.valueOf(movie.getId());
         fetchActors(movie.getId());
         displayRelatedMovies(movie);
         updateDirectorDetails(movie.getId());
@@ -248,4 +255,29 @@ public class MovieDetailsController {
         showDirectorMovies(directorId);
 
     }
+
+
+
+    public void setTrailerKey(String trailerKey) {
+        this.trailerKey = trailerKey;
+    }
+
+
+    @FXML
+    private void handleTrailerButtonAction() {
+        try {
+            if (selectedMovieId != null) {
+                String responseBody = TMDBApi.sendGET("/movie/" + selectedMovieId + "/videos", "");
+                String videoKey = TMDBApi.parseVideoKey(responseBody);
+                if (videoKey != null) {
+                    Desktop.getDesktop().browse(new URI("https://www.youtube.com/watch?v=" + videoKey));
+                } else {
+                    System.out.println("Aucune bande-annonce trouvée pour ce film.");
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
 }

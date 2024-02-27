@@ -344,4 +344,32 @@ import java.util.stream.Stream;
         return null; // Ou une valeur par défaut
     }
 
+    public static String parseVideoKey(String responseBody) {
+        // Création d'une instance de Gson
+        Gson gson = new Gson();
+
+        // Parser la réponse JSON en un objet JsonObject
+        JsonObject jsonObject = gson.fromJson(responseBody, JsonObject.class);
+
+        // Vérifier si l'objet "results" est présent et contient des données
+        if (jsonObject.has("results") && jsonObject.get("results").isJsonArray()) {
+            JsonArray results = jsonObject.getAsJsonArray("results");
+
+            // Parcourir les éléments du tableau pour trouver la bande-annonce (si disponible)
+            for (int i = 0; i < results.size(); i++) {
+                JsonObject videoObject = results.get(i).getAsJsonObject();
+                String type = videoObject.get("type").getAsString();
+                String site = videoObject.get("site").getAsString();
+
+                // Vérifier si l'objet vidéo est une bande-annonce et hébergée sur YouTube
+                if ("Trailer".equalsIgnoreCase(type) && "YouTube".equalsIgnoreCase(site)) {
+                    return videoObject.get("key").getAsString(); // Retourner la clé de la vidéo
+                }
+            }
+        }
+
+        return null; // Retourner null si aucune bande-annonce correspondante n'a été trouvée
+    }
+
+
 }

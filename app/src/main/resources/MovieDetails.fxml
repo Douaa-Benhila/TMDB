@@ -44,6 +44,8 @@
 
             <Label fx:id="overviewText" id="description" />
             <Hyperlink fx:id="directorHyperlink" onAction="#handleDirectorHyperlinkAction" />
+            <Button fx:id="trailerButton" text="Voir la Bande-Annonce" onAction="#handleTrailerButtonAction"/>
+
 
 
         </VBox>
