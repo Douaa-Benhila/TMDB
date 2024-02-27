@@ -46,25 +46,5 @@ public class DirectorMoviesController {
      * Charge et affiche les films d'un réalisateur spécifique.
      * @param directorId L'identifiant du réalisateur dont les films doivent être chargés.
      */
-    public void loadMovies(String directorId) {
-        new Thread(() -> {
-            try {
-                List<String> movieTitles = tmdbApi.getMoviesByDirector(directorId);
-                Platform.runLater(() -> {
-                    System.out.println("Affichage des films : " + movieTitles);
-                    moviesListView.getItems().setAll(movieTitles);
-                });
-            } catch (IOException | InterruptedException e) {
-                e.printStackTrace();
-                Platform.runLater(() -> {
-                    moviesListView.getItems().setAll("Impossible de charger les films");
-                });
-            }
-        }).start();
-    }
-
-
-
-
 
 }
