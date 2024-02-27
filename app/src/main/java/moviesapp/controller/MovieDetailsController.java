@@ -95,6 +95,25 @@ public class MovieDetailsController {
     }
 
 
+    public void updateDirectorDetails(int movieId) {
+        new Thread(() -> {
+            try {
+                String[] directorDetails = TMDBApi.getDirectorDetails(movieId);
+                if (directorDetails != null) {
+                    String directorName = directorDetails[0];
+                    String directorId = directorDetails[1];
+                    Platform.runLater(() -> {
+                        directorHyperlink.setText("Director: " + directorName);
+                        // Stockage de directorId pour l'utiliser lors de l'affichage des films du réalisateur
+                        this.directorId = directorId;
+                    });
+                }
+            } catch (IOException | InterruptedException e) {
+                e.printStackTrace();
+                Platform.runLater(() -> directorHyperlink.setText("Director: Error loading"));
+            }
+        }).start();
+    }
 
 
 
