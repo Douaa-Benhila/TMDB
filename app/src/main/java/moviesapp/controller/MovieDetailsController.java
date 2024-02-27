@@ -102,7 +102,6 @@ public class MovieDetailsController {
     }
 
 
-
     public void updateDirectorDetails(int movieId) {
         new Thread(() -> {
             try {
@@ -122,6 +121,8 @@ public class MovieDetailsController {
             }
         }).start();
     }
+
+
 
 
 
@@ -253,7 +254,6 @@ public class MovieDetailsController {
 
     public void handleDirectorHyperlinkAction(javafx.event.ActionEvent actionEvent) {
         showDirectorMovies(directorId);
-
     }
 
 
