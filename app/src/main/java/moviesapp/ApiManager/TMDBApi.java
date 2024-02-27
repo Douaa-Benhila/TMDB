@@ -6,7 +6,6 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import moviesapp.JsonManager.JsonParser;
 import moviesapp.JsonManager.MovieListResponse;
-import moviesapp.model.Author;
 import moviesapp.model.Movie;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -312,11 +311,6 @@ import java.util.stream.Stream;
         return movies;
     }
 
-    public static List<String> getMoviesByDirector(String directorId) throws IOException, InterruptedException {
-        List<String> movies = new ArrayList<>();
-        String url = "https://api.themoviedb.org/3/person/" + directorId + "/movie_credits?api_key=" + API_KEY;
-        HttpRequest request = HttpRequest.newBuilder().uri(URI.create(url)).GET().build();
-        HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
 
     /**
      * Obtient les détails du réalisateur d'un film spécifique.
