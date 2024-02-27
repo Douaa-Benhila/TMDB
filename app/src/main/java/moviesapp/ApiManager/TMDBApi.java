@@ -285,6 +285,63 @@ import java.util.stream.Stream;
      * @throws IOException Si une erreur se produit lors de la communication avec l'API.
      * @throws InterruptedException Si l'opération est interrompue.
      */
+    public static List<String> getMoviesByDirector(String directorId) throws IOException, InterruptedException {
+        List<String> movies = new ArrayList<>();
+        String url = "https://api.themoviedb.org/3/person/" + directorId + "/movie_credits?api_key=" + API_KEY;
+        HttpRequest request = HttpRequest.newBuilder().uri(URI.create(url)).GET().build();
+        HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
 
+        Gson gson = new Gson();
+        JsonObject jsonResponse = gson.fromJson(response.body(), JsonObject.class);
+
+        JsonElement crewElement = jsonResponse.get("crew");
+        if (crewElement != null && crewElement.isJsonArray()) {
+            JsonArray crewMovies = crewElement.getAsJsonArray();
+
+            for (JsonElement movieElement : crewMovies) {
+                JsonObject movie = movieElement.getAsJsonObject();
+                JsonElement jobElement = movie.get("job");
+                JsonElement titleElement = movie.get("title");
+                if (jobElement != null && "Director".equals(jobElement.getAsString()) && titleElement != null) {
+                    String title = titleElement.getAsString();
+                    movies.add(title);
+                }
+            }
+        }
+        return movies;
+    }
+
+
+    /**
+     * Obtient les détails du réalisateur d'un film spécifique.
+     *
+     * @param movieId L'identifiant du film pour lequel obtenir les détails du réalisateur.
+     * @return Un tableau contenant le nom et l'identifiant du réalisateur, ou null si aucun réalisateur n'est trouvé.
+     * @throws IOException Si une erreur se produit lors de la communication avec l'API.
+     * @throws InterruptedException Si l'opération est interrompue.
+     */
+    public static String[] getDirectorDetails(int movieId) throws IOException, InterruptedException {
+        String url = "https://api.themoviedb.org/3/movie/" + movieId + "/credits?api_key=" + API_KEY;
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(url))
+                .GET()
+                .build();
+        HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
+
+        Gson gson = new Gson();
+        JsonObject jsonResponse = gson.fromJson(response.body(), JsonObject.class);
+        JsonArray crew = jsonResponse.getAsJsonArray("crew");
+
+        for (JsonElement element : crew) {
+            JsonObject crewMember = element.getAsJsonObject();
+            if ("Director".equals(crewMember.get("job").getAsString())) {
+                String name = crewMember.get("name").getAsString();
+                String id = crewMember.get("id").getAsString(); // Extrait l'ID
+                return new String[]{name, id}; // Retourne le nom et l'ID
+            }
+        }
+
+        return null; // Ou une valeur par défaut
+    }
 
 }
