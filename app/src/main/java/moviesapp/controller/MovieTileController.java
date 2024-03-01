@@ -129,4 +129,6 @@ public class MovieTileController {
     public void setMovie(Movie movie) {
         this.movie = movie;
     }
+    // Méthode pour récupérer le film associé
+
 }
