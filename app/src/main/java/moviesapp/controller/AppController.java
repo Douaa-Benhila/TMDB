@@ -8,8 +8,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
-import javafx.util.converter.IntegerStringConverter;
-import javafx.util.converter.NumberStringConverter;
 import moviesapp.ApiManager.TMDBApi;
 import moviesapp.model.Favorites;
 import moviesapp.model.Movie;
@@ -45,40 +43,8 @@ public class AppController {
     public void initialize() {
         displayMostViralMovies();
         fetchAndPopulateGenres();
-        configureYearFields(startYearField);
-        configureYearFields(endYearField);
-        configureRatingField(ratingField);
+
     }
-
-    private void configureYearFields(TextField yearField) {
-        TextFormatter<Integer> yearFormatter = new TextFormatter<>(new IntegerStringConverter(), null, change -> {
-            if (change.getControlNewText().matches("\\d{0,4}")) {
-                return change;
-            }
-            return null;
-        });
-        yearField.setTextFormatter(yearFormatter);
-    }
-
-    private void configureRatingField(TextField ratingField) {
-        TextFormatter<Number> ratingFormatter = new TextFormatter<>(new NumberStringConverter(), null, change -> {
-            if (change.getControlNewText().isEmpty()) {
-                return change;
-            }
-            if (change.getControlNewText().matches("^([0-9]|10)(\\.[0-9]{1,2})?$")) {
-                double value = Double.parseDouble(change.getControlNewText());
-                if (value >= 0 && value <= 10) {
-                    return change;
-                }
-            }
-            return null;
-        });
-        ratingField.setTextFormatter(ratingFormatter);
-    }
-
-
-
-
 
     /**
      * Récupère les genres disponibles depuis l'API TMDB et les ajoute au ComboBox pour la sélection par l'utilisateur.
