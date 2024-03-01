@@ -250,7 +250,7 @@ public class AppController {
         sectionTitle.setText("-> Most Popular Movies");
     }
 
-    private void handleBackButton(ActionEvent event) {
+    public void handleBackButton(ActionEvent event) {
         String previousPage = NavigationManager.getPreviousPage();
         if (previousPage != null) {
             // Code pour naviguer vers la page précédente
