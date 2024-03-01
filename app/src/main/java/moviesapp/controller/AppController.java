@@ -6,16 +6,22 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import moviesapp.ApiManager.TMDBApi;
 import moviesapp.model.Favorites;
 import moviesapp.model.Movie;
+
+
+
 import java.io.IOException;
+
 import java.security.cert.PolicyNode;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 
 /**
  * Contrôleur principal pour l'application MoviesApp.
@@ -45,6 +51,9 @@ public class AppController {
         fetchAndPopulateGenres();
 
     }
+
+
+
 
     /**
      * Récupère les genres disponibles depuis l'API TMDB et les ajoute au ComboBox pour la sélection par l'utilisateur.
@@ -250,13 +259,9 @@ public class AppController {
         sectionTitle.setText("-> Most Popular Movies");
     }
 
-    public void handleBackButton(ActionEvent event) {
-        String previousPage = NavigationManager.getPreviousPage();
-        if (previousPage != null) {
-            // Code pour naviguer vers la page précédente
-            // Vous pouvez utiliser FXMLLoader pour charger la vue de la page précédente
-        } else {
-            // Gérer le cas où il n'y a pas de page précédente
-        }
-    }
+
+
+
+
+
 }
