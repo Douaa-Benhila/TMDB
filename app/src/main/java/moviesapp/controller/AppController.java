@@ -172,13 +172,17 @@ public class AppController {
     /**
      * Retire un film de la liste des favoris de l'utilisateur.
      * @param movie Le film à retirer.
-     */
+     **/
     private void removeFromFavorites(Movie movie) {
         if (favoriteMovies.getFavoriteMovies().contains(movie)) {
             movie.setFavorite(false);
             favoriteMovies.removeFavoriteMovie(movie);
+            onShowFavorites();
         }
     }
+
+
+
 
     /**
      * Affiche les films les plus populaires à l'utilisateur.
