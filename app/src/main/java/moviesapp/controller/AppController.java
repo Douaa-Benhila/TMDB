@@ -249,4 +249,14 @@ public class AppController {
         // Mettre à jour le titre de la section
         sectionTitle.setText("-> Most Popular Movies");
     }
+
+    private void handleBackButton(ActionEvent event) {
+        String previousPage = NavigationManager.getPreviousPage();
+        if (previousPage != null) {
+            // Code pour naviguer vers la page précédente
+            // Vous pouvez utiliser FXMLLoader pour charger la vue de la page précédente
+        } else {
+            // Gérer le cas où il n'y a pas de page précédente
+        }
+    }
 }
