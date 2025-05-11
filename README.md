@@ -84,7 +84,7 @@ Voici les principales composantes du code :
 
 ---
 
-## 📦 Installation & Lancement
+##  Installation & Lancement
 
 ### Prérequis
 - Java 17+
@@ -106,7 +106,7 @@ gradle run
 
 ---
 
-## 📚 Ressources & Aide
+##  Ressources & Aide
 
 - Tutoriels YouTube (API TMDB, JavaFX)
 - Documentation Gson & TMDB
@@ -115,6 +115,6 @@ gradle run
 ---
 
 
-## 📌 Conclusion
+##  Conclusion
 
 **TMDB** est un projet complet permettant d’appliquer les connaissances en Java tout en créant une application ludique et utile. Il démontre comment construire un logiciel à la fois fonctionnel, évolutif et agréable à utiliser, même pour un public non technique.
